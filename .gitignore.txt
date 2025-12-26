@@ -1,0 +1,36 @@
+# --- Repo root ignores (monorepo-style) ---
+# Unity project lives in ./AntSimulator/
+# Unity-specific ignores should be inside ./AntSimulator/.gitignore
+
+# macOS / Windows junk
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# JetBrains / VSCode at repo root (optional but recommended)
+.idea/
+.vscode/
+*.suo
+*.user
+*.userprefs
+
+# Rider/IDE caches that might appear at root
+**/.vs/
+**/.gradle/
+
+# If someone accidentally generates Unity stuff at repo root, ignore it
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Safety: ignore Unity solution/project files if generated at repo root
+/*.sln
+/*.csproj
+/*.unityproj
