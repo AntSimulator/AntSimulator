@@ -10,14 +10,27 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# JetBrains / VSCode at repo root (optional but recommended)
+# =========================
+# IDE / Editor (root-level)
+# =========================
+
+# JetBrains (Rider / IntelliJ)
 .idea/
+
+# VS Code
 .vscode/
+*.code-workspace
+
+# Visual Studio 2022 / VS
+.vs/
 *.suo
 *.user
 *.userprefs
+*.vsconfig
 
-# Rider/IDE caches that might appear at root
+# =========================
+# IDE caches that may appear anywhere
+# =========================
 **/.vs/
 **/.gradle/
 
