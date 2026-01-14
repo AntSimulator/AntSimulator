@@ -3,6 +3,12 @@ using UnityEngine;
 public class MarketOpenState : IGameState
 {
     private string gameStateName = "MarketOpenState";
+    private GameStateController gsc;
+
+    public MarketOpenState(GameStateController gsc)
+    {
+        this.gsc = gsc;
+    }
 
     public void Enter()
     {
