@@ -9,7 +9,7 @@ public class GameStateController : MonoBehaviour
 
     void Start()
     {
-        ChangeState(new MarketOpenState(this));
+        ChangeState(new PreMarketState(this));
         calendarUI.HighLightToday(currentDay);
         
     }
