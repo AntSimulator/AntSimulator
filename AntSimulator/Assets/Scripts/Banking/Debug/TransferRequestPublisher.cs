@@ -3,7 +3,7 @@ using UnityEngine;
 using Banking.Contracts;
 using Banking.Events;
 
-namespace AntSimulator.Banking.Debugging
+namespace Banking.Debugging
 {
     public class TransferRequestPublisher : MonoBehaviour
     {
