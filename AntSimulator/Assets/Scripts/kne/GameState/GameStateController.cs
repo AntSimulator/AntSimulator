@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class GameStateController : MonoBehaviour
 {
     private IGameState currentState;
     public int currentDay = 1;
     public CalendarManager calendarUI;
+    public TextMeshProUGUI stateInfoText;
 
     void Start()
     {
+        Application.targetFrameRate = 30;
         ChangeState(new PreMarketState(this));
         calendarUI.HighLightToday(currentDay);
         

@@ -6,6 +6,7 @@ public class SettlementState : IGameState
     private GameStateController gsc;
     private float timer = 0f;
     private float duration = 30f;
+    private int lastDisplayedSec = -1;
 
     public SettlementState(GameStateController gsc)
     {
@@ -20,7 +21,19 @@ public class SettlementState : IGameState
 
     public void Tick() {
         timer += Time.deltaTime;
+        float remainTime = duration - timer;
+        int sec = Mathf.CeilToInt(remainTime);
+        
+        if(sec != lastDisplayedSec)
+        {
+            if (gsc.stateInfoText != null)
+            {
+                gsc.stateInfoText.text = $"Until next day <color=yellow>{sec:D2}</color>";
+            }
 
+            lastDisplayedSec = sec;
+        }
+        
         if (timer >= duration) {
             gsc.ChangeState(new PreMarketState(gsc));
         }
