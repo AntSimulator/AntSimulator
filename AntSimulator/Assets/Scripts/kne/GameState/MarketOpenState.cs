@@ -5,7 +5,7 @@ public class MarketOpenState : IGameState
     private string gameStateName = "MarketOpenState";
     private GameStateController gsc;
     private float timer = 0f;
-    private float duration = 300f;
+    private float duration = 150f;
     private int lastDisplayedSec = -1;
 
     public MarketOpenState(GameStateController gsc)

@@ -9,6 +9,10 @@ public class GameStateController : MonoBehaviour
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
 
+    [Header("Ending Settings")]
+    public int targetDay = 5;
+
+
     void Start()
     {
         Application.targetFrameRate = 30;
