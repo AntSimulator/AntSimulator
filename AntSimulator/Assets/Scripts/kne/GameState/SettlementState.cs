@@ -5,7 +5,7 @@ public class SettlementState : IGameState
     private string gameStateName = "SettlementState";
     private GameStateController gsc;
     private float timer = 0f;
-    private float duration = 30f;
+    private float duration = 20f;
     private int lastDisplayedSec = -1;
 
     public SettlementState(GameStateController gsc)
@@ -35,15 +35,23 @@ public class SettlementState : IGameState
         }
         
         if (timer >= duration) {
-            gsc.ChangeState(new PreMarketState(gsc));
+            gsc.NextDay();
+            if(gsc.currentDay > gsc.targetDay)
+            {
+                gsc.ChangeState(new GameEndingState(gsc));
+            }
+            else
+            {
+                gsc.ChangeState(new PreMarketState(gsc));
+            }
         }
     }
 
     public void Exit() {
-        if (gsc != null) 
-        {
-            gsc.NextDay();
-        }
+        //if (gsc != null) 
+        //{
+        //    gsc.NextDay();
+        //}
     }
     
 }
