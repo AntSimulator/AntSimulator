@@ -1,17 +1,19 @@
 using System;
 
-[Serializable]
-public class Holding
+namespace Player
 {
-    public string stockId;
-    public int quantity;
-    public float avgBuyPrice;
-
-    public Holding(string stockId)
+    [Serializable]
+    public class Holding
     {
-        this.stockId = stockId;
-        quantity = 0;
-        avgBuyPrice = 0f;
+        public string stockId;
+        public int quantity;
+        public float avgBuyPrice;
+
+        public Holding(string stockId)
+        {
+            this.stockId = stockId;
+            quantity = 0;
+            avgBuyPrice = 0f;
+        }
     }
-    //new
 }

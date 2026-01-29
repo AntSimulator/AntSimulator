@@ -1,0 +1,16 @@
+{
+  "code": "100001",
+  "name": "AURORA TECH",
+  "candles": [
+    { "date": 0, "close": 101.2, "volume": 180000 },
+    { "date": 1, "close": 103.4, "volume": 240000 },
+    { "date": 2, "close": 99.8,  "volume": 210000 },
+    { "date": 3, "close": 105.1, "volume": 320000 },
+    { "date": 4, "close": 104.0, "volume": 290000 },
+    { "date": 5, "close": 107.6, "volume": 410000 },
+    { "date": 6, "close": 110.3, "volume": 520000 },
+    { "date": 7, "close": 108.9, "volume": 360000 },
+    { "date": 8, "close": 112.7, "volume": 610000 },
+    { "date": 9, "close": 111.5, "volume": 480000 }
+  ]
+}

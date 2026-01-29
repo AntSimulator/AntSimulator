@@ -14,7 +14,7 @@ public class GameStateController : MonoBehaviour
         Application.targetFrameRate = 30;
         ChangeState(new PreMarketState(this));
         calendarUI.HighLightToday(currentDay);
-        
+
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class GameStateController : MonoBehaviour
         if (keyboard.digit1Key.wasPressedThisFrame) ChangeState(new MarketOpenState(this));
         if (keyboard.digit2Key.wasPressedThisFrame) ChangeState(new JailState(this));
         if (keyboard.digit3Key.wasPressedThisFrame) ChangeState(new SettlementState(this));
-        
+
     }
 
     public void ChangeState(IGameState newState)
@@ -46,6 +46,6 @@ public class GameStateController : MonoBehaviour
             calendarUI.HighLightToday(currentDay);
         }
 
-        Debug.Log("³¯Â¥°¡ ¹Ù²î¾ú½À´Ï´Ù! ÇöÀç: " + currentDay + "ÀÏ");
+        Debug.Log("ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½! ï¿½ï¿½ï¿½ï¿½: " + currentDay + "ï¿½ï¿½");
     }
 }

@@ -1,0 +1,47 @@
+{
+  "stocks": [
+    { "code": "100001", "name": "AURORA TECH", "iconColor": "#FF3B30" },
+    { "code": "100002", "name": "BLUEBIRD SYSTEMS", "iconColor": "#007AFF" },
+    { "code": "100003", "name": "GREENHARBOR FOODS", "iconColor": "#34C759" },
+    { "code": "100004", "name": "CRIMSON CAPITAL", "iconColor": "#FF3B30" },
+    { "code": "100005", "name": "SKYLINE SEMICON", "iconColor": "#007AFF" },
+    { "code": "100006", "name": "MINTWAVE ENERGY", "iconColor": "#34C759" },
+    { "code": "100007", "name": "REDWOOD LOGISTICS", "iconColor": "#FF3B30" },
+    { "code": "100008", "name": "OCEANLINK MEDIA", "iconColor": "#007AFF" },
+    { "code": "100009", "name": "VERDANT PHARMA", "iconColor": "#34C759" },
+    { "code": "100010", "name": "SCARLET FINANCE", "iconColor": "#FF3B30" },
+
+    { "code": "100011", "name": "NOVA ELECTRONICS", "iconColor": "#007AFF" },
+    { "code": "100012", "name": "CLOVER INDUSTRIES", "iconColor": "#34C759" },
+    { "code": "100013", "name": "RUBY RETAIL", "iconColor": "#FF3B30" },
+    { "code": "100014", "name": "AZURE NETWORKS", "iconColor": "#007AFF" },
+    { "code": "100015", "name": "EMERALD MOTORS", "iconColor": "#34C759" },
+    { "code": "100016", "name": "FIREBRICK MINING", "iconColor": "#FF3B30" },
+    { "code": "100017", "name": "DEEPSEA SHIPPING", "iconColor": "#007AFF" },
+    { "code": "100018", "name": "FORESTLINE PAPER", "iconColor": "#34C759" },
+    { "code": "100019", "name": "CARDINAL AEROSPACE", "iconColor": "#FF3B30" },
+    { "code": "100020", "name": "COBALT SOFTWARE", "iconColor": "#007AFF" },
+
+    { "code": "100021", "name": "SPRINGFIELD AGRI", "iconColor": "#34C759" },
+    { "code": "100022", "name": "REDSTONE CONSTRUCT", "iconColor": "#FF3B30" },
+    { "code": "100023", "name": "BLUESTAR TELECOM", "iconColor": "#007AFF" },
+    { "code": "100024", "name": "GREENFIELD REALTY", "iconColor": "#34C759" },
+    { "code": "100025", "name": "CARMINE HEALTH", "iconColor": "#FF3B30" },
+    { "code": "100026", "name": "NAVY RIDGE BANK", "iconColor": "#007AFF" },
+    { "code": "100027", "name": "LIMEPORT TRAVEL", "iconColor": "#34C759" },
+    { "code": "100028", "name": "ROSEWATER BEAUTY", "iconColor": "#FF3B30" },
+    { "code": "100029", "name": "BLUEPEAK OUTDOOR", "iconColor": "#007AFF" },
+    { "code": "100030", "name": "GREENGLOW CHEM", "iconColor": "#34C759" },
+
+    { "code": "100031", "name": "REDSPRING GAMES", "iconColor": "#FF3B30" },
+    { "code": "100032", "name": "AZUREVAULT STORAGE", "iconColor": "#007AFF" },
+    { "code": "100033", "name": "EVERGREEN MART", "iconColor": "#34C759" },
+    { "code": "100034", "name": "CRIMSON CLOUD", "iconColor": "#FF3B30" },
+    { "code": "100035", "name": "BLUEMOON LABS", "iconColor": "#007AFF" },
+    { "code": "100036", "name": "GREENPATH BIO", "iconColor": "#34C759" },
+    { "code": "100037", "name": "REDHILL HOTELS", "iconColor": "#FF3B30" },
+    { "code": "100038", "name": "COASTAL CONNECT", "iconColor": "#007AFF" },
+    { "code": "100039", "name": "MEADOWLINE TEXTILE", "iconColor": "#34C759" },
+    { "code": "100040", "name": "RUBICON INVEST", "iconColor": "#FF3B30" }
+  ]
+}

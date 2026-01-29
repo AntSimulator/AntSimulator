@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.monitor1394.xcharts": {
+      "version": "https://github.com/XCharts-Team/XCharts.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "90e9187808c3f32462c65fb9394e79bc6026ad84"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.2",
       "depth": 0,

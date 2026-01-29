@@ -1,8 +1,11 @@
+// PlayerController.cs
 using UnityEngine;
 using TMPro;
 
-public class PlayerController : MonoBehaviour
+namespace Player
 {
+    public class PlayerController : MonoBehaviour
+    {
     [System.Serializable]
     public class TestStock
     {
@@ -139,8 +142,8 @@ public class PlayerController : MonoBehaviour
         {
             if (state == null) return;
             state.cash = value;
-            UpdateUI(); // 은행 이체로 돈이 변하면 UI도 즉시 갱신
+            UpdateUI(); // 잔액 텍스트도 즉시 갱신
         }
-        //new
     }
+}
 }

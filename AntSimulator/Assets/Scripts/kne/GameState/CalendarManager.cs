@@ -21,7 +21,7 @@ public class CalendarManager : MonoBehaviour
         {
             HighLightToday(gmc.currentDay);
         }
-        
+
     }
 
     public void SetupNumbers()
