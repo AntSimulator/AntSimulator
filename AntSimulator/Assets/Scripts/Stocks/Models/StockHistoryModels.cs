@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class Candle { public int date; public float close; public long volume; }
+public class Candle { public int tick; public float price; public long volume; }
 
 [Serializable]
 public class StockHistory10D

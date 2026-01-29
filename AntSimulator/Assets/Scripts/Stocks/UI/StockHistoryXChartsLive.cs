@@ -55,11 +55,11 @@ public class StockHistoryXChartsLive : MonoBehaviour
             return;
         }
 
-        var xLabels = data.candles.Select(c => c.date.ToString()).ToArray(); // "0"~"9"
-        var closes  = data.candles.Select(c => (double)c.close).ToArray();
+        var xLabels = data.candles.Select(c => c.tick.ToString()).ToArray(); // "0"~"9"
+        var prices  = data.candles.Select(c => (double)c.price).ToArray();
         var vols    = data.candles.Select(c => (double)c.volume).ToArray();
 
-        ApplyBarChart(closeChart,  $"{data.name} CLOSE",  xLabels, closes);
+        ApplyBarChart(closeChart,  $"{data.name} CLOSE",  xLabels, prices);
         ApplyBarChart(volumeChart, $"{data.name} VOLUME", xLabels, vols);
     }
 
