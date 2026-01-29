@@ -1,0 +1,16 @@
+{
+  "code": "100001",
+  "name": "AURORA TECH",
+  "candles": [
+    { "tick": 0, "price": 101.2, "volume": 180000 },
+    { "tick": 1, "price": 103.4, "volume": 240000 },
+    { "tick": 2, "price": 99.8,  "volume": 210000 },
+    { "tick": 3, "price": 105.1, "volume": 320000 },
+    { "tick": 4, "price": 104.0, "volume": 290000 },
+    { "tick": 5, "price": 107.6, "volume": 410000 },
+    { "tick": 6, "price": 110.3, "volume": 520000 },
+    { "tick": 7, "price": 108.9, "volume": 360000 },
+    { "tick": 8, "price": 112.7, "volume": 610000 },
+    { "tick": 9, "price": 111.5, "volume": 480000 }
+  ]
+}

@@ -12,10 +12,10 @@ public class JailState : IGameState
 
     public void Enter()
     {
-        Debug.Log($"[GameStateNName] ÇöÀç {gameStateName}»óÅÂ ÀÔ´Ï´Ù.");
+        Debug.Log($"[GameStateNName] ï¿½ï¿½ï¿½ï¿½ {gameStateName}ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.");
     }
 
     public void Tick() { }
     public void Exit() { }
-    
+
 }
