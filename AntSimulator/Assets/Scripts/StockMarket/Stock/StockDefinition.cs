@@ -13,6 +13,7 @@ public class StockDefinition : ScriptableObject
     
     [Header("상승 하락 폭 가중치")]
     public float communityWeight = 1.0f;
+    public float statemetDepthWeight = 1.0f;
     public float eventDepthWeight = 1.0f;
 
     [Header("상승 하락 최대 폭")]

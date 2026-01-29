@@ -18,6 +18,8 @@ public class MarketSimulator : MonoBehaviour
    public float tickIntervalSec = 1f;
    private float timer;
 
+   public GameStateController gameStateController;
+
    void Start()
    {
       foreach (var def in stockDefinitions)
@@ -115,8 +117,19 @@ public class MarketSimulator : MonoBehaviour
       {
          stock.currentPrice *= (1f - change);
       }
-
       
+   }
 
+   private void HandleDayStarted(int day)
+   {
+      foreach (var stock in stocks.Values)
+      {
+         CalculateDailyVolatility(stock);
+      }
+   }
+
+   private void CalculateDailyVolatility(StockState stock)
+   {
+      stock.volatilityMultiplier = 1;
    }
 }

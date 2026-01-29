@@ -5,6 +5,8 @@ using UnityEngine.Experimental.GlobalIllumination;
 [CreateAssetMenu(fileName = "EventDefinition", menuName = "Scriptable Objects/EventDefinition")]
 public class EventDefinition : ScriptableObject
 {
+    //얘는 섹터 이벤트에 적용됨
+    
     [Header("기본 정보")] 
     public string eventId;
     public string title;

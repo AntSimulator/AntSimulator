@@ -9,8 +9,10 @@ public class GameStateController : MonoBehaviour
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
 
+    public System.Action<int> OnDayStarted;
+
     [Header("Ending Settings")]
-    public int targetDay = 5;
+    public int targetDay = 4;
 
 
     void Start()
@@ -49,7 +51,9 @@ public class GameStateController : MonoBehaviour
         {
             calendarUI.HighLightToday(currentDay);
         }
+        
+        OnDayStarted?.Invoke(currentDay);
 
-        Debug.Log("날짜가 바뀌었습니다! 현재: " + currentDay + "일");
+        Debug.Log("?????? ????????????! ????: " + currentDay + "??");
     }
 }
