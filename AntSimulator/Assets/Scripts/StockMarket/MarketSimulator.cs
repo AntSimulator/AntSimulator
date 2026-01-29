@@ -1,64 +1,135 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem.Controls;
+using Random = Unity.Mathematics.Random;
 
 public class MarketSimulator : MonoBehaviour
 {
-    //TODO: make a dictionary to save each stock
-    //TODO: link with stockDef
-    
-    [Header("Tick")] public float tickIntervalSec = 1.0f;
+   public List<StockDefinition> stockDefinitions;
+   private Dictionary<string, StockState> stocks = new();
+   private Dictionary<string, StockDefinition> defMap = new();
 
-    [Header("Simulation Parameters")] 
-    [Range(-50, 50)] public float baseDrift = 0.0f; // 기본적인 시장의 방 (양수면 기본적으로 올라감. 음수면 내려감. 물론 방향성인거지 다른 영향으로 drift와 다르게 흘러갈 수 잇음)
-    public float noiseScale = 1.0f; //가격 변화에 들어갈 랜덤성을 얼마나 크게 할지 정하는 변수. noise가 크면 클수록 예측 불가능성 커짐
-    public float eventScale = 1.0f;
-    public float maxUpPercentPerTick = 0.08f;
-    public float maxDownPercentPerTick = 0.08f;
-    public float minPrice = 1f;
-    
-    
-    //TODO change this variable with actual stock price
-    private float stockPrice = 10.0f;
+   public float tickIntervalSec = 1f;
+   private float timer;
 
-    private float timer = 0f;
+   public GameStateController gameStateController;
 
-    void Start()
-    {
-        //TODO: reference StockDefinition to create StockState
-        
-        //TODO: log Initialized N Stocks
-        
-        //TODO: if stock price <= 0 -> stock price = 1
-    }
+   void Start()
+   {
+      foreach (var def in stockDefinitions)
+      {
+         defMap[def.name] = def;
+         stocks[def.name] = new StockState(def.name, def.basePrice);
+      }
+      Debug.Log($"Initialized {stocks.Count} stocks");
+      
+   }
 
-    void Update()
-    {
-        //TODO: update every stock's information every tick
+   private void Update()
+   {
+      timer += Time.deltaTime;
+      if(timer < tickIntervalSec) return;
+      timer -= tickIntervalSec;
 
-        timer += Time.deltaTime;
-        if(timer < tickIntervalSec) return;
-        timer -= tickIntervalSec;
+      Tick();
+   }
 
-        Tick();
-    }
+   private void Tick()
+   {
+      foreach (var kv in stocks)
+      {
+         UpdateStock(kv.Value, defMap[kv.Key]);
+      }
+   }
 
-    private void Tick()
-    {
-        //TODO: for each stock, save previous price, create logic for stock market
-        
-        //TODO: log print out changes of each stock per tick
-    }
+   private void UpdateStock(StockState stock, StockDefinition def)
+   {
+      stock.prevPrice = stock.currentPrice;
+      CalculateStockPrice(stock, def);
+      stock.Record();
+   }
 
-    // Tick 안에서 얘 호출하면 값 바뀜
-    private void calculateStockPrice()
-    {
-        float rdNum = UnityEngine.Random.Range(-10f, 11f)*noiseScale;
+   private float CalculateDirection(StockDefinition def)
+   {
+      float score = 0f;
 
-        stockPrice = stockPrice * (1+Mathf.Clamp((baseDrift + rdNum + eventScale), maxDownPercentPerTick, maxUpPercentPerTick));
-    }
+      return score;
+   }
+
+   private float CalculateMagnitude(StockState stock, StockDefinition def)
+   {
+      float baseMag = 1f;
+
+      float mag = baseMag;
+      return mag;
+   }
+
+   private void CalculateStockPrice(StockState stock, StockDefinition def)
+   {
+      /*
+       * 기본적으로 올라갈 확률 반반. 이 확률에 이벤트, 선언, 뉴스 의 가중치를 주어서
+       * 올라갈 확률을 조정해줌. 그 이후에 조정된 값을 바탕으로
+       * 0 부터 100 까지의 수 하나를 랜덤으로 뽑은 뒤, 그게 downThreshold 보다 작으면
+       * 해당 주식은 내려가고, 크면 해당 주식은 올라간다.
+       */
+      float upThreshold = 50;
+      upThreshold = upThreshold
+                    * def.eventProbWeight
+                    * def.statementWeight
+                    * def.newsWeight;
+      upThreshold = Mathf.Clamp(upThreshold, 0f, 100.0f);
+      float downThreshold = 100.0f - upThreshold;
+      float roll = UnityEngine.Random.Range(1.0f, 100.0f);
+      bool isUp = (roll > downThreshold);
+
+      float maxChange;
+      if (isUp == true)
+      {
+         maxChange = def.maxUpPercent;
+      }
+      else
+      {
+         maxChange = def.maxDownPercent;
+      }
+
+      maxChange = maxChange
+                  * def.communityWeight
+                  * def.eventDepthWeight;
+      maxChange += stock.volatilityMultiplier * 0.01f;
+      if (maxChange > 0.5)
+      {
+         maxChange = Mathf.Clamp(maxChange, 0, 0.30f);
+      }
+
+      float change = UnityEngine.Random.Range(0f, maxChange);
+
+      if (isUp)
+      {
+         stock.currentPrice *= (1f + change);
+      }
+      else
+      {
+         stock.currentPrice *= (1f - change);
+      }
+      
+   }
+
+   private void HandleDayStarted(int day)
+   {
+      foreach (var stock in stocks.Values)
+      {
+         CalculateDailyVolatility(stock);
+      }
+   }
+
+   private void CalculateDailyVolatility(StockState stock)
+   {
+      stock.volatilityMultiplier = 1;
+   }
 }

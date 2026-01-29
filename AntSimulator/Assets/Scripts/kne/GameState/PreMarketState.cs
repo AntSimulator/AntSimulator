@@ -5,7 +5,7 @@ public class PreMarketState : IGameState
     private string gameStateName = "PreMarketState";
     private GameStateController gsc;
     private float timer = 0f;
-    private float duration = 30f;
+    private float duration = 10f;
     private int lastDisplayedSecond = -1;
 
     public PreMarketState(GameStateController gsc)

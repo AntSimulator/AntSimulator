@@ -9,6 +9,12 @@ public class GameStateController : MonoBehaviour
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
 
+    public System.Action<int> OnDayStarted;
+
+    [Header("Ending Settings")]
+    public int targetDay = 4;
+
+
     void Start()
     {
         Application.targetFrameRate = 30;
@@ -45,7 +51,9 @@ public class GameStateController : MonoBehaviour
         {
             calendarUI.HighLightToday(currentDay);
         }
+        
+        OnDayStarted?.Invoke(currentDay);
 
-        Debug.Log("��¥�� �ٲ�����ϴ�! ����: " + currentDay + "��");
+        Debug.Log("?????? ????????????! ????: " + currentDay + "??");
     }
 }
