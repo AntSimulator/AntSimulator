@@ -19,7 +19,11 @@ public class StockHistoryXChartsLive : MonoBehaviour
 
     void Awake()
     {
-        _path = Path.Combine(Application.streamingAssetsPath, jsonFileName);
+        _path = Path.Combine(Application.persistentDataPath, jsonFileName);
+        if (!File.Exists(_path))
+        {
+            _path = Path.Combine(Application.streamingAssetsPath, jsonFileName);
+        }
         Reload();
     }
 

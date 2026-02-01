@@ -15,6 +15,8 @@ public class GameStateController : MonoBehaviour
 
     public System.Action<int> OnDayStarted;
 
+    public StockSeedExporter seedExporter;
+
     [Header("Ending Settings")]
     public int targetDay = 4;
 
@@ -22,6 +24,9 @@ public class GameStateController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 30;
+        
+        seedExporter.WriteSeedOnce();
+        
         //?? ??? ??? ??? ??? ??
         var runEvents = RunEventGenerator.Generate(
             eventDatabase,

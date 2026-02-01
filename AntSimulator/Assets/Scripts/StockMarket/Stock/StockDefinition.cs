@@ -27,6 +27,7 @@ public class StockDefinition : ScriptableObject
     [Header("기본 정보")] 
     public string name;
     public Sector sector;
+    public string displayName;
 
     // public string ticker;
 }

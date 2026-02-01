@@ -12,6 +12,7 @@ public class MarketSimulator : MonoBehaviour
     private float timer;
 
     public EventManager eventManager;
+    public StockHistoryExporter historyExporter;
 
     [Header("Recording")] public RunRecorder runRecorder;
     public GameStateController gameStateController;
@@ -33,6 +34,8 @@ public class MarketSimulator : MonoBehaviour
 
         if (gameStateController != null)
             gameStateController.OnDayStarted += HandleDayStarted;
+        
+        historyExporter?.InitFromMarket();
 
         Debug.Log($"Initialized {stocks.Count} stocks");
     }
@@ -54,6 +57,7 @@ public class MarketSimulator : MonoBehaviour
             UpdateStock(kv.Value, defMap[kv.Key]);
 
         runRecorder?.RecordTick();
+        historyExporter?.OnTick();
     }
 
     private void UpdateStock(StockState stock, StockDefinition def)

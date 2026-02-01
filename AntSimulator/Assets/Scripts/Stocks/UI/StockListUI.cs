@@ -72,7 +72,11 @@ namespace Stocks.UI
 
     async Task<StockSeedDatabase> LoadSeedAsync(string fileName)
     {
-        var path = Path.Combine(Application.streamingAssetsPath, fileName);
+        var path = Path.Combine(Application.persistentDataPath, fileName);
+        if (!File.Exists(path))
+        {
+            path = Path.Combine(Application.streamingAssetsPath, fileName);
+        }
 
         // PC/Editor는 File.ReadAllText로 충분
         // Android는 StreamingAssets가 jar 경로라 UnityWebRequest가 안전
