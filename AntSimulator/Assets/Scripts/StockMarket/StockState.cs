@@ -10,7 +10,7 @@ public class StockState
     public float prevPrice; // 직전 틱 가격
     public float volatilityMultiplier = 1f; // 변동성
 
-    public List<float> priceHistroy = new List<float>();
+    public List<float> priceHistroy = new ();
 
     public StockState(string id, float startPrice)
     {

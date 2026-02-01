@@ -9,6 +9,10 @@ public class GameStateController : MonoBehaviour
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
 
+    public EventManager eventManager;
+    public EventDatabaseSO eventDatabase;
+    public RunRecorder runRecorder;
+
     public System.Action<int> OnDayStarted;
 
     [Header("Ending Settings")]
@@ -18,8 +22,27 @@ public class GameStateController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 30;
+        //?? ??? ??? ??? ??? ??
+        var runEvents = RunEventGenerator.Generate(
+            eventDatabase,
+            totalDays: targetDay,
+            calendarCount: targetDay,
+            hiddenCount: targetDay * 3);
+        
+        //??? ??? ??? + day 1 ?? ??
+        eventManager.Init(runEvents);
+        eventManager.OnDayStarted(currentDay);
+
+        // ?? ??
+        runRecorder.totalDays = targetDay;
+        runRecorder.BeginRunAndWriteManifest();
+        
+        //????? ??? ???
         ChangeState(new PreMarketState(this));
-        calendarUI.HighLightToday(currentDay);
+        calendarUI?.HighLightToday(currentDay);
+        
+        // ?? ???? Day start ?? ?? 
+        OnDayStarted?.Invoke(currentDay);
         
     }
 
@@ -45,12 +68,17 @@ public class GameStateController : MonoBehaviour
 
     public void NextDay()
     {
+        //?? ?? ??
+        eventManager.OnDayEnded();
+        
         currentDay++;
 
         if (calendarUI != null)
         {
             calendarUI.HighLightToday(currentDay);
         }
+        // ??? ? ?? ??
+        eventManager.OnDayStarted(currentDay);
         
         OnDayStarted?.Invoke(currentDay);
 

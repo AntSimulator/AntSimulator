@@ -1,135 +1,110 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.InputSystem.Controls;
-using Random = Unity.Mathematics.Random;
 
 public class MarketSimulator : MonoBehaviour
 {
-   public List<StockDefinition> stockDefinitions;
-   private Dictionary<string, StockState> stocks = new();
-   private Dictionary<string, StockDefinition> defMap = new();
+    public List<StockDefinition> stockDefinitions;
 
-   public float tickIntervalSec = 1f;
-   private float timer;
+    private readonly Dictionary<string, StockState> stocks = new();
+    private readonly Dictionary<string, StockDefinition> defMap = new();
 
-   public GameStateController gameStateController;
+    public float tickIntervalSec = 1f;
+    private float timer;
 
-   void Start()
-   {
-      foreach (var def in stockDefinitions)
-      {
-         defMap[def.name] = def;
-         stocks[def.name] = new StockState(def.name, def.basePrice);
-      }
-      Debug.Log($"Initialized {stocks.Count} stocks");
-      
-   }
+    public EventManager eventManager;
 
-   private void Update()
-   {
-      timer += Time.deltaTime;
-      if(timer < tickIntervalSec) return;
-      timer -= tickIntervalSec;
+    [Header("Recording")] public RunRecorder runRecorder;
+    public GameStateController gameStateController;
 
-      Tick();
-   }
+    void Start()
+    {
+        stocks.Clear();
+        defMap.Clear();
 
-   private void Tick()
-   {
-      foreach (var kv in stocks)
-      {
-         UpdateStock(kv.Value, defMap[kv.Key]);
-      }
-   }
+        if (stockDefinitions != null)
+        {
+            foreach (var def in stockDefinitions)
+            {
+                if (def == null) continue;
+                defMap[def.name] = def;
+                stocks[def.name] = new StockState(def.name, def.basePrice);
+            }
+        }
 
-   private void UpdateStock(StockState stock, StockDefinition def)
-   {
-      stock.prevPrice = stock.currentPrice;
-      CalculateStockPrice(stock, def);
-      stock.Record();
-   }
+        if (gameStateController != null)
+            gameStateController.OnDayStarted += HandleDayStarted;
 
-   private float CalculateDirection(StockDefinition def)
-   {
-      float score = 0f;
+        Debug.Log($"Initialized {stocks.Count} stocks");
+    }
 
-      return score;
-   }
+    public Dictionary<string, StockState> GetAllStocks() => stocks;
 
-   private float CalculateMagnitude(StockState stock, StockDefinition def)
-   {
-      float baseMag = 1f;
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer < tickIntervalSec) return;
+        timer -= tickIntervalSec;
 
-      float mag = baseMag;
-      return mag;
-   }
+        Tick();
+    }
 
-   private void CalculateStockPrice(StockState stock, StockDefinition def)
-   {
-      /*
-       * 기본적으로 올라갈 확률 반반. 이 확률에 이벤트, 선언, 뉴스 의 가중치를 주어서
-       * 올라갈 확률을 조정해줌. 그 이후에 조정된 값을 바탕으로
-       * 0 부터 100 까지의 수 하나를 랜덤으로 뽑은 뒤, 그게 downThreshold 보다 작으면
-       * 해당 주식은 내려가고, 크면 해당 주식은 올라간다.
-       */
-      float upThreshold = 50;
-      upThreshold = upThreshold
-                    * def.eventProbWeight
-                    * def.statementWeight
-                    * def.newsWeight;
-      upThreshold = Mathf.Clamp(upThreshold, 0f, 100.0f);
-      float downThreshold = 100.0f - upThreshold;
-      float roll = UnityEngine.Random.Range(1.0f, 100.0f);
-      bool isUp = (roll > downThreshold);
+    private void Tick()
+    {
+        foreach (var kv in stocks)
+            UpdateStock(kv.Value, defMap[kv.Key]);
 
-      float maxChange;
-      if (isUp == true)
-      {
-         maxChange = def.maxUpPercent;
-      }
-      else
-      {
-         maxChange = def.maxDownPercent;
-      }
+        runRecorder?.RecordTick();
+    }
 
-      maxChange = maxChange
-                  * def.communityWeight
-                  * def.eventDepthWeight;
-      maxChange += stock.volatilityMultiplier * 0.01f;
-      if (maxChange > 0.5)
-      {
-         maxChange = Mathf.Clamp(maxChange, 0, 0.30f);
-      }
+    private void UpdateStock(StockState stock, StockDefinition def)
+    {
+        stock.prevPrice = stock.currentPrice;
+        CalculateStockPrice(stock, def);
+        stock.Record();
+    }
 
-      float change = UnityEngine.Random.Range(0f, maxChange);
+    private void CalculateStockPrice(StockState stock, StockDefinition def)
+    {
+        // 이벤트 효과
+        float pEvent = 0f;
+        float dEvent = 0f;
+        if (eventManager != null)
+            (pEvent, dEvent) = eventManager.GetEffectsForStock(stock.stockId, def.sector);
 
-      if (isUp)
-      {
-         stock.currentPrice *= (1f + change);
-      }
-      else
-      {
-         stock.currentPrice *= (1f - change);
-      }
-      
-   }
+        // 확률: 50% 기준에서 퍼센트포인트 더하기
+        float upThreshold = 50f + (pEvent * 100f);
+        upThreshold = Mathf.Clamp(upThreshold, 0f, 100f);
 
-   private void HandleDayStarted(int day)
-   {
-      foreach (var stock in stocks.Values)
-      {
-         CalculateDailyVolatility(stock);
-      }
-   }
+        float downThreshold = 100f - upThreshold;
+        float roll = UnityEngine.Random.Range(1f, 100f);
+        bool isUp = (roll > downThreshold);
 
-   private void CalculateDailyVolatility(StockState stock)
-   {
-      stock.volatilityMultiplier = 1;
-   }
+        // 기본 캡
+        float maxChange = isUp ? def.maxUpPercent : def.maxDownPercent;
+
+        // 이벤트 폭 증가분 더하기 (dEvent는 증가분)
+        maxChange = maxChange + dEvent;
+
+        // 변동성(선택)
+        maxChange += stock.volatilityMultiplier * 0.01f;
+
+        // 최종 캡
+        maxChange = Mathf.Clamp(maxChange, 0f, 0.30f);
+
+        float change = UnityEngine.Random.Range(0f, maxChange);
+        stock.currentPrice *= isUp ? (1f + change) : (1f - change);
+        if (stock.currentPrice < 1f) stock.currentPrice = 1f;
+    }
+
+    private void HandleDayStarted(int day)
+    {
+        foreach (var s in stocks.Values)
+            CalculateDailyVolatility(s);
+    }
+
+    private void CalculateDailyVolatility(StockState stock)
+    {
+        
+        stock.volatilityMultiplier = 1f;
+    }
 }

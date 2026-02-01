@@ -6,15 +6,15 @@ public class StockDefinition : ScriptableObject
 {
     [Header("Starting Price")] public float basePrice = 10f;
 
-    [Header("상승 하락 확률 가중치")] 
-    public float eventProbWeight = 1.0f;
-    public float statementWeight = 1.0f;
-    public float newsWeight = 1.0f;
-    
-    [Header("상승 하락 폭 가중치")]
-    public float communityWeight = 1.0f;
-    public float statemetDepthWeight = 1.0f;
-    public float eventDepthWeight = 1.0f;
+    // [Header("상승 하락 확률 가중치")] 
+    // public float eventProbWeight = 1.0f;
+    // public float statementWeight = 1.0f;
+    // public float newsWeight = 1.0f;
+    //
+    // [Header("상승 하락 폭 가중치")]
+    // public float communityWeight = 1.0f;
+    // public float statemetDepthWeight = 1.0f;
+    // public float eventDepthWeight = 1.0f;
 
     [Header("상승 하락 최대 폭")]
     [Tooltip("최대 상승 폭")]
@@ -26,6 +26,7 @@ public class StockDefinition : ScriptableObject
 
     [Header("기본 정보")] 
     public string name;
+    public Sector sector;
 
-    public string ticker;
+    // public string ticker;
 }
