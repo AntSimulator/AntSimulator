@@ -1,4 +1,5 @@
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using XCharts.Runtime;
@@ -9,6 +10,14 @@ public class StockHistoryXChartsLive : MonoBehaviour
     public CandlestickChart priceStick;   // ✅ BarChart -> CandlestickChart
     public BarChart volumeChart;
 
+    [Header("DataZoom (inside pan + zoom)")]
+    public bool useDataZoom = true;
+    [Min(5)] public int initialVisibleCount = 60;
+    [Range(0.01f, 1f)] public float minZoomRatio = 0.1f;
+    [Range(1f, 20f)] public float scrollSensitivity = 4f;
+    public bool keepEndOnUpdate = true;
+
+
     [Header("JSON in StreamingAssets")]
     public string jsonFileName = "stocks_history.json";
     public float pollSeconds = 0.5f;
@@ -16,6 +25,11 @@ public class StockHistoryXChartsLive : MonoBehaviour
     string _path;
     System.DateTime _lastWriteUtc;
     float _t;
+
+    DataZoom _priceZoom;
+    DataZoom _volumeZoom;
+    bool _isSyncingZoom;
+
 
     void Awake()
     {
@@ -62,7 +76,97 @@ public class StockHistoryXChartsLive : MonoBehaviour
 
         ApplyCandlestickChart(priceStick, $"{data.name} PRICE", xLabels, prices); // ✅ 캔들
         ApplyBarChart(volumeChart, $"{data.name} VOLUME", xLabels, vols);        // ✅ 바
+
+        SetupDataZoom(xLabels.Length);
     }
+
+    void SetupDataZoom(int dataCount)
+    {
+        if (!useDataZoom) return;
+        if (!priceStick || !volumeChart) return;
+
+        _priceZoom = ConfigureDataZoom(priceStick);
+        _volumeZoom = ConfigureDataZoom(volumeChart);
+
+        _priceZoom.startEndFunction = (ref float start, ref float end) =>
+            SyncZoom(_volumeZoom, volumeChart, start, end);
+
+        _volumeZoom.startEndFunction = (ref float start, ref float end) =>
+            SyncZoom(_priceZoom, priceStick, start, end);
+
+        ApplyInitialZoom(dataCount);
+    }
+
+    DataZoom ConfigureDataZoom(BaseChart chart)
+    {
+        var zoom = chart.EnsureChartComponent<DataZoom>();
+        zoom.enable = true;
+        zoom.supportInside = true;
+        zoom.supportInsideDrag = true;
+        zoom.supportInsideScroll = true;
+        zoom.supportSlider = false;
+        zoom.supportMarquee = false;
+        zoom.zoomLock = false;
+        zoom.filterMode = DataZoom.FilterMode.Filter;
+        zoom.xAxisIndexs = new List<int> { 0 };
+        zoom.yAxisIndexs = new List<int>();
+        zoom.rangeMode = DataZoom.RangeMode.Percent;
+        zoom.minZoomRatio = Mathf.Clamp(minZoomRatio, 0.01f, 1f);
+        zoom.scrollSensitivity = scrollSensitivity;
+        return zoom;
+    }
+
+    void ApplyInitialZoom(int dataCount)
+    {
+        if (dataCount <= 0 || _priceZoom == null || _volumeZoom == null) return;
+
+        int visible = Mathf.Clamp(initialVisibleCount, 1, dataCount);
+        float end = 100f;
+        float start = 100f * (1f - (float)visible / dataCount);
+
+        if (keepEndOnUpdate)
+        {
+            bool atEnd = Mathf.Abs(_priceZoom.end - 100f) < 0.001f;
+            if (!atEnd)
+            {
+                start = _priceZoom.start;
+                end = _priceZoom.end;
+            }
+        }
+
+        SetZoomRange(_priceZoom, priceStick, start, end);
+        SetZoomRange(_volumeZoom, volumeChart, start, end);
+    }
+
+    void SyncZoom(DataZoom targetZoom, BaseChart targetChart, float start, float end)
+    {
+        if (_isSyncingZoom) return;
+        _isSyncingZoom = true;
+
+        SetZoomRange(targetZoom, targetChart, start, end);
+
+        _isSyncingZoom = false;
+    }
+
+    void SetZoomRange(DataZoom zoom, BaseChart chart, float start, float end)
+    {
+        if (zoom == null || chart == null) return;
+
+        start = Mathf.Clamp(start, 0f, 100f);
+        end = Mathf.Clamp(end, 0f, 100f);
+        if (end < start) end = start;
+
+        if (Mathf.Abs(zoom.start - start) < 0.001f &&
+            Mathf.Abs(zoom.end - end) < 0.001f)
+            return;
+
+        zoom.start = start;
+        zoom.end = end;
+
+        chart.OnDataZoomRangeChanged(zoom);
+        chart.RefreshChart();
+    }
+
 
     static void ApplyCandlestickChart(CandlestickChart chart, string title, string[] xLabels, double[] closes)
     {
