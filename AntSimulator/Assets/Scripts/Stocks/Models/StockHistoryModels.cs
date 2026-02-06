@@ -11,3 +11,9 @@ public class StockHistory10D
     public string name;
     public List<Candle> candles;
 }
+
+[Serializable]
+public class StockHistoryDatabase
+{
+    public List<StockHistory10D> stocks = new();
+}
