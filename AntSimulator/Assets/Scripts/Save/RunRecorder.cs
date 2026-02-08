@@ -79,7 +79,7 @@ public class RunRecorder : MonoBehaviour
                 eventId = inst.eventId,
                 startDay = inst.startDay,
                 durationDays = inst.durationDays,
-                isHidden = inst.isHidden
+                //isHidden = inst.isHidden
             });
         }
 

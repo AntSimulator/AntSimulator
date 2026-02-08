@@ -11,6 +11,10 @@ public class EventManager : MonoBehaviour
 
     private readonly List<EventInstance> active = new();
 
+    public int ticksPerDay = 300;
+    public int morningTick = 0;
+
+    public IReadOnlyList<EventInstance> ActiveEvents => active;
     public void Init(List<EventInstance> runEvents)
     {
         this.runEvents = runEvents ?? new List<EventInstance>();
@@ -20,8 +24,31 @@ public class EventManager : MonoBehaviour
     public void OnDayStarted(int day)
     {
         if (runEvents == null) return;
-        foreach (var inst in runEvents.Where(x => x.startDay == day))
-            active.Add(inst);
+
+        var todayList = runEvents.Where(x => x.startDay == day).ToList();
+        if(todayList.Count == 0) return;
+        int morningIdx = UnityEngine.Random.Range(0, todayList.Count);
+        for(int i = 0; i<todayList.Count; i++)
+        {
+            var inst = todayList[i];
+            if(inst == null)continue;
+            inst.remainingDays = inst.durationDays;
+            inst.revealed = false;
+            inst.delistApplied = false;
+            if (i == morningIdx)
+            {
+                inst.revealTickInDay = morningTick;
+            }
+            else
+            {
+                inst.revealTickInDay = UnityEngine.Random.Range(0, Mathf.Max(1, ticksPerDay));
+            }
+
+            if (!active.Contains(inst))
+            {
+                active.Add(inst);
+            }
+        }
     }
 
     public void OnDayEnded()
@@ -45,6 +72,7 @@ public class EventManager : MonoBehaviour
         {
             var def = db != null ? db.FindById(inst.eventId) : null;
             if (def == null) continue;
+            if(!inst.revealed) continue;
 
             bool affects = def.scope switch
             {
@@ -72,5 +100,18 @@ public class EventManager : MonoBehaviour
 
         float depthSum = depthMul - 1f;              // 증가분으로 환원
         return (probSum, depthSum);
+    }
+
+    public List<EventInstance> GetEventsStartingOnDay(int day)
+    {
+        if (runEvents == null) return new List<EventInstance>();
+        return runEvents.Where(e => e != null && e.startDay == day).ToList();
+    }
+
+    public EventInstance PickTomorrowForeshadow(int today)
+    {
+        var list = GetEventsStartingOnDay(today + 1);
+        if (list.Count == 0) return null;
+        return list[UnityEngine.Random.Range(0, list.Count)];
     }
 }

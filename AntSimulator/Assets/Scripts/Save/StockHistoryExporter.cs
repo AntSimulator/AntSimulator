@@ -89,8 +89,8 @@ public class StockHistoryExporter : MonoBehaviour
                 a.close = price;
             }
 
-            // 거래량이 아직 없으니 임시로 조금씩 증가(원하면 0으로 둬도 됨)
-            a.volume += UnityEngine.Random.Range(10, 50);
+            
+            a.volume += kv.Value.tickVolume;
         }
 
         // 2) 캔들 마감 시점(5틱)

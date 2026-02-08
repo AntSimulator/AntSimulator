@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
@@ -26,6 +27,10 @@ public class EventDefinition : ScriptableObject
 
     [Header("지속")] public int durationDays = 1;
 
+    [Header("상폐")] 
+    public bool delist = false;
+    public List<string> delistStockIds;
+    
     [Header("메타")] 
     public bool canBeCalendarEvent = true;
     public bool canBeHidden = true;

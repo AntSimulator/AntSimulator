@@ -49,6 +49,8 @@ public class GameStateController : MonoBehaviour
         // ?? ???? Day start ?? ?? 
         OnDayStarted?.Invoke(currentDay);
         
+        
+        
     }
 
     // Update is called once per frame
