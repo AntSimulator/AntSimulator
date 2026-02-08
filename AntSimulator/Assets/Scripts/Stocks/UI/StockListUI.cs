@@ -1,8 +1,7 @@
-using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 using Stocks.Models;
+using Utils.UnityAdapter;
 
 namespace Stocks.UI
 {
@@ -15,14 +14,20 @@ namespace Stocks.UI
         [Header("Charts")]
         [SerializeField] private StockHistoryXChartsLive historyCharts;
         [SerializeField] private bool selectFirstOnRender = true;
+        
+        [Header("Trade")]
+        [SerializeField] private Player.PlayerController playerController;
 
         [Header("Seed JSON")]
-        [SerializeField] private string jsonFileName = "stocks_seed.json";
+        [SerializeField] private string jsonFileName = "market_seed.json";
 
         //json 불러오기 및 Render 함수 호출
         async void Start()
         {
-            //Debug.Log("[StockListUI] Start()");
+            if (playerController == null)
+            {
+                playerController = FindObjectOfType<Player.PlayerController>();
+            }
 
             var db = await LoadSeedAsync(jsonFileName);
 
@@ -42,8 +47,6 @@ namespace Stocks.UI
         
         void Render(StockSeedDatabase db)
         {
-            //Debug.Log($"[StockListUI] Render() called. count={db.stocks.Count}");
-
             if (content == null || rowPrefab == null)
             {
                 Debug.LogError("[StockListUI] content 또는 rowPrefab이 비어있음.");
@@ -69,20 +72,29 @@ namespace Stocks.UI
                 
             }
             
-            //Debug.Log($"[StockListUI] after render: contentChildCount={content.childCount}");
         }
 
         // Row 클릭시 호출
         void OnRowSelected(StockSeedItem item)
         {
             if (item == null) return;
-            if (historyCharts == null)
+            
+            if (historyCharts != null)
             {
-                Debug.LogWarning("[StockListUI] historyCharts is not assigned.");
-                return;
+                historyCharts.ShowStock(item.code, item.name);
             }
 
-            historyCharts.ShowStock(item.code, item.name);
+            if (playerController != null)
+            {
+                if (!playerController.SelectStockById(item.code))
+                {
+                    Debug.LogWarning($"[StockListUI] No matching trade stock for code={item.code}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("[StockListUI] playerController is not assigned.");
+            }
         }
 
         // HTML 색상 문자열 파싱 시도
@@ -101,35 +113,15 @@ namespace Stocks.UI
         // Seed JSON 비동기 로드
         async Task<StockSeedDatabase> LoadSeedAsync(string fileName)
         {
-            var path = Path.Combine(Application.streamingAssetsPath, fileName);
-
-            // PC/Editor는 File.ReadAllText로 충분
-            // Android는 StreamingAssets가 jar 경로라 UnityWebRequest가 안전
-            if (path.Contains("://") || path.Contains("jar:"))
+            var load = await StreamingAssetsJsonLoader.LoadTextAsync(fileName);
+            if (!load.Success)
             {
-                using var req = UnityWebRequest.Get(path);
-                var op = req.SendWebRequest();
-                while (!op.isDone) await Task.Yield();
-
-                if (req.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.LogError($"[StockListUI] Seed load failed: {req.error} ({path})");
-                    return null;
-                }
-
-                return JsonUtility.FromJson<StockSeedDatabase>(req.downloadHandler.text);
+                Debug.LogError($"[StockListUI] Seed load failed: {load.Error} ({load.Path})");
+                return null;
             }
-            else
-            {
-                if (!File.Exists(path))
-                {
-                    Debug.LogError($"[StockListUI] Seed file not found: {path}");
-                    return null;
-                }
 
-                var json = File.ReadAllText(path);
-                return JsonUtility.FromJson<StockSeedDatabase>(json);
-            }
+            return JsonUtility.FromJson<StockSeedDatabase>(load.Text);
         }
     }
 }
+

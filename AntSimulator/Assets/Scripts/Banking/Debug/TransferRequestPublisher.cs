@@ -1,6 +1,5 @@
-﻿using System;
 using UnityEngine;
-using Banking.Contracts;
+using Banking.Core;
 using Banking.Events;
 
 namespace Banking.Debugging
@@ -23,14 +22,10 @@ namespace Banking.Debugging
                 return;
             }
 
-            var request = new TransferRequest
-            {
-                fromAccount = "",
-                toAccount = toAccount,
-                amount = amount,
-                memo = memo,
-                correlationId = Guid.NewGuid().ToString("N")
-            };
+            var request = TransferRequestFactory.Create(
+                toAccount,
+                amount.ToString(),
+                memo);
 
             requestChannel.Raise(request);
 
