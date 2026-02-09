@@ -117,7 +117,7 @@ public class RunRecorder : MonoBehaviour
 
         foreach (var kv in marketSimulator.GetAllStocks())
         {
-            line.prices.Add(new TickPrice { id = kv.Key, p = kv.Value.currentPrice });
+            line.prices.Add(new TickPoint() { id = kv.Key, p = kv.Value.currentPrice , v = kv.Value.tickVolume});
         }
 
         historyWriter.WriteLine(JsonUtility.ToJson(line, false));

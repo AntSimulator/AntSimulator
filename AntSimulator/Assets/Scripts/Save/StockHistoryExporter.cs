@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Stocks.Models;
 using UnityEngine;
 
 public class StockHistoryExporter : MonoBehaviour
@@ -62,6 +63,8 @@ public class StockHistoryExporter : MonoBehaviour
     {
         if (market == null) return;
 
+        int tpc = 5;
+
         _tickCounter++;
 
         // 1) 모든 종목에 대해 현재 tick 가격을 캔들에 누적
@@ -94,7 +97,7 @@ public class StockHistoryExporter : MonoBehaviour
         }
 
         // 2) 캔들 마감 시점(5틱)
-        if (_tickCounter < ticksPerCandle) return;
+        if (_tickCounter < tpc) return;
         _tickCounter = 0;
         _candleIndex++;
 
@@ -109,7 +112,10 @@ public class StockHistoryExporter : MonoBehaviour
             _candles[id].Add(new Candle
             {
                 tick = _candleIndex,
-                price = a.close,
+                open = a.open,
+                high = a.high,
+                low = a.low,
+                close = a.close,
                 volume = a.volume
             });
 
@@ -124,25 +130,28 @@ public class StockHistoryExporter : MonoBehaviour
         }
 
         // 3) UI용 json 갱신: 선택된 종목 1개만 stocks_history.json로 덮어쓰기
-        WriteSelectedHistoryJson();
+        WriteAllHistoryJson();
     }
 
-    private void WriteSelectedHistoryJson()
+    private void WriteAllHistoryJson()
     {
-        if (string.IsNullOrEmpty(selectedStockId)) return;
-        if (!_candles.TryGetValue(selectedStockId, out var list)) return;
+        var db = new Stocks.Models.StockHistoryDatabase();
 
-        var data = new StockHistory10D
+        foreach (var kv in _candles)
         {
-            code = selectedStockId,
-            name = selectedStockId,
-            candles = list.ToList()
-        };
+            var stockId = kv.Key;
+            db.stocks.Add(new Stocks.Models.StockHistory10D
+            {
+                code = stockId,
+                name = stockId,
+                candles = kv.Value.ToList()
+            });
+        }
 
         var path = Path.Combine(Application.persistentDataPath, fileName);
-        File.WriteAllText(path, JsonUtility.ToJson(data, true), Encoding.UTF8);
-        // Debug.Log($"[HistoryExporter] wrote: {path}");
-    }
+        File.WriteAllText(path, JsonUtility.ToJson(db, true), Encoding.UTF8);
+        Debug.Log($"[HistoryExporter] wrote DB: {path} stocks={db.stocks.Count}");
+    } 
 
     // 나중에 UI 클릭에서 호출하면 됨
     public void SelectStock(string stockId)
@@ -151,7 +160,7 @@ public class StockHistoryExporter : MonoBehaviour
         if (!_candles.ContainsKey(stockId)) return;
 
         selectedStockId = stockId;
-        WriteSelectedHistoryJson(); // 즉시 반영
+        WriteAllHistoryJson(); // 즉시 반영
         Debug.Log($"[HistoryExporter] selected={selectedStockId}");
     }
 }

@@ -1,10 +1,19 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine.Experimental.GlobalIllumination;
 
 namespace Stocks.Models
 {
     [Serializable]
-    public class Candle { public int tick; public float price; public long volume; }
+    public class Candle
+    {
+        public int tick;
+        public float open;
+        public float high;
+        public float low;
+        public float close;
+        public long volume;
+    }
 
     [Serializable]
     public class StockHistory10D

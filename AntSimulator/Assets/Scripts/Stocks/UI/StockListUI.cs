@@ -15,7 +15,7 @@ namespace Stocks.UI
         [SerializeField] private bool selectFirstOnRender = true;
 
         [Header("Seed JSON")]
-        [SerializeField] private string jsonFileName = "market_seed.json";
+        [SerializeField] private string jsonFileName = "stocks_seed.json";
 
         //json 불러오기 및 Render 함수 호출
         async void Start()

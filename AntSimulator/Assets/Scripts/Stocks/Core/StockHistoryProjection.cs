@@ -62,21 +62,14 @@ namespace Stocks.Core
             var volumes = new double[count];
             var ohlc = new OhlcPoint[count];
 
-            var previousClose = (double)stock.candles[0].price;
+            
             for (var i = 0; i < count; i++)
             {
                 var candle = stock.candles[i];
-                var close = candle.price;
-                var open = i == 0 ? close : previousClose;
-                var high = Math.Max(open, close) * 1.01d;
-                var low = Math.Min(open, close) * 0.99d;
-
                 labels[i] = candle.tick.ToString();
-                closes[i] = close;
+                closes[i] = candle.close;
                 volumes[i] = candle.volume;
-                ohlc[i] = new OhlcPoint(open, close, low, high);
-
-                previousClose = close;
+                ohlc[i] = new OhlcPoint(candle.open, candle.close, candle.low, candle.high);
             }
 
             return new StockHistoryProjectionResult(stock.name, labels, closes, volumes, ohlc);

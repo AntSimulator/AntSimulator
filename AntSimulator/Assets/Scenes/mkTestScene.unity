@@ -527,6 +527,11 @@ GameObject:
   - component: {fileID: 1479401490}
   - component: {fileID: 1479401489}
   - component: {fileID: 1479401488}
+  - component: {fileID: 1479401497}
+  - component: {fileID: 1479401496}
+  - component: {fileID: 1479401495}
+  - component: {fileID: 1479401494}
+  - component: {fileID: 1479401493}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -569,6 +574,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EvnetManager
   runEvents: []
   db: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
+  ticksPerDay: 180
+  morningTick: 0
 --- !u!114 &1479401490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,24 +589,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarketSimulator
   stockDefinitions:
-  - {fileID: 11400000, guid: 2a61a4e68ac4046f6923bce0c679eb24, type: 2}
-  - {fileID: 11400000, guid: a732c2874339c41ebbc467aab6fee41c, type: 2}
-  - {fileID: 11400000, guid: e9a08928c1bf74689b4acf6988a31553, type: 2}
-  - {fileID: 11400000, guid: 8aa94512400f74b67a6087be8d92ad2f, type: 2}
-  - {fileID: 11400000, guid: 894f1232a9a88429b9153c16d52e45d1, type: 2}
-  - {fileID: 11400000, guid: 946f95fe76d84406598666d6b19e6368, type: 2}
-  - {fileID: 11400000, guid: fcadcd8f2b7f843d986566ac95186311, type: 2}
-  - {fileID: 11400000, guid: c2a6b606c4af947da86089573a89a0e9, type: 2}
-  - {fileID: 11400000, guid: c4baa36187ec14f20823827ab4e69dfe, type: 2}
-  - {fileID: 11400000, guid: 08595c3fe06dc4663b67ae5a2225ccc0, type: 2}
-  - {fileID: 11400000, guid: d86c7e31a9ed14a44bc4f2cd7aac4a84, type: 2}
-  - {fileID: 11400000, guid: 2375d5e9dc87241f785d1a9c78e3ed6a, type: 2}
-  - {fileID: 11400000, guid: 9be847766a5e94742b9d7537f7c4fdaa, type: 2}
-  - {fileID: 11400000, guid: 55a59cf21e2214bf7a954ea462bab169, type: 2}
-  - {fileID: 11400000, guid: 8e0f616d9b28842c1b122f730699d50f, type: 2}
-  - {fileID: 11400000, guid: 45ca981f0dec6472e8875a9134af3b1c, type: 2}
+  - {fileID: 11400000, guid: 2a59a3635d6214fc0b007c94f7c20fbf, type: 2}
+  - {fileID: 11400000, guid: c929ddb281e4f4ca5af476dc0caeee34, type: 2}
+  - {fileID: 11400000, guid: 51f96fc91ae58407a9c7f71f177746d1, type: 2}
+  globalCommunity: {fileID: 1479401497}
+  htsCommunity: {fileID: 1479401496}
   tickIntervalSec: 1
   eventManager: {fileID: 1479401489}
+  historyExporter: {fileID: 1479401494}
+  ticksPerDay: 150
   runRecorder: {fileID: 1479401488}
   gameStateController: {fileID: 1479401491}
 --- !u!114 &1479401491
@@ -620,6 +618,7 @@ MonoBehaviour:
   eventManager: {fileID: 1479401489}
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1479401488}
+  seedExporter: {fileID: 1479401493}
   targetDay: 4
 --- !u!4 &1479401492
 Transform:
@@ -636,6 +635,102 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1479401493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479401487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5cbc631f4fe492a9915c5ff9db4bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StockSeedExporter
+  stockDefinitions:
+  - {fileID: 11400000, guid: c929ddb281e4f4ca5af476dc0caeee34, type: 2}
+  - {fileID: 11400000, guid: 51f96fc91ae58407a9c7f71f177746d1, type: 2}
+  - {fileID: 11400000, guid: 2a59a3635d6214fc0b007c94f7c20fbf, type: 2}
+  fileName: stocks_seed.json
+--- !u!114 &1479401494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479401487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559db9c24301a4859be84037e22b0a04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StockHistoryExporter
+  market: {fileID: 1479401490}
+  game: {fileID: 1479401491}
+  fileName: stocks_history.json
+  ticksPerCandle: 5
+  keepCandles: 60
+  selectedStockId: 
+--- !u!114 &1479401495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479401487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b659e690a09854c5aab27a27fe0ce6ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarketBootstrapper
+  game: {fileID: 1479401491}
+  market: {fileID: 1479401490}
+  events: {fileID: 1479401489}
+  recorder: {fileID: 1479401488}
+--- !u!114 &1479401496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479401487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72f2536596055449c93049a90a0651e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunityManager
+  templates: []
+  basePostsPerDayPerStock: 1
+  scheduleBasePosts: 1
+  moveBurstThreshold: 0.02
+  volumeBurstRelThreshold: 2.5
+  volMulBurstThreshold: 1.6
+  burstMin: 1
+  burstMax: 6
+  ticksPerDay: 300
+  morningTick: 0
+  logWhenPosted: 1
+--- !u!114 &1479401497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479401487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57d5d98dbdcb7422c87f039ccf844ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlobalCommunityManager
+  eventManager: {fileID: 1479401489}
+  eventDb: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
+  ticksPerDay: 300
+  morningTick: 0
+  infoPostsPerDay: 3
+  memePostsPerDay: 2
+  bragPostsPerDay: 1
+  lossPostsPerDay: 1
+  templates: []
+  logWhenPosted: 1
 --- !u!4 &1590022796 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4224382268944060936, guid: cba86f7229cca054ea461eb63655e5fe, type: 3}

@@ -196,8 +196,17 @@ public class MarketSimulator : MonoBehaviour
         double boostByMove = 1.0 + (def.volumeBoostK * ret);
         
         //이벤트가 있으면 거래량도 늘어남
-        double boostByEvent = 1.0 + (def.eventToVolume * Mathf.Abs(dEvent)) +
-                              (def.eventToVolume * Mathf.Abs(pEvent) + 0.5f);
+        double boostByEvent = 1.0;
+
+        boostByEvent *= (1.0 * def.eventToVolume * Mathf.Abs(dEvent));
+        boostByEvent *= (1.0 * def.eventToVolume * Mathf.Abs(pEvent));
+
+        // 이벤트 있으면 최소 기본 버프
+        if (Mathf.Abs(dEvent) > 0.0001f || Mathf.Abs(pEvent) > 0.0001f)
+            boostByEvent *= 1.3; // 기본 30% 상승
+
+        boostByEvent = System.Math.Min(boostByEvent, 5.0); // 상한선 
+        
         //랜덤 노이즈 
         double noise = UnityEngine.Random.Range(def.volumeNoiseMin, def.volumeNoiseMax);
         double v = baseTick * boostByMove * boostByEvent * noise;

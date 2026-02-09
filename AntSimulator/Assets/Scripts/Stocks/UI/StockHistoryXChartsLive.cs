@@ -37,6 +37,8 @@ namespace Stocks.UI
         DataZoom _volumeZoom;
         bool _isSyncingZoom;
 
+        private long _lastSize = -1;
+
 
         void OnEnable()
         {
@@ -50,11 +52,9 @@ namespace Stocks.UI
 
         void Awake()
         {
-            _path = Path.Combine(Application.streamingAssetsPath, jsonFileName);
-            if (!File.Exists(_path))
-            {
-                _path = Path.Combine(Application.streamingAssetsPath, jsonFileName);
-            }
+            //var p = Path.Combine(Application.persistentDataPath, jsonFileName);
+            var s = Path.Combine(Application.streamingAssetsPath, jsonFileName);
+            _path = File.Exists(s) ? s : null;
             if (priceStick) priceStick.Init();
             if (volumeChart) volumeChart.Init();
 
@@ -75,8 +75,21 @@ namespace Stocks.UI
 
             if (!File.Exists(_path)) return;
 
-            var wt = File.GetLastWriteTimeUtc(_path);
-            if (wt == _lastWriteUtc) return;
+            var p = Path.Combine(Application.persistentDataPath, jsonFileName);
+            if (_path != p && File.Exists(p))
+            {
+                _path = p;
+                _lastWriteUtc = default;
+            }
+            if(!File.Exists(_path)) return;
+
+            var info = new FileInfo(_path);
+            var wt = info.LastWriteTimeUtc;
+            var size = info.Length;
+            if (wt == _lastWriteUtc && size == _lastSize) return;
+
+            _lastWriteUtc = wt;
+            _lastSize = size;
 
             Reload();
         }
@@ -117,9 +130,9 @@ namespace Stocks.UI
                     Debug.LogError("[XChartsLive] parse failed / empty candles");
                     return;
                 }
-
                 db = new StockHistoryDatabase { stocks = new List<StockHistory10D> { single } };
             }
+
 
             _db = db;
             RenderSelectedOrFirst();

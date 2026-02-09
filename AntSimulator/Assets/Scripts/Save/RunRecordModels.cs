@@ -34,12 +34,13 @@ public class TickLine
     public int tick;
     public int day;
     public string t; // ISO8601
-    public List<TickPrice> prices = new();
+    public List<TickPoint> prices = new();
 }
 
 [Serializable]
-public class TickPrice
+public class TickPoint
 {
     public string id;
     public float p;
+    public float v;
 }
