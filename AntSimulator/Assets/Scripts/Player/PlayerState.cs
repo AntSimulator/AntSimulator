@@ -14,6 +14,36 @@ namespace Player
         {
             cash = startCash;
         }
+        
+        public void SetCash(long value)
+        {
+            cash = Math.Max(0, value);
+        }
+
+        public void ClearHoldings()
+        {
+            holdings.Clear();
+        }
+
+        public void SetHolding(string stockId, int quantity, float avgBuyPrice = 0f)
+        {
+            if (string.IsNullOrWhiteSpace(stockId)) return;
+
+            if (quantity <= 0)
+            {
+                holdings.Remove(stockId);
+                return;
+            }
+
+            if (!holdings.TryGetValue(stockId, out var holding))
+            {
+                holding = new Holding(stockId);
+                holdings.Add(stockId, holding);
+            }
+
+            holding.quantity = quantity;
+            holding.avgBuyPrice = Math.Max(0f, avgBuyPrice);
+        }
 
         public bool TryBuy(string stockId, int qty, float price, out string reason)
         {
