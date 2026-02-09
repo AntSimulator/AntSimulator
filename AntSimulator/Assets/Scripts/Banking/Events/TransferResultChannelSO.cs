@@ -1,13 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using Banking.Contracts;
+using Banking.Core;
 
 namespace Banking.Events
 {
     [CreateAssetMenu(
         menuName = "AntSimulator/Events/Banking/Transfer Result Channel",
         fileName = "TransferResultChannel")]
-    public class TransferResultChannelSO : ScriptableObject
+    public class TransferResultChannelSO : ScriptableObject, ITransferResultPublisher
     {
         public event Action<TransferResult> OnRaised;
 

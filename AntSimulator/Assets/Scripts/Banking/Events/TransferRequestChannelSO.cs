@@ -1,13 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using Banking.Contracts;
+using Banking.Core;
 
 namespace Banking.Events
 {
     [CreateAssetMenu(
         menuName = "AntSimulator/Events/Banking/Transfer Request Channel",
         fileName = "TransferRequestChannel")]
-    public class TransferRequestChannelSO : ScriptableObject
+    public class TransferRequestChannelSO : ScriptableObject, ITransferRequestSource
     {
         public event Action<TransferRequest> OnRaised;
 

@@ -1,7 +1,6 @@
-﻿using System;
 using UnityEngine;
 using TMPro;
-using Banking.Contracts;
+using Banking.Core;
 using Banking.Events;
 
 namespace Banking.UI
@@ -13,7 +12,7 @@ namespace Banking.UI
         [Header("UI")]
         [SerializeField] private TMP_InputField toAccountInput;
         [SerializeField] private TMP_InputField amountInput;
-        [SerializeField] private TMP_InputField memoInput; // 선택
+        [SerializeField] private TMP_InputField memoInput;
 
         public void OnClickTransfer()
         {
@@ -35,21 +34,10 @@ namespace Banking.UI
                 return;
             }
 
-            string toAccount = toAccountInput.text;
-            string amountStr = amountInput.text;
-            string memo = memoInput != null ? memoInput.text : "";
-
-            if (!long.TryParse(amountStr, out long amount))
-                amount = 0;
-
-            var req = new TransferRequest
-            {
-                fromAccount = "",
-                toAccount = toAccount ?? "",
-                amount = amount,
-                memo = memo ?? "",
-                correlationId = Guid.NewGuid().ToString("N")
-            };
+            var toAccount = toAccountInput.text;
+            var amountStr = amountInput.text;
+            var memo = memoInput != null ? memoInput.text : string.Empty;
+            var req = TransferRequestFactory.Create(toAccount, amountStr, memo);
 
             requestChannel.Raise(req);
             Debug.Log($"[TransferUI] Raised from UI: correlationId={req.correlationId}, to={req.toAccount}, amount={req.amount}");

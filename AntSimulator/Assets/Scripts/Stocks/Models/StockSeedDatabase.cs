@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Stocks.Models
 {
     [Serializable]
     public class StockSeedDatabase
     {
+        public long currentBalance = 100000;
         public List<StockSeedItem> stocks = new();
     }
 }
