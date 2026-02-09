@@ -4,7 +4,12 @@ using TMPro;
 
 public class GameStateController : MonoBehaviour
 {
+    public SaveManager saveManager;
+    private bool isRestoring = false;
+
     private IGameState currentState;
+    public string currentStateName = "";
+    public float stateTimer = 0f;
     public int currentDay = 1;
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
@@ -70,7 +75,14 @@ public class GameStateController : MonoBehaviour
     {
         currentState?.Exit();
         currentState = newState;
+        stateTimer = 0f;
         currentState?.Enter();
+
+        if(saveManager != null && isRestoring == false)
+        {
+            saveManager.AutoSave();
+            Debug.Log("자동 저장되었습니다.");
+        } 
     }
 
     public void NextDay()
@@ -90,5 +102,31 @@ public class GameStateController : MonoBehaviour
         OnDayStarted?.Invoke(currentDay);
 
         Debug.Log("?????? ????????????! ????: " + currentDay + "??");
+    }
+
+    public void LoadState(string stateName, float savedTime)
+    {
+        isRestoring = true;
+        
+
+        if (stateName == "PreMarketState")
+        {
+            ChangeState(new PreMarketState(this));
+        }
+        else if (stateName == "MarketOpenState")
+        {
+            ChangeState(new MarketOpenState(this));
+        }else if (stateName == "SettlementState")
+        {
+            ChangeState(new SettlementState(this));
+        }else if (stateName == "JailState")
+        {
+            ChangeState(new JailState(this));
+        }
+
+        stateTimer = savedTime;
+        currentStateName = stateName;
+
+        isRestoring = false;
     }
 }
