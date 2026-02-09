@@ -9,13 +9,6 @@ namespace Stocks.UI
 {
     public class StockHistoryXChartsLive : MonoBehaviour
     {
-        _path = Path.Combine(Application.persistentDataPath, jsonFileName);
-        if (!File.Exists(_path))
-        {
-            _path = Path.Combine(Application.streamingAssetsPath, jsonFileName);
-        }
-        Reload();
-    }
         [Header("Assign in Inspector")]
         public CandlestickChart priceStick;
         public BarChart volumeChart;
@@ -58,7 +51,10 @@ namespace Stocks.UI
         void Awake()
         {
             _path = Path.Combine(Application.streamingAssetsPath, jsonFileName);
-
+            if (!File.Exists(_path))
+            {
+                _path = Path.Combine(Application.streamingAssetsPath, jsonFileName);
+            }
             if (priceStick) priceStick.Init();
             if (volumeChart) volumeChart.Init();
 
@@ -67,7 +63,8 @@ namespace Stocks.UI
 
         void HandleStockSelected(string code, string name)
         {
-            ShowStock(code, name);
+            _ = name;
+            ShowStock(code);
         }
 
         void Update()

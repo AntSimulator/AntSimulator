@@ -83,44 +83,19 @@ namespace Stocks.UI
             }
             return ColorUtility.TryParseHtmlString(html, out color);
         }
-        
-        
 
-        // Seed JSON 비동기 로드
-        async Task<StockSeedDatabase> LoadSeedAsync(string fileName)
+        async Task<StockSeedDatabase> LoadSeedAsync(string filename)
         {
-            color = default;
-            return false;
-        }
-        return ColorUtility.TryParseHtmlString(html, out color);
-    }
-
-    async Task<StockSeedDatabase> LoadSeedAsync(string fileName)
-    {
-        var path = Path.Combine(Application.persistentDataPath, fileName);
-        if (!File.Exists(path))
-        {
-            path = Path.Combine(Application.streamingAssetsPath, fileName);
-        }
-
-        // PC/Editor는 File.ReadAllText로 충분
-        // Android는 StreamingAssets가 jar 경로라 UnityWebRequest가 안전
-        if (path.Contains("://") || path.Contains("jar:"))
-        {
-            using var req = UnityWebRequest.Get(path);
-            var op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
-
-            if (req.result != UnityWebRequest.Result.Success)
-            var load = await StreamingAssetsJsonLoader.LoadTextAsync(fileName);
+            var load = await StreamingAssetsJsonLoader.LoadTextAsync(filename);
             if (!load.Success)
             {
-                Debug.LogError($"[StockListUI] Seed load failed: {load.Error} ({load.Path})");
+                Debug.LogError($"[StockListUI] Seed Load failed: {load.Error} ({load.Path})");
                 return null;
             }
 
             return JsonUtility.FromJson<StockSeedDatabase>(load.Text);
         }
+        
     }
 }
 
