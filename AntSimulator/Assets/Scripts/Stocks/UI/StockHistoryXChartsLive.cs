@@ -38,6 +38,16 @@ namespace Stocks.UI
         bool _isSyncingZoom;
 
 
+        void OnEnable()
+        {
+            StockSelectionEvents.OnStockSelected += HandleStockSelected;
+        }
+
+        void OnDisable()
+        {
+            StockSelectionEvents.OnStockSelected -= HandleStockSelected;
+        }
+
         void Awake()
         {
             _path = Path.Combine(Application.streamingAssetsPath, jsonFileName);
@@ -46,6 +56,11 @@ namespace Stocks.UI
             if (volumeChart) volumeChart.Init();
 
             Reload();
+        }
+
+        void HandleStockSelected(string code, string name)
+        {
+            ShowStock(code, name);
         }
 
         void Update()

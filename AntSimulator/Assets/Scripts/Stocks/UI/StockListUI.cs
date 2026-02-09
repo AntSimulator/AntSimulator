@@ -11,12 +11,8 @@ namespace Stocks.UI
         [SerializeField] private Transform content;        // ScrollRect/Viewport/Content
         [SerializeField] private StockRowView rowPrefab;   // StockRow.prefab
 
-        [Header("Charts")]
-        [SerializeField] private StockHistoryXChartsLive historyCharts;
+        [Header("Selection")]
         [SerializeField] private bool selectFirstOnRender = true;
-        
-        [Header("Trade")]
-        [SerializeField] private Player.PlayerController playerController;
 
         [Header("Seed JSON")]
         [SerializeField] private string jsonFileName = "market_seed.json";
@@ -24,11 +20,6 @@ namespace Stocks.UI
         //json 불러오기 및 Render 함수 호출
         async void Start()
         {
-            if (playerController == null)
-            {
-                playerController = FindObjectOfType<Player.PlayerController>();
-            }
-
             var db = await LoadSeedAsync(jsonFileName);
 
             Debug.Log($"[StockListUI] db null? {db == null}");
@@ -78,23 +69,8 @@ namespace Stocks.UI
         void OnRowSelected(StockSeedItem item)
         {
             if (item == null) return;
-            
-            if (historyCharts != null)
-            {
-                historyCharts.ShowStock(item.code, item.name);
-            }
 
-            if (playerController != null)
-            {
-                if (!playerController.SelectStockById(item.code))
-                {
-                    Debug.LogWarning($"[StockListUI] No matching trade stock for code={item.code}");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("[StockListUI] playerController is not assigned.");
-            }
+            StockSelectionEvents.RaiseSelected(item.code, item.name);
         }
 
         // HTML 색상 문자열 파싱 시도

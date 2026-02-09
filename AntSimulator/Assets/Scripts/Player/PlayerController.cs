@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Player.Core;
 using Stocks.Models;
+using Stocks.UI;
 using Utils.UnityAdapter;
 
 namespace Player
@@ -32,7 +33,6 @@ namespace Player
         [SerializeField] private bool seedOverrideStocks = true;
 
         [Header("UI (TMP)")]
-        [SerializeField] private TMP_Dropdown stockDropdown;
         [SerializeField] private TMP_Text cashText;
         [SerializeField] private TMP_Text priceText;
         [SerializeField] private TMP_Text qtyText;
@@ -41,6 +41,17 @@ namespace Player
         private PlayerTradingEngine tradingEngine;
         private SeedPortfolioUseCase seedPortfolioUseCase;
         private int selectedIndex;
+        private string pendingSelectedStockId;
+
+        private void OnEnable()
+        {
+            StockSelectionEvents.OnStockSelected += OnStockSelectedFromRow;
+        }
+
+        private void OnDisable()
+        {
+            StockSelectionEvents.OnStockSelected -= OnStockSelectedFromRow;
+        }
 
         private TestStock CurrentStock
         {
@@ -65,7 +76,6 @@ namespace Player
             EnsureDefaultStocks();
             tradingEngine.ReplaceStocks(ToCoreStocks(testStocks));
 
-            SetupDropdown();
             tradingEngine.SelectByIndex(selectedIndex);
             UpdateUI();
         }
@@ -97,40 +107,6 @@ namespace Player
             };
         }
 
-        private void SetupDropdown()
-        {
-            if (stockDropdown == null)
-            {
-                return;
-            }
-
-            stockDropdown.ClearOptions();
-            var options = new List<string>();
-            for (var i = 0; i < testStocks.Length; i++)
-            {
-                options.Add(testStocks[i].stockId);
-            }
-
-            stockDropdown.AddOptions(options);
-            stockDropdown.onValueChanged.RemoveListener(OnDropdownChanged);
-            stockDropdown.onValueChanged.AddListener(OnDropdownChanged);
-
-            selectedIndex = Mathf.Clamp(stockDropdown.value, 0, testStocks.Length - 1);
-        }
-
-        private void OnDropdownChanged(int index)
-        {
-            if (testStocks == null || testStocks.Length == 0)
-            {
-                selectedIndex = 0;
-                return;
-            }
-
-            selectedIndex = Mathf.Clamp(index, 0, testStocks.Length - 1);
-            tradingEngine.SelectByIndex(selectedIndex);
-            UpdateUI();
-        }
-
         public bool SelectStockById(string stockId)
         {
             if (string.IsNullOrWhiteSpace(stockId) || testStocks == null || testStocks.Length == 0)
@@ -147,11 +123,7 @@ namespace Player
 
                 selectedIndex = i;
                 tradingEngine.SelectByIndex(i);
-
-                if (stockDropdown != null)
-                {
-                    stockDropdown.SetValueWithoutNotify(i);
-                }
+                pendingSelectedStockId = null;
 
                 UpdateUI();
                 return true;
@@ -178,21 +150,33 @@ namespace Player
             testStocks = ToTestStocks(result.Stocks);
             EnsureDefaultStocks();
 
-            if (seedOverrideStocks)
+            selectedIndex = seedOverrideStocks
+                ? 0
+                : Mathf.Clamp(selectedIndex, 0, testStocks.Length - 1);
+
+            tradingEngine.ReplaceStocks(ToCoreStocks(testStocks));
+            if (!string.IsNullOrWhiteSpace(pendingSelectedStockId) && SelectStockById(pendingSelectedStockId))
             {
-                selectedIndex = 0;
-                SetupDropdown();
+                pendingSelectedStockId = null;
             }
             else
             {
-                selectedIndex = Mathf.Clamp(selectedIndex, 0, testStocks.Length - 1);
+                tradingEngine.SelectByIndex(selectedIndex);
             }
-
-            tradingEngine.ReplaceStocks(ToCoreStocks(testStocks));
-            tradingEngine.SelectByIndex(selectedIndex);
 
             Debug.Log($"[Player] Seed applied cash={state.cash} stocks={testStocks.Length}");
             UpdateUI();
+        }
+
+        private void OnStockSelectedFromRow(string stockCode, string stockName)
+        {
+            _ = stockName;
+
+            if (!SelectStockById(stockCode))
+            {
+                pendingSelectedStockId = stockCode;
+                Debug.LogWarning($"[Player] No matching trade stock for code={stockCode}. Pending selection.");
+            }
         }
 
         private async Task<StockSeedDatabase> LoadSeedAsync(string fileName)
