@@ -76,12 +76,12 @@ public class SaveSlotMenu : MonoBehaviour
         {
             saveManager.SaveToSlot(slotIndex);
             RefreshUI();
-            CloseMenu();
+            Debug.Log($"새 게임 슬롯 {slotIndex}");
         }
         else
         {
             saveManager.LoadFromSlot(slotIndex);
-            CloseMenu();
+            Debug.Log($"불러오기 슬롯 {slotIndex}");
         }
 
     }

@@ -14,14 +14,25 @@ public class SaveManager : MonoBehaviour
 
     public void SaveToSlot(int slotIndex)
     {
-        if (gsc == null) return;
 
         currentSlotIndex = slotIndex;
 
         SaveData data = new SaveData();
-        data.day = gsc.currentDay;
-        data.timer = gsc.stateTimer;
-        data.stateName = gsc.currentStateName;
+
+        if (gsc != null)
+        {
+            data.day = gsc.currentDay;
+            data.timer = gsc.stateTimer;
+            data.stateName = gsc.currentStateName;
+        }
+        else
+        {
+            Debug.Log("새 게임을 시작합니다...");
+            data.day = 1;
+            data.timer = 0f;
+            data.stateName = "PreMarketState";
+        }
+        
         data.saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
         string json = JsonUtility.ToJson(data);
@@ -40,6 +51,7 @@ public class SaveManager : MonoBehaviour
 
     public void LoadFromSlot(int slotIndex)
     {
+        currentSlotIndex = slotIndex;
         string path = GetSavePath(slotIndex);
 
         if (!File.Exists(path))
@@ -47,7 +59,6 @@ public class SaveManager : MonoBehaviour
             Debug.Log("저장된 파일이 없습니다.");
             return;
         }
-        currentSlotIndex = slotIndex;
 
         string json = File.ReadAllText(path);
 
@@ -62,6 +73,10 @@ public class SaveManager : MonoBehaviour
             {
                 gsc.calendarUI.HighLightToday(gsc.currentDay);
             }
+        }
+        else
+        {
+            Debug.Log("타이틀화면");
         }
     }
 }
