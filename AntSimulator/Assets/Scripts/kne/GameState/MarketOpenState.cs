@@ -4,7 +4,6 @@ public class MarketOpenState : IGameState
 {
     private string gameStateName = "MarketOpenState";
     private GameStateController gsc;
-    private float timer = 0f;
     private float duration = 150f;
     private int lastDisplayedSec = -1;
 
@@ -15,13 +14,14 @@ public class MarketOpenState : IGameState
 
     public void Enter()
     {
+        gsc.currentStateName = gameStateName;
         Debug.Log($"[GameStateNName] 현재 {gameStateName}상태 입니다.");
-        timer = 0f;
         lastDisplayedSec = -1;
     }
+
     public void Tick() {
-        timer += Time.deltaTime;
-        float remainTime = duration - timer;
+        gsc.stateTimer += Time.deltaTime;
+        float remainTime = duration - gsc.stateTimer;
         int totalSeconds = Mathf.FloorToInt(remainTime);
 
         if (totalSeconds != lastDisplayedSec)
@@ -38,7 +38,7 @@ public class MarketOpenState : IGameState
         }
         
 
-        if(timer >= duration)
+        if(gsc.stateTimer >= duration)
         {
             gsc.ChangeState(new SettlementState(gsc));
         }
