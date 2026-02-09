@@ -86,7 +86,7 @@ namespace Stocks.UI
 
         async Task<StockSeedDatabase> LoadSeedAsync(string filename)
         {
-            var load = await StreamingAssetsJsonLoader.LoadTextAsync(filename);
+            var load = await PersistentJsonLoader.LoadTextAsync(filename);
             if (!load.Success)
             {
                 Debug.LogError($"[StockListUI] Seed Load failed: {load.Error} ({load.Path})");

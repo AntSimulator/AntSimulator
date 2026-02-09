@@ -6,7 +6,7 @@ using Utils.Core;
 
 namespace Utils.UnityAdapter
 {
-    public static class StreamingAssetsJsonLoader
+    public static class PersistentJsonLoader
     {
         public static async Task<TextLoadResult> LoadTextAsync(string fileName)
         {

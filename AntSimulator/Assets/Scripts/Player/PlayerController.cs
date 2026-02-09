@@ -194,7 +194,7 @@ namespace Player
 
         private async Task<StockSeedDatabase> LoadSeedAsync(string fileName)
         {
-            var load = await StreamingAssetsJsonLoader.LoadTextAsync(fileName);
+            var load = await PersistentJsonLoader.LoadTextAsync(fileName);
             if (!load.Success)
             {
                 Debug.LogWarning($"[Player] Seed load failed: {load.Error} ({load.Path})");
