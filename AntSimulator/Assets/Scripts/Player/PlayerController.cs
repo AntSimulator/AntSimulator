@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Player.Core;
 using Stocks.Models;
 using Stocks.UI;
-using Utils.UnityAdapter;
 
 namespace Player
 {
@@ -29,9 +27,13 @@ namespace Player
         [SerializeField] private long startCash = 100000;
         [SerializeField] private int seedDefaultPrice = 1000;
 
-        [Header("Seed JSON")]
+        [Header("Seed Source (Stock SO)")]
         [SerializeField] private bool applySeedOnStart = true;
-        [SerializeField] private string seedJsonFileName = "market_seed.json";
+        [SerializeField] private List<StockDefinition> seedStockDefinitions = new();
+        [SerializeField] private MarketSimulator marketSimulator;
+        [SerializeField] private long seedBalance = -1;
+        [SerializeField] private int seedInitialAmount = 0;
+        [SerializeField] private string seedIconColor = "#FFFFFF";
         [SerializeField] private bool seedOverrideStocks = true;
 
         [Header("UI (TMP)")]
@@ -93,14 +95,14 @@ namespace Player
             UpdateUI();
         }
 
-        private async void Start()
+        private void Start()
         {
             if (!applySeedOnStart)
             {
                 return;
             }
 
-            await ApplySeedAsync();
+            ApplySeedFromStockDefinitions();
         }
 
         private void EnsureDefaultStocks()
@@ -145,13 +147,20 @@ namespace Player
             return false;
         }
 
-        private async Task ApplySeedAsync()
+        private void ApplySeedFromStockDefinitions()
         {
-            var db = await LoadSeedAsync(seedJsonFileName);
-            if (db == null)
+            var definitions = ResolveSeedStockDefinitions();
+            if (definitions.Count == 0)
             {
+                Debug.LogWarning("[Player] No stock definitions available for seed.");
                 return;
             }
+
+            var db = StockSeedFactory.BuildFromDefinitions(
+                definitions,
+                currentBalance: seedBalance,
+                defaultAmount: seedInitialAmount,
+                defaultIconColor: seedIconColor);
 
             var result = seedPortfolioUseCase.Apply(
                 state,
@@ -192,16 +201,24 @@ namespace Player
             }
         }
 
-        private async Task<StockSeedDatabase> LoadSeedAsync(string fileName)
+        private List<StockDefinition> ResolveSeedStockDefinitions()
         {
-            var load = await PersistentJsonLoader.LoadTextAsync(fileName);
-            if (!load.Success)
+            if (seedStockDefinitions != null && seedStockDefinitions.Count > 0)
             {
-                Debug.LogWarning($"[Player] Seed load failed: {load.Error} ({load.Path})");
-                return null;
+                return seedStockDefinitions;
             }
 
-            return JsonUtility.FromJson<StockSeedDatabase>(load.Text);
+            if (marketSimulator == null)
+            {
+                marketSimulator = FindObjectOfType<MarketSimulator>();
+            }
+
+            if (marketSimulator != null && marketSimulator.stockDefinitions != null && marketSimulator.stockDefinitions.Count > 0)
+            {
+                return marketSimulator.stockDefinitions;
+            }
+
+            return new List<StockDefinition>();
         }
 
         public void Buy()

@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 using Stocks.Models;
-using Utils.UnityAdapter;
 
 namespace Stocks.UI
 {
@@ -14,13 +13,13 @@ namespace Stocks.UI
         [Header("Selection")]
         [SerializeField] private bool selectFirstOnRender = true;
 
-        [Header("Seed JSON")]
-        [SerializeField] private string jsonFileName = "stocks_seed.json";
+        [Header("Source (Stock SO)")]
+        [SerializeField] private List<StockDefinition> stockDefinitions = new();
+        [SerializeField] private MarketSimulator marketSimulator;
 
-        //json 불러오기 및 Render 함수 호출
-        async void Start()
+        void Start()
         {
-            var db = await LoadSeedAsync(jsonFileName);
+            var db = BuildSeedFromStockDefinitions();
 
             Debug.Log($"[StockListUI] db null? {db == null}");
             Debug.Log($"[StockListUI] stocks null? {db?.stocks == null}, count={db?.stocks?.Count ?? -1}");
@@ -84,16 +83,36 @@ namespace Stocks.UI
             return ColorUtility.TryParseHtmlString(html, out color);
         }
 
-        async Task<StockSeedDatabase> LoadSeedAsync(string filename)
+        private StockSeedDatabase BuildSeedFromStockDefinitions()
         {
-            var load = await PersistentJsonLoader.LoadTextAsync(filename);
-            if (!load.Success)
+            var defs = ResolveStockDefinitions();
+            if (defs.Count == 0)
             {
-                Debug.LogError($"[StockListUI] Seed Load failed: {load.Error} ({load.Path})");
+                Debug.LogError("[StockListUI] No StockDefinition source found.");
                 return null;
             }
 
-            return JsonUtility.FromJson<StockSeedDatabase>(load.Text);
+            return StockSeedFactory.BuildFromDefinitions(defs);
+        }
+
+        private List<StockDefinition> ResolveStockDefinitions()
+        {
+            if (stockDefinitions != null && stockDefinitions.Count > 0)
+            {
+                return stockDefinitions;
+            }
+
+            if (marketSimulator == null)
+            {
+                marketSimulator = FindObjectOfType<MarketSimulator>();
+            }
+
+            if (marketSimulator != null && marketSimulator.stockDefinitions != null && marketSimulator.stockDefinitions.Count > 0)
+            {
+                return marketSimulator.stockDefinitions;
+            }
+
+            return new List<StockDefinition>();
         }
         
     }

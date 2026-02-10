@@ -1,40 +1,36 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using UnityEngine;
 using Stocks.Models;
 
 public class StockSeedExporter : MonoBehaviour
 {
     [Header("Source")]
-    public List<StockDefinition> stockDefinitions;
+    public List<StockDefinition> stockDefinitions = new();
 
-    [Header("Output")]
-    public string fileName = "stocks_seed.json";
+    [Header("Seed Defaults")]
+    public long currentBalance = 100000;
+    public int initialAmount = 0;
+    public string iconColor = "#FFFFFF";
 
-    public void WriteSeedOnce()
+    public StockSeedDatabase BuildSeedDatabase()
     {
         if (stockDefinitions == null || stockDefinitions.Count == 0)
         {
             Debug.LogError("[SeedExporter] stockDefinitions is empty.");
+            return null;
+        }
+
+        return StockSeedFactory.BuildFromDefinitions(stockDefinitions, currentBalance, initialAmount, iconColor);
+    }
+
+    public void WriteSeedOnce()
+    {
+        var db = BuildSeedDatabase();
+        if (db == null)
+        {
             return;
         }
 
-        var db = new StockSeedDatabase();
-        foreach (var def in stockDefinitions)
-        {
-            if (def == null) continue;
-
-            db.stocks.Add(new StockSeedItem
-            {
-                code = def.name,      //HTS 코드로 사용 
-                name = def.displayName,      
-                iconColor = "#FFFFFF" // 일단 흰색.
-            });
-        }
-
-        var path = Path.Combine(Application.persistentDataPath, fileName);
-        File.WriteAllText(path, JsonUtility.ToJson(db, true), Encoding.UTF8);
-        Debug.Log($"[SeedExporter] wrote: {path} ({db.stocks.Count} stocks)");
+        Debug.Log($"[SeedExporter] JSON export removed. Built seed from SO count={db.stocks.Count}");
     }
 }
