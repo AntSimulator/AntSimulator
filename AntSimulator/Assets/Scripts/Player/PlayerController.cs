@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using Player.Core;
 using Stocks.Models;
 using Stocks.UI;
@@ -36,26 +33,11 @@ namespace Player
         [SerializeField] private string seedIconColor = "#FFFFFF";
         [SerializeField] private bool seedOverrideStocks = true;
 
-        [Header("UI (TMP)")]
-        [SerializeField] private TMP_Text cashText;
-        [SerializeField] private TMP_Text priceText;
-        [SerializeField] private TMP_Text qtyText;
-
-        [Header("Popup HTS Tabs")]
-        [SerializeField] private bool usePortfolioTab = true;
-        [SerializeField] private string tradeTabLabel = "Trading";
-        [SerializeField] private string portfolioTabLabel = "Portfolio";
-
         private PlayerState state;
         private PlayerTradingEngine tradingEngine;
         private SeedPortfolioUseCase seedPortfolioUseCase;
         private int selectedIndex;
         private string pendingSelectedStockId;
-        private readonly List<GameObject> tradeTabObjects = new();
-        private GameObject portfolioTabPanel;
-        private TMP_Text portfolioSummaryText;
-        private Button tradeTabButton;
-        private Button portfolioTabButton;
 
         private void OnEnable()
         {
@@ -89,10 +71,7 @@ namespace Player
 
             EnsureDefaultStocks();
             tradingEngine.ReplaceStocks(ToCoreStocks(testStocks));
-
             tradingEngine.SelectByIndex(selectedIndex);
-            TryBuildPortfolioTab();
-            UpdateUI();
         }
 
         private void Start()
@@ -139,8 +118,6 @@ namespace Player
                 selectedIndex = i;
                 tradingEngine.SelectByIndex(i);
                 pendingSelectedStockId = null;
-
-                UpdateUI();
                 return true;
             }
 
@@ -187,7 +164,6 @@ namespace Player
             }
 
             Debug.Log($"[Player] Seed applied cash={state.cash} stocks={testStocks.Length}");
-            UpdateUI();
         }
 
         private void OnStockSelectedFromRow(string stockCode, string stockName)
@@ -238,8 +214,6 @@ namespace Player
             {
                 Debug.Log($"[BUY] {current.stockId} x{qtyStep} @ {current.currentPrice}");
             }
-
-            UpdateUI();
         }
 
         public void Sell()
@@ -259,8 +233,6 @@ namespace Player
             {
                 Debug.Log($"[SELL] {current.stockId} x{qtyStep} @ {current.currentPrice}");
             }
-
-            UpdateUI();
         }
 
         public void PriceUp()
@@ -271,7 +243,6 @@ namespace Player
             }
 
             SyncSelectedStockFromEngine();
-            UpdateUI();
         }
 
         public void PriceDown()
@@ -282,7 +253,6 @@ namespace Player
             }
 
             SyncSelectedStockFromEngine();
-            UpdateUI();
         }
 
         private void SyncSelectedStockFromEngine()
@@ -307,253 +277,6 @@ namespace Player
             local.currentPrice = coreStock.currentPrice;
         }
 
-        private void UpdateUI()
-        {
-            var current = CurrentStock;
-
-            if (cashText != null)
-            {
-                cashText.text = $"Cash: {state.cash}";
-            }
-
-            if (current == null)
-            {
-                if (priceText != null)
-                {
-                    priceText.text = "Price: -";
-                }
-
-                if (qtyText != null)
-                {
-                    qtyText.text = "Qty: -";
-                }
-
-                UpdatePortfolioSummary(null);
-
-                return;
-            }
-
-            if (priceText != null)
-            {
-                priceText.text = $"Price: {current.currentPrice}";
-            }
-
-            if (qtyText != null)
-            {
-                qtyText.text = $"Qty: {state.GetQuantity(current.stockId)}";
-            }
-
-            UpdatePortfolioSummary(current);
-        }
-
-        private void TryBuildPortfolioTab()
-        {
-            if (!usePortfolioTab || priceText == null || priceText.transform.parent == null)
-            {
-                return;
-            }
-
-            var tradePanelRoot = priceText.transform.parent as RectTransform;
-            if (tradePanelRoot == null)
-            {
-                return;
-            }
-
-            tradeTabObjects.Clear();
-            for (var index = 0; index < tradePanelRoot.childCount; index++)
-            {
-                var child = tradePanelRoot.GetChild(index);
-                if (child != null)
-                {
-                    tradeTabObjects.Add(child.gameObject);
-                }
-            }
-
-            var tabBarObject = new GameObject("TabBar", typeof(RectTransform), typeof(Image));
-            var tabBarRect = tabBarObject.GetComponent<RectTransform>();
-            tabBarRect.SetParent(tradePanelRoot, false);
-            tabBarRect.anchorMin = new Vector2(0f, 1f);
-            tabBarRect.anchorMax = new Vector2(1f, 1f);
-            tabBarRect.offsetMin = new Vector2(8f, -34f);
-            tabBarRect.offsetMax = new Vector2(-8f, -4f);
-
-            var tabBarImage = tabBarObject.GetComponent<Image>();
-            tabBarImage.color = new Color(1f, 1f, 1f, 0.12f);
-            tabBarImage.raycastTarget = false;
-
-            tradeTabButton = CreateTabButton("TradeTabButton", tradeTabLabel, tabBarRect, new Vector2(0f, 0f), new Vector2(0.5f, 1f));
-            portfolioTabButton = CreateTabButton("PortfolioTabButton", portfolioTabLabel, tabBarRect, new Vector2(0.5f, 0f), new Vector2(1f, 1f));
-
-            tradeTabButton.onClick.AddListener(OpenTradeTab);
-            portfolioTabButton.onClick.AddListener(OpenPortfolioTab);
-
-            portfolioTabPanel = new GameObject("PortfolioTabPanel", typeof(RectTransform), typeof(Image));
-            var portfolioPanelRect = portfolioTabPanel.GetComponent<RectTransform>();
-            portfolioPanelRect.SetParent(tradePanelRoot, false);
-            portfolioPanelRect.anchorMin = new Vector2(0f, 0f);
-            portfolioPanelRect.anchorMax = new Vector2(1f, 1f);
-            portfolioPanelRect.offsetMin = new Vector2(10f, 10f);
-            portfolioPanelRect.offsetMax = new Vector2(-10f, -38f);
-
-            var portfolioPanelImage = portfolioTabPanel.GetComponent<Image>();
-            portfolioPanelImage.color = new Color(0f, 0f, 0f, 0.18f);
-
-            var summaryObject = new GameObject("SummaryText", typeof(RectTransform), typeof(TextMeshProUGUI));
-            var summaryRect = summaryObject.GetComponent<RectTransform>();
-            summaryRect.SetParent(portfolioTabPanel.transform, false);
-            summaryRect.anchorMin = new Vector2(0f, 0f);
-            summaryRect.anchorMax = new Vector2(1f, 1f);
-            summaryRect.offsetMin = new Vector2(12f, 12f);
-            summaryRect.offsetMax = new Vector2(-12f, -12f);
-
-            portfolioSummaryText = summaryObject.GetComponent<TextMeshProUGUI>();
-            portfolioSummaryText.alignment = TextAlignmentOptions.TopLeft;
-            portfolioSummaryText.fontSize = 20f;
-            portfolioSummaryText.enableWordWrapping = false;
-            portfolioSummaryText.text = string.Empty;
-
-            OpenTradeTab();
-        }
-
-        private Button CreateTabButton(string objectName, string label, Transform parent, Vector2 anchorMin, Vector2 anchorMax)
-        {
-            var buttonObject = new GameObject(objectName, typeof(RectTransform), typeof(Image), typeof(Button));
-            var buttonRect = buttonObject.GetComponent<RectTransform>();
-            buttonRect.SetParent(parent, false);
-            buttonRect.anchorMin = anchorMin;
-            buttonRect.anchorMax = anchorMax;
-            buttonRect.offsetMin = Vector2.zero;
-            buttonRect.offsetMax = Vector2.zero;
-
-            var buttonImage = buttonObject.GetComponent<Image>();
-            buttonImage.color = new Color(1f, 1f, 1f, 0.5f);
-
-            var button = buttonObject.GetComponent<Button>();
-
-            var labelObject = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
-            var labelRect = labelObject.GetComponent<RectTransform>();
-            labelRect.SetParent(buttonRect, false);
-            labelRect.anchorMin = Vector2.zero;
-            labelRect.anchorMax = Vector2.one;
-            labelRect.offsetMin = Vector2.zero;
-            labelRect.offsetMax = Vector2.zero;
-
-            var labelText = labelObject.GetComponent<TextMeshProUGUI>();
-            labelText.text = label;
-            labelText.alignment = TextAlignmentOptions.Center;
-            labelText.fontSize = 22f;
-            labelText.color = Color.black;
-            if (cashText != null && cashText.font != null)
-            {
-                labelText.font = cashText.font;
-            }
-
-            return button;
-        }
-
-        private void OpenTradeTab()
-        {
-            SetPortfolioTabActive(false);
-        }
-
-        private void OpenPortfolioTab()
-        {
-            SetPortfolioTabActive(true);
-        }
-
-        private void SetPortfolioTabActive(bool active)
-        {
-            for (var index = 0; index < tradeTabObjects.Count; index++)
-            {
-                var child = tradeTabObjects[index];
-                if (child != null)
-                {
-                    child.SetActive(!active);
-                }
-            }
-
-            if (portfolioTabPanel != null)
-            {
-                portfolioTabPanel.SetActive(active);
-            }
-
-            SetTabButtonVisual(tradeTabButton, !active);
-            SetTabButtonVisual(portfolioTabButton, active);
-        }
-
-        private static void SetTabButtonVisual(Button button, bool selected)
-        {
-            if (button == null)
-            {
-                return;
-            }
-
-            var image = button.GetComponent<Image>();
-            if (image != null)
-            {
-                image.color = selected
-                    ? new Color(1f, 1f, 1f, 0.95f)
-                    : new Color(1f, 1f, 1f, 0.45f);
-            }
-        }
-
-        private void UpdatePortfolioSummary(TestStock current)
-        {
-            if (!usePortfolioTab || portfolioSummaryText == null || state == null)
-            {
-                return;
-            }
-
-            var summary = new StringBuilder(512);
-            summary.AppendLine($"Cash: {state.cash:N0}");
-
-            if (current == null)
-            {
-                summary.AppendLine("Current selected stock: -");
-            }
-            else
-            {
-                var currentQty = state.GetQuantity(current.stockId);
-                summary.AppendLine($"Current stock: {current.stockId} / current price {current.currentPrice:N0} / owened {currentQty}");
-            }
-
-            summary.AppendLine();
-            summary.AppendLine("Portfolio Summary:");
-
-            if (testStocks == null || testStocks.Length == 0)
-            {
-                summary.AppendLine("- none");
-                portfolioSummaryText.text = summary.ToString();
-                return;
-            }
-
-            for (var index = 0; index < testStocks.Length; index++)
-            {
-                var stock = testStocks[index];
-                if (stock == null || string.IsNullOrWhiteSpace(stock.stockId))
-                {
-                    continue;
-                }
-
-                if (!state.holdings.TryGetValue(stock.stockId, out var holding) || holding == null || holding.quantity <= 0)
-                {
-                    summary.AppendLine($"- {stock.stockId}: None");
-                    continue;
-                }
-
-                if (holding.avgBuyPrice <= 0f)
-                {
-                    summary.AppendLine($"- {stock.stockId}: owned {holding.quantity} stocks / avg buy price unknown");
-                    continue;
-                }
-
-                var returnRate = (stock.currentPrice - holding.avgBuyPrice) / holding.avgBuyPrice;
-                summary.AppendLine($"- {stock.stockId}: owned {holding.quantity} stocks / return {returnRate:P2}");
-            }
-
-            portfolioSummaryText.text = summary.ToString();
-        }
-
         public long Cash
         {
             get => state != null ? state.cash : 0;
@@ -565,7 +288,6 @@ namespace Player
                 }
 
                 state.SetCash(value);
-                UpdateUI();
             }
         }
 
