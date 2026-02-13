@@ -29,7 +29,6 @@ public class GameStateController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 30;
-        
         seedExporter.WriteSeedOnce();
         
         //?? ??? ??? ??? ??? ??
@@ -38,7 +37,7 @@ public class GameStateController : MonoBehaviour
             totalDays: targetDay,
             calendarCount: targetDay,
             hiddenCount: targetDay * 3);
-        
+
         //??? ??? ??? + day 1 ?? ??
         eventManager.Init(runEvents);
         eventManager.OnDayStarted(currentDay);
@@ -46,7 +45,7 @@ public class GameStateController : MonoBehaviour
         // ?? ??
         runRecorder.totalDays = targetDay;
         runRecorder.BeginRunAndWriteManifest();
-        
+
         //????? ??? ???
         ChangeState(new PreMarketState(this));
         calendarUI?.HighLightToday(currentDay);
@@ -89,16 +88,17 @@ public class GameStateController : MonoBehaviour
     {
         //?? ?? ??
         eventManager.OnDayEnded();
-        
+
         currentDay++;
 
         if (calendarUI != null)
         {
             calendarUI.HighLightToday(currentDay);
         }
+
         // ??? ? ?? ??
         eventManager.OnDayStarted(currentDay);
-        
+
         OnDayStarted?.Invoke(currentDay);
 
         Debug.Log("?????? ????????????! ????: " + currentDay + "??");
@@ -128,5 +128,37 @@ public class GameStateController : MonoBehaviour
         currentStateName = stateName;
 
         isRestoring = false;
+    }
+
+    public void StartDayTransition()
+    {
+        StartCoroutine(TransitionRoutine());
+    }
+
+    private System.Collections.IEnumerator TransitionRoutine()
+    {
+        if (ScreenFader.Instance != null)
+        {
+            yield return StartCoroutine(ScreenFader.Instance.FadeOut());
+        }
+
+        NextDay();
+
+        if (currentDay > targetDay)
+        {
+            ChangeState(new GameEndingState(this));
+        }
+        else
+        {
+            ChangeState(new PreMarketState(this));
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+
+        if (ScreenFader.Instance != null)
+        {
+            yield return StartCoroutine(ScreenFader.Instance.FadeIn());
+        }
     }
 }

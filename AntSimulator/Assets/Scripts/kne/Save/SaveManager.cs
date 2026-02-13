@@ -1,5 +1,8 @@
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SaveManager : MonoBehaviour
 {
@@ -14,14 +17,28 @@ public class SaveManager : MonoBehaviour
 
     public void SaveToSlot(int slotIndex)
     {
-        if (gsc == null) return;
 
         currentSlotIndex = slotIndex;
 
         SaveData data = new SaveData();
-        data.day = gsc.currentDay;
-        data.timer = gsc.stateTimer;
-        data.stateName = gsc.currentStateName;
+
+        if (gsc != null)
+        {
+            data.day = gsc.currentDay;
+            data.timer = gsc.stateTimer;
+            data.stateName = gsc.currentStateName;
+            data.sceneName = SceneManager.GetActiveScene().name;
+        }
+        else
+        {
+            Debug.Log("새 게임을 시작합니다...");
+            data.day = 1;
+            data.timer = 0f;
+            data.stateName = "PreMarketState";
+
+            SceneManager.LoadScene("IntroScene");
+        }
+        
         data.saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
         string json = JsonUtility.ToJson(data);
@@ -40,6 +57,9 @@ public class SaveManager : MonoBehaviour
 
     public void LoadFromSlot(int slotIndex)
     {
+
+        StartCoroutine(LoadRoutine(slotIndex));
+        currentSlotIndex = slotIndex;
         string path = GetSavePath(slotIndex);
 
         if (!File.Exists(path))
@@ -47,7 +67,6 @@ public class SaveManager : MonoBehaviour
             Debug.Log("저장된 파일이 없습니다.");
             return;
         }
-        currentSlotIndex = slotIndex;
 
         string json = File.ReadAllText(path);
 
@@ -63,5 +82,67 @@ public class SaveManager : MonoBehaviour
                 gsc.calendarUI.HighLightToday(gsc.currentDay);
             }
         }
+        else
+        {
+            Debug.Log("타이틀화면");
+
+            //SceneManager.LoadScene("");
+        }
     }
+
+    IEnumerator LoadRoutine(int slotIndex)
+    {
+        currentSlotIndex = slotIndex;
+        string path = GetSavePath(slotIndex);
+
+        if (!File.Exists(path))
+        {
+            Debug.Log("저장된 파일이 없습니다.");
+            yield break;
+        }
+
+        string json = File.ReadAllText(path);
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+        if (ScreenFader.Instance != null)
+            yield return ScreenFader.Instance.FadeOut();
+
+        string targetScene = string.IsNullOrEmpty(data.sceneName) ? "IntroScene" : data.sceneName;
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        gsc = FindObjectOfType<GameStateController>();
+
+        if (gsc != null)
+        {
+            gsc.currentDay = data.day;
+            gsc.LoadState(data.stateName, data.timer);
+
+            if (gsc.calendarUI != null)
+            {
+                gsc.calendarUI.HighLightToday(gsc.currentDay);
+            }
+
+            Debug.Log($"로드 완료! {targetScene} 씬으로 이동했습니다.");
+        }
+        else
+        {
+            Debug.LogError("이동한 씬에 GameStateController가 없습니다!");
+        }
+
+        if (ScreenFader.Instance != null)
+            yield return ScreenFader.Instance.FadeIn();
+    }
+
+    public void ExitGame()
+    {
+        Debug.Log("게임 종료");
+        Application.Quit();
+    }
+
 }

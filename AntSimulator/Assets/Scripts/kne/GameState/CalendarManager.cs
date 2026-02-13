@@ -67,7 +67,10 @@ public class CalendarManager : MonoBehaviour
     public void HighLightToday(int currentDay)
     {
         for (int i = 0; i < dayCells.Count; i++) {
-            dayCells[i].GetComponent<Image>().color = (i == currentDay - 1) ? todayColor : normalColor;
+            Image img = dayCells[i].GetComponent<Image>();
+            if (img == null) continue;
+            Color targetColor = (i == currentDay - 1) ? todayColor : normalColor;
+            img.color = new Color(targetColor.r, targetColor.g, targetColor.b, img.color.a);
         }
     }
 
