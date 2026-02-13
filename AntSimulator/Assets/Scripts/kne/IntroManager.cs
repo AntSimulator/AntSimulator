@@ -17,11 +17,11 @@ public class IntroManager : MonoBehaviour
 
     public List<CutscenePage> pages;
 
-    [Header("¼³Á¤")]
-    public string nextSceneName = "";
+    [Header("ï¿½ï¿½ï¿½ï¿½")]
+    public string nextSceneName = "MainScene";
     public float fadeSpeed = 2.0f; 
 
-    [Header("UI ¿¬°á")]
+    [Header("UI ï¿½ï¿½ï¿½ï¿½")]
     public Image displayImage;
     public TMP_Text displayText;
 
@@ -45,7 +45,7 @@ public class IntroManager : MonoBehaviour
         }
         else
         {
-            //SceneManager.LoadScene(nextSceneName);
+            SceneManager.LoadScene(nextSceneName);
         }
     }
 
