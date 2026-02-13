@@ -6,15 +6,15 @@ using UnityEngine;
 public class HTSCommunityManager : MonoBehaviour
 {
     [Header("Templates (ScriptableObject)")]
-    public List<CommunityPostSO> templates = new();
+    public List<HTSCommunitySO> templates = new();
 
     [Header("Daily Base (per stock)")]
-    public int basePostsPerDayPerStock = 1;     // 평소 하루 1개 정도
+    public int basePostsPerDayPerStock = 1; // 평소 하루 1개 정도
     public bool scheduleBasePosts = true;
 
     [Header("Burst Trigger")]
     [Tooltip("틱 등락률 절대값이 이 값 이상이면 글 폭증 후보")]
-    public float moveBurstThreshold = 0.02f;    // 2%
+    public float moveBurstThreshold = 0.02f; // 2%
     [Tooltip("tickVol / emaVol 이 값 이상이면 거래량 폭증 후보")]
     public float volumeBurstRelThreshold = 2.5f;
     [Tooltip("volatilityMultiplier 이 값 이상이면 폭증 후보")]
@@ -33,10 +33,10 @@ public class HTSCommunityManager : MonoBehaviour
 
     // ====== Output ======
     // stockId별 게시글 리스트
-    private readonly Dictionary<string, List<CommunityPost>> postsByStock = new();
+    private readonly Dictionary<string, List<HTSPost>> postsByStock = new();
 
-    // UI 붙일 때 편한 이벤트
-    public event Action<string, CommunityPost> OnStockPostCreated;
+    // UI 이벤트
+    public event Action<string, HTSPost> OnStockPostCreated;
 
     // 오늘의 예약 스케줄
     private readonly List<Scheduled> schedule = new();
@@ -48,8 +48,7 @@ public class HTSCommunityManager : MonoBehaviour
         public int day;
         public int tickInDay;
         public string stockId;
-        public CommunityPostType type;
-        public string linkedEventId;   // 필요하면 나중에 붙이기
+        public HTSReactionDirection direction;
     }
 
     // ---- 외부에서 초기 종목 등록할 때 ----
@@ -64,15 +63,15 @@ public class HTSCommunityManager : MonoBehaviour
         foreach (var id in stockIds)
         {
             if (string.IsNullOrEmpty(id)) continue;
-            postsByStock[id] = new List<CommunityPost>();
+            postsByStock[id] = new List<HTSPost>();
         }
     }
 
     // ---- 외부(UI)가 읽기 ----
-    public IReadOnlyList<CommunityPost> GetPosts(string stockId)
+    public IReadOnlyList<HTSPost> GetPosts(string stockId)
     {
-        if (string.IsNullOrEmpty(stockId)) return Array.Empty<CommunityPost>();
-        return postsByStock.TryGetValue(stockId, out var list) ? list : Array.Empty<CommunityPost>();
+        if (string.IsNullOrEmpty(stockId)) return Array.Empty<HTSPost>();
+        return postsByStock.TryGetValue(stockId, out var list) ? list : Array.Empty<HTSPost>();
     }
 
     // ---- 하루 시작: “기본 글” 예약 ----
@@ -92,7 +91,7 @@ public class HTSCommunityManager : MonoBehaviour
                     day = day,
                     tickInDay = RandomTickAvoidMorning(),
                     stockId = stockId,
-                    type = CommunityPostType.Meme // 기본은 밈/잡담 느낌(원하면 Info로)
+                    direction = UnityEngine.Random.value < 0.5f ? HTSReactionDirection.Up : HTSReactionDirection.Down
                 });
             }
         }
@@ -136,10 +135,13 @@ public class HTSCommunityManager : MonoBehaviour
         if (!burst) return;
 
         int count = CalcBurstCount(retAbs, relVol, volatilityMultiplier, hasEventEffect, communitySensitivity);
+
+        // 상승/하락 방향은 가격으로 결정 (동일하면 Up 처리)
+        var direction = (currentPrice >= prevPrice) ? HTSReactionDirection.Up : HTSReactionDirection.Down;
+
         for (int i = 0; i < count; i++)
         {
-            var type = PickBurstType(retAbs, hasEventEffect);
-            CreateAndAddPost(stockId, day, tickInDay, type, linkedEventId: null);
+            CreateAndAddPost(stockId, day, tickInDay, direction);
         }
     }
 
@@ -153,77 +155,70 @@ public class HTSCommunityManager : MonoBehaviour
             if (s.day != day) continue;
             if (s.tickInDay != tickInDay) continue;
 
-            CreateAndAddPost(s.stockId, s.day, s.tickInDay, s.type, s.linkedEventId);
+            CreateAndAddPost(s.stockId, s.day, s.tickInDay, s.direction);
             schedule.RemoveAt(i);
         }
     }
 
-    private void CreateAndAddPost(string stockId, int day, int tickInDay, CommunityPostType type, string linkedEventId)
+    private void CreateAndAddPost(string stockId, int day, int tickInDay, HTSReactionDirection direction)
     {
-        var template = PickTemplateByType(type);
+        var template = PickTemplate(stockId, direction);
         if (template == null) return;
 
-        var post = new CommunityPost
+        var post = new HTSPost
         {
             id = Guid.NewGuid().ToString("N"),
             day = day,
             tickInDay = tickInDay,
-            type = template.type,
+            stockId = stockId,
+            direction = direction,
             title = template.title,
-            body = template.body,
-            relatedStockId = template.allowAttachStockId ? stockId : null,
-            linkedEventId = template.allowAttachEventId ? linkedEventId : null,
-            templateId = template.templateId
+            body = template.body
         };
+
+        if (!postsByStock.ContainsKey(stockId))
+            postsByStock[stockId] = new List<HTSPost>();
 
         postsByStock[stockId].Add(post);
         OnStockPostCreated?.Invoke(stockId, post);
 
         if (logWhenPosted)
-            Debug.Log($"[HTSCommunity][{stockId}][D{day} T{tickInDay}] {post.type} | {post.title}");
+            Debug.Log($"[HTSCommunity][{stockId}][D{day} T{tickInDay}] {direction} | {post.title}");
     }
 
-    private CommunityPostSO PickTemplateByType(CommunityPostType type)
+    private HTSCommunitySO PickTemplate(string stockId, HTSReactionDirection direction)
     {
         if (templates == null || templates.Count == 0) return null;
 
-        var list = templates.Where(t => t != null && t.type == type).ToList();
-        if (list.Count == 0) return null;
+        // 1) 해당 stockId 전용 템플릿 우선
+        var exact = templates
+            .Where(t => t != null
+                        && t.direction == direction
+                        && string.Equals(t.stockId, stockId, StringComparison.Ordinal))
+            .ToList();
 
-        float total = 0f;
-        for (int i = 0; i < list.Count; i++) total += Mathf.Max(0.001f, list[i].weight);
+        if (exact.Count > 0)
+            return exact[UnityEngine.Random.Range(0, exact.Count)];
 
-        float r = UnityEngine.Random.Range(0f, total);
-        float acc = 0f;
-        for (int i = 0; i < list.Count; i++)
-        {
-            acc += Mathf.Max(0.001f, list[i].weight);
-            if (r <= acc) return list[i];
-        }
-        return list[list.Count - 1];
-    }
+        // 2) 공용 템플릿(빈 stockId) fallback
+        var generic = templates
+            .Where(t => t != null
+                        && t.direction == direction
+                        && string.IsNullOrEmpty(t.stockId))
+            .ToList();
 
-    private CommunityPostType PickBurstType(float retAbs, bool hasEventEffect)
-    {
-        // 이벤트 영향 있으면 Reaction 쪽으로
-        if (hasEventEffect) return CommunityPostType.EventReaction;
+        if (generic.Count > 0)
+            return generic[UnityEngine.Random.Range(0, generic.Count)];
 
-        // 급락/급등은 Loss/Brag로 나뉘게 하고 싶으면 여기서 확장 가능
-        // 지금은 “움직임이 크면 잡담+밈+정보 섞기”
-        float r = UnityEngine.Random.value;
-        if (r < 0.45f) return CommunityPostType.Meme;
-        if (r < 0.70f) return CommunityPostType.Info;
-        if (r < 0.85f) return CommunityPostType.Brag;
-        return CommunityPostType.Loss;
+        return null;
     }
 
     private int CalcBurstCount(float retAbs, float relVol, float volMul, bool hasEvent, float sensitivity)
     {
-        // 대충 “움직임 + 거래량”을 점수로 만들고 그걸 글 수로 변환
         float score = 0f;
-        score += Mathf.InverseLerp(moveBurstThreshold, 0.10f, retAbs);     // 2%~10%
-        score += Mathf.InverseLerp(volumeBurstRelThreshold, 6f, relVol);  // 2.5배~6배
-        score += Mathf.InverseLerp(volMulBurstThreshold, 3.0f, volMul);   // 1.6~3.0
+        score += Mathf.InverseLerp(moveBurstThreshold, 0.10f, retAbs);      // 2%~10%
+        score += Mathf.InverseLerp(volumeBurstRelThreshold, 6f, relVol);   // 2.5배~6배
+        score += Mathf.InverseLerp(volMulBurstThreshold, 3.0f, volMul);    // 1.6~3.0
         if (hasEvent) score += 0.5f;
 
         score *= Mathf.Max(0.1f, sensitivity);
@@ -246,10 +241,5 @@ public class HTSCommunityManager : MonoBehaviour
         int t = UnityEngine.Random.Range(0, tpd);
         if (t == morningTick) t = (t + 1) % tpd;
         return t;
-    }
-    public List<CommunityPost> GetPostsForStock(string stockId)
-    {
-        if (!postsByStock.ContainsKey(stockId)) return new List<CommunityPost>();
-        return postsByStock[stockId];
     }
 }
