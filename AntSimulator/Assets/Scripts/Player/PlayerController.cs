@@ -205,6 +205,7 @@ namespace Player
                 return;
             }
 
+            SyncMarketPrice();
             var result = tradingEngine.Buy(qtyStep);
             if (!result.Success)
             {
@@ -212,7 +213,7 @@ namespace Player
             }
             else
             {
-                Debug.Log($"[BUY] {current.stockId} x{qtyStep} @ {current.currentPrice}");
+                Debug.Log($"[BUY] {current.stockId} x{qtyStep} @ {tradingEngine.CurrentStock.currentPrice}");
             }
         }
 
@@ -224,6 +225,7 @@ namespace Player
                 return;
             }
 
+            SyncMarketPrice();
             var result = tradingEngine.Sell(qtyStep);
             if (!result.Success)
             {
@@ -231,7 +233,19 @@ namespace Player
             }
             else
             {
-                Debug.Log($"[SELL] {current.stockId} x{qtyStep} @ {current.currentPrice}");
+                Debug.Log($"[SELL] {current.stockId} x{qtyStep} @ {tradingEngine.CurrentStock.currentPrice}");
+            }
+        }
+
+        private void SyncMarketPrice()
+        {
+            var coreStock = tradingEngine.CurrentStock;
+            if (coreStock == null || marketSimulator == null) return;
+
+            var allStocks = marketSimulator.GetAllStocks();
+            if (allStocks != null && allStocks.TryGetValue(coreStock.stockId, out var marketState))
+            {
+                coreStock.SetPrice(Mathf.RoundToInt(marketState.currentPrice));
             }
         }
 
@@ -275,6 +289,27 @@ namespace Player
             }
 
             local.currentPrice = coreStock.currentPrice;
+        }
+
+        public int QtyStep => qtyStep;
+
+        public void SetQtyStep(string text)
+        {
+            if (int.TryParse(text, out var qty) && qty >= 1)
+            {
+                qtyStep = qty;
+            }
+        }
+
+        public string SelectedStockId => tradingEngine?.CurrentStock?.stockId;
+
+        public int GetSelectedQuantity() => tradingEngine?.GetCurrentQuantity() ?? 0;
+
+        public float GetSelectedAvgBuyPrice()
+        {
+            var current = tradingEngine?.CurrentStock;
+            if (current == null) return 0f;
+            return state.holdings.TryGetValue(current.stockId, out var h) ? h.avgBuyPrice : 0f;
         }
 
         public long Cash
