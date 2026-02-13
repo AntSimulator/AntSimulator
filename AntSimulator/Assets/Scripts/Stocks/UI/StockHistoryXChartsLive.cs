@@ -52,9 +52,8 @@ namespace Stocks.UI
 
         void Awake()
         {
-            //var p = Path.Combine(Application.persistentDataPath, jsonFileName);
-            var s = Path.Combine(Application.streamingAssetsPath, jsonFileName);
-            _path = File.Exists(s) ? s : null;
+            var p = Path.Combine(Application.persistentDataPath, jsonFileName);
+            _path = File.Exists(p) ? p : null;
             if (priceStick) priceStick.Init();
             if (volumeChart) volumeChart.Init();
 
