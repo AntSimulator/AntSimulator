@@ -1,3 +1,4 @@
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.IO;
 
@@ -31,6 +32,8 @@ public class SaveManager : MonoBehaviour
             data.day = 1;
             data.timer = 0f;
             data.stateName = "PreMarketState";
+
+            SceneManager.LoadScene("IntroScene");
         }
         
         data.saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -77,6 +80,9 @@ public class SaveManager : MonoBehaviour
         else
         {
             Debug.Log("타이틀화면");
+
+            //SceneManager.LoadScene("");
         }
     }
+
 }
