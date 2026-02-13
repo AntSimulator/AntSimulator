@@ -1,13 +1,8 @@
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using Player.Core;
 using Stocks.Models;
 using Stocks.UI;
-using Utils.UnityAdapter;
 
 namespace Player
 {
@@ -29,31 +24,20 @@ namespace Player
         [SerializeField] private long startCash = 100000;
         [SerializeField] private int seedDefaultPrice = 1000;
 
-        [Header("Seed JSON")]
+        [Header("Seed Source (Stock SO)")]
         [SerializeField] private bool applySeedOnStart = true;
-        [SerializeField] private string seedJsonFileName = "market_seed.json";
+        [SerializeField] private List<StockDefinition> seedStockDefinitions = new();
+        [SerializeField] private MarketSimulator marketSimulator;
+        [SerializeField] private long seedBalance = -1;
+        [SerializeField] private int seedInitialAmount = 0;
+        [SerializeField] private string seedIconColor = "#FFFFFF";
         [SerializeField] private bool seedOverrideStocks = true;
-
-        [Header("UI (TMP)")]
-        [SerializeField] private TMP_Text cashText;
-        [SerializeField] private TMP_Text priceText;
-        [SerializeField] private TMP_Text qtyText;
-
-        [Header("Popup HTS Tabs")]
-        [SerializeField] private bool usePortfolioTab = true;
-        [SerializeField] private string tradeTabLabel = "Trading";
-        [SerializeField] private string portfolioTabLabel = "Portfolio";
 
         private PlayerState state;
         private PlayerTradingEngine tradingEngine;
         private SeedPortfolioUseCase seedPortfolioUseCase;
         private int selectedIndex;
         private string pendingSelectedStockId;
-        private readonly List<GameObject> tradeTabObjects = new();
-        private GameObject portfolioTabPanel;
-        private TMP_Text portfolioSummaryText;
-        private Button tradeTabButton;
-        private Button portfolioTabButton;
 
         private void OnEnable()
         {
@@ -87,20 +71,17 @@ namespace Player
 
             EnsureDefaultStocks();
             tradingEngine.ReplaceStocks(ToCoreStocks(testStocks));
-
             tradingEngine.SelectByIndex(selectedIndex);
-            TryBuildPortfolioTab();
-            UpdateUI();
         }
 
-        private async void Start()
+        private void Start()
         {
             if (!applySeedOnStart)
             {
                 return;
             }
 
-            await ApplySeedAsync();
+            ApplySeedFromStockDefinitions();
         }
 
         private void EnsureDefaultStocks()
@@ -137,21 +118,26 @@ namespace Player
                 selectedIndex = i;
                 tradingEngine.SelectByIndex(i);
                 pendingSelectedStockId = null;
-
-                UpdateUI();
                 return true;
             }
 
             return false;
         }
 
-        private async Task ApplySeedAsync()
+        private void ApplySeedFromStockDefinitions()
         {
-            var db = await LoadSeedAsync(seedJsonFileName);
-            if (db == null)
+            var definitions = ResolveSeedStockDefinitions();
+            if (definitions.Count == 0)
             {
+                Debug.LogWarning("[Player] No stock definitions available for seed.");
                 return;
             }
+
+            var db = StockSeedFactory.BuildFromDefinitions(
+                definitions,
+                currentBalance: seedBalance,
+                defaultAmount: seedInitialAmount,
+                defaultIconColor: seedIconColor);
 
             var result = seedPortfolioUseCase.Apply(
                 state,
@@ -178,7 +164,6 @@ namespace Player
             }
 
             Debug.Log($"[Player] Seed applied cash={state.cash} stocks={testStocks.Length}");
-            UpdateUI();
         }
 
         private void OnStockSelectedFromRow(string stockCode, string stockName)
@@ -192,16 +177,24 @@ namespace Player
             }
         }
 
-        private async Task<StockSeedDatabase> LoadSeedAsync(string fileName)
+        private List<StockDefinition> ResolveSeedStockDefinitions()
         {
-            var load = await StreamingAssetsJsonLoader.LoadTextAsync(fileName);
-            if (!load.Success)
+            if (seedStockDefinitions != null && seedStockDefinitions.Count > 0)
             {
-                Debug.LogWarning($"[Player] Seed load failed: {load.Error} ({load.Path})");
-                return null;
+                return seedStockDefinitions;
             }
 
-            return JsonUtility.FromJson<StockSeedDatabase>(load.Text);
+            if (marketSimulator == null)
+            {
+                marketSimulator = FindObjectOfType<MarketSimulator>();
+            }
+
+            if (marketSimulator != null && marketSimulator.stockDefinitions != null && marketSimulator.stockDefinitions.Count > 0)
+            {
+                return marketSimulator.stockDefinitions;
+            }
+
+            return new List<StockDefinition>();
         }
 
         public void Buy()
@@ -212,6 +205,7 @@ namespace Player
                 return;
             }
 
+            SyncMarketPrice();
             var result = tradingEngine.Buy(qtyStep);
             if (!result.Success)
             {
@@ -219,10 +213,8 @@ namespace Player
             }
             else
             {
-                Debug.Log($"[BUY] {current.stockId} x{qtyStep} @ {current.currentPrice}");
+                Debug.Log($"[BUY] {current.stockId} x{qtyStep} @ {tradingEngine.CurrentStock.currentPrice}");
             }
-
-            UpdateUI();
         }
 
         public void Sell()
@@ -233,6 +225,7 @@ namespace Player
                 return;
             }
 
+            SyncMarketPrice();
             var result = tradingEngine.Sell(qtyStep);
             if (!result.Success)
             {
@@ -240,10 +233,20 @@ namespace Player
             }
             else
             {
-                Debug.Log($"[SELL] {current.stockId} x{qtyStep} @ {current.currentPrice}");
+                Debug.Log($"[SELL] {current.stockId} x{qtyStep} @ {tradingEngine.CurrentStock.currentPrice}");
             }
+        }
 
-            UpdateUI();
+        private void SyncMarketPrice()
+        {
+            var coreStock = tradingEngine.CurrentStock;
+            if (coreStock == null || marketSimulator == null) return;
+
+            var allStocks = marketSimulator.GetAllStocks();
+            if (allStocks != null && allStocks.TryGetValue(coreStock.stockId, out var marketState))
+            {
+                coreStock.SetPrice(Mathf.RoundToInt(marketState.currentPrice));
+            }
         }
 
         public void PriceUp()
@@ -254,7 +257,6 @@ namespace Player
             }
 
             SyncSelectedStockFromEngine();
-            UpdateUI();
         }
 
         public void PriceDown()
@@ -265,7 +267,6 @@ namespace Player
             }
 
             SyncSelectedStockFromEngine();
-            UpdateUI();
         }
 
         private void SyncSelectedStockFromEngine()
@@ -290,251 +291,25 @@ namespace Player
             local.currentPrice = coreStock.currentPrice;
         }
 
-        private void UpdateUI()
+        public int QtyStep => qtyStep;
+
+        public void SetQtyStep(string text)
         {
-            var current = CurrentStock;
-
-            if (cashText != null)
+            if (int.TryParse(text, out var qty) && qty >= 1)
             {
-                cashText.text = $"Cash: {state.cash}";
-            }
-
-            if (current == null)
-            {
-                if (priceText != null)
-                {
-                    priceText.text = "Price: -";
-                }
-
-                if (qtyText != null)
-                {
-                    qtyText.text = "Qty: -";
-                }
-
-                UpdatePortfolioSummary(null);
-
-                return;
-            }
-
-            if (priceText != null)
-            {
-                priceText.text = $"Price: {current.currentPrice}";
-            }
-
-            if (qtyText != null)
-            {
-                qtyText.text = $"Qty: {state.GetQuantity(current.stockId)}";
-            }
-
-            UpdatePortfolioSummary(current);
-        }
-
-        private void TryBuildPortfolioTab()
-        {
-            if (!usePortfolioTab || priceText == null || priceText.transform.parent == null)
-            {
-                return;
-            }
-
-            var tradePanelRoot = priceText.transform.parent as RectTransform;
-            if (tradePanelRoot == null)
-            {
-                return;
-            }
-
-            tradeTabObjects.Clear();
-            for (var index = 0; index < tradePanelRoot.childCount; index++)
-            {
-                var child = tradePanelRoot.GetChild(index);
-                if (child != null)
-                {
-                    tradeTabObjects.Add(child.gameObject);
-                }
-            }
-
-            var tabBarObject = new GameObject("TabBar", typeof(RectTransform), typeof(Image));
-            var tabBarRect = tabBarObject.GetComponent<RectTransform>();
-            tabBarRect.SetParent(tradePanelRoot, false);
-            tabBarRect.anchorMin = new Vector2(0f, 1f);
-            tabBarRect.anchorMax = new Vector2(1f, 1f);
-            tabBarRect.offsetMin = new Vector2(8f, -34f);
-            tabBarRect.offsetMax = new Vector2(-8f, -4f);
-
-            var tabBarImage = tabBarObject.GetComponent<Image>();
-            tabBarImage.color = new Color(1f, 1f, 1f, 0.12f);
-            tabBarImage.raycastTarget = false;
-
-            tradeTabButton = CreateTabButton("TradeTabButton", tradeTabLabel, tabBarRect, new Vector2(0f, 0f), new Vector2(0.5f, 1f));
-            portfolioTabButton = CreateTabButton("PortfolioTabButton", portfolioTabLabel, tabBarRect, new Vector2(0.5f, 0f), new Vector2(1f, 1f));
-
-            tradeTabButton.onClick.AddListener(OpenTradeTab);
-            portfolioTabButton.onClick.AddListener(OpenPortfolioTab);
-
-            portfolioTabPanel = new GameObject("PortfolioTabPanel", typeof(RectTransform), typeof(Image));
-            var portfolioPanelRect = portfolioTabPanel.GetComponent<RectTransform>();
-            portfolioPanelRect.SetParent(tradePanelRoot, false);
-            portfolioPanelRect.anchorMin = new Vector2(0f, 0f);
-            portfolioPanelRect.anchorMax = new Vector2(1f, 1f);
-            portfolioPanelRect.offsetMin = new Vector2(10f, 10f);
-            portfolioPanelRect.offsetMax = new Vector2(-10f, -38f);
-
-            var portfolioPanelImage = portfolioTabPanel.GetComponent<Image>();
-            portfolioPanelImage.color = new Color(0f, 0f, 0f, 0.18f);
-
-            var summaryObject = new GameObject("SummaryText", typeof(RectTransform), typeof(TextMeshProUGUI));
-            var summaryRect = summaryObject.GetComponent<RectTransform>();
-            summaryRect.SetParent(portfolioTabPanel.transform, false);
-            summaryRect.anchorMin = new Vector2(0f, 0f);
-            summaryRect.anchorMax = new Vector2(1f, 1f);
-            summaryRect.offsetMin = new Vector2(12f, 12f);
-            summaryRect.offsetMax = new Vector2(-12f, -12f);
-
-            portfolioSummaryText = summaryObject.GetComponent<TextMeshProUGUI>();
-            portfolioSummaryText.alignment = TextAlignmentOptions.TopLeft;
-            portfolioSummaryText.fontSize = 20f;
-            portfolioSummaryText.enableWordWrapping = false;
-            portfolioSummaryText.text = string.Empty;
-
-            OpenTradeTab();
-        }
-
-        private Button CreateTabButton(string objectName, string label, Transform parent, Vector2 anchorMin, Vector2 anchorMax)
-        {
-            var buttonObject = new GameObject(objectName, typeof(RectTransform), typeof(Image), typeof(Button));
-            var buttonRect = buttonObject.GetComponent<RectTransform>();
-            buttonRect.SetParent(parent, false);
-            buttonRect.anchorMin = anchorMin;
-            buttonRect.anchorMax = anchorMax;
-            buttonRect.offsetMin = Vector2.zero;
-            buttonRect.offsetMax = Vector2.zero;
-
-            var buttonImage = buttonObject.GetComponent<Image>();
-            buttonImage.color = new Color(1f, 1f, 1f, 0.5f);
-
-            var button = buttonObject.GetComponent<Button>();
-
-            var labelObject = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
-            var labelRect = labelObject.GetComponent<RectTransform>();
-            labelRect.SetParent(buttonRect, false);
-            labelRect.anchorMin = Vector2.zero;
-            labelRect.anchorMax = Vector2.one;
-            labelRect.offsetMin = Vector2.zero;
-            labelRect.offsetMax = Vector2.zero;
-
-            var labelText = labelObject.GetComponent<TextMeshProUGUI>();
-            labelText.text = label;
-            labelText.alignment = TextAlignmentOptions.Center;
-            labelText.fontSize = 22f;
-            labelText.color = Color.black;
-            if (cashText != null && cashText.font != null)
-            {
-                labelText.font = cashText.font;
-            }
-
-            return button;
-        }
-
-        private void OpenTradeTab()
-        {
-            SetPortfolioTabActive(false);
-        }
-
-        private void OpenPortfolioTab()
-        {
-            SetPortfolioTabActive(true);
-        }
-
-        private void SetPortfolioTabActive(bool active)
-        {
-            for (var index = 0; index < tradeTabObjects.Count; index++)
-            {
-                var child = tradeTabObjects[index];
-                if (child != null)
-                {
-                    child.SetActive(!active);
-                }
-            }
-
-            if (portfolioTabPanel != null)
-            {
-                portfolioTabPanel.SetActive(active);
-            }
-
-            SetTabButtonVisual(tradeTabButton, !active);
-            SetTabButtonVisual(portfolioTabButton, active);
-        }
-
-        private static void SetTabButtonVisual(Button button, bool selected)
-        {
-            if (button == null)
-            {
-                return;
-            }
-
-            var image = button.GetComponent<Image>();
-            if (image != null)
-            {
-                image.color = selected
-                    ? new Color(1f, 1f, 1f, 0.95f)
-                    : new Color(1f, 1f, 1f, 0.45f);
+                qtyStep = qty;
             }
         }
 
-        private void UpdatePortfolioSummary(TestStock current)
+        public string SelectedStockId => tradingEngine?.CurrentStock?.stockId;
+
+        public int GetSelectedQuantity() => tradingEngine?.GetCurrentQuantity() ?? 0;
+
+        public float GetSelectedAvgBuyPrice()
         {
-            if (!usePortfolioTab || portfolioSummaryText == null || state == null)
-            {
-                return;
-            }
-
-            var summary = new StringBuilder(512);
-            summary.AppendLine($"Cash: {state.cash:N0}");
-
-            if (current == null)
-            {
-                summary.AppendLine("Current selected stock: -");
-            }
-            else
-            {
-                var currentQty = state.GetQuantity(current.stockId);
-                summary.AppendLine($"Current stock: {current.stockId} / current price {current.currentPrice:N0} / owened {currentQty}");
-            }
-
-            summary.AppendLine();
-            summary.AppendLine("Portfolio Summary:");
-
-            if (testStocks == null || testStocks.Length == 0)
-            {
-                summary.AppendLine("- none");
-                portfolioSummaryText.text = summary.ToString();
-                return;
-            }
-
-            for (var index = 0; index < testStocks.Length; index++)
-            {
-                var stock = testStocks[index];
-                if (stock == null || string.IsNullOrWhiteSpace(stock.stockId))
-                {
-                    continue;
-                }
-
-                if (!state.holdings.TryGetValue(stock.stockId, out var holding) || holding == null || holding.quantity <= 0)
-                {
-                    summary.AppendLine($"- {stock.stockId}: None");
-                    continue;
-                }
-
-                if (holding.avgBuyPrice <= 0f)
-                {
-                    summary.AppendLine($"- {stock.stockId}: owned {holding.quantity} stocks / avg buy price unknown");
-                    continue;
-                }
-
-                var returnRate = (stock.currentPrice - holding.avgBuyPrice) / holding.avgBuyPrice;
-                summary.AppendLine($"- {stock.stockId}: owned {holding.quantity} stocks / return {returnRate:P2}");
-            }
-
-            portfolioSummaryText.text = summary.ToString();
+            var current = tradingEngine?.CurrentStock;
+            if (current == null) return 0f;
+            return state.holdings.TryGetValue(current.stockId, out var h) ? h.avgBuyPrice : 0f;
         }
 
         public long Cash
@@ -548,7 +323,6 @@ namespace Player
                 }
 
                 state.SetCash(value);
-                UpdateUI();
             }
         }
 

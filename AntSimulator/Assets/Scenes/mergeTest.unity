@@ -4412,7 +4412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7f34eeade942448b5d4221a87456a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StockHistoryXChartsLive
-  priceStick: {fileID: 1984327455}
+  priceStick: {fileID: 0}
   volumeChart: {fileID: 255389104}
   useDataZoom: 1
   initialVisibleCount: 60
@@ -7628,7 +7628,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1689140721}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999636
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11404,13 +11404,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a59a3635d6214fc0b007c94f7c20fbf, type: 2}
   - {fileID: 11400000, guid: c929ddb281e4f4ca5af476dc0caeee34, type: 2}
   - {fileID: 11400000, guid: 51f96fc91ae58407a9c7f71f177746d1, type: 2}
-  globalCommunity: {fileID: 1049095965}
-  htsCommunity: {fileID: 1049095964}
+  globalCommunity: {fileID: 0}
+  htsCommunity: {fileID: 0}
   tickIntervalSec: 1
-  eventManager: {fileID: 1049095967}
-  historyExporter: {fileID: 1049095962}
-  ticksPerDay: 150
-  runRecorder: {fileID: 1049095966}
+  eventManager: {fileID: 0}
+  historyExporter: {fileID: 0}
+  ticksPerDay: 0
+  runRecorder: {fileID: 0}
   gameStateController: {fileID: 1049095969}
 --- !u!114 &1049095969
 MonoBehaviour:
@@ -11424,13 +11424,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c682ec8b5b323ad40a011d15a69fea1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStateController
+  saveManager: {fileID: 0}
+  currentStateName: 
+  stateTimer: 0
   currentDay: 1
   calendarUI: {fileID: 2123212651}
   stateInfoText: {fileID: 1387852391}
-  eventManager: {fileID: 1049095967}
-  eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
-  runRecorder: {fileID: 1049095966}
-  seedExporter: {fileID: 1049095961}
+  eventManager: {fileID: 0}
+  eventDatabase: {fileID: 0}
+  runRecorder: {fileID: 0}
+  seedExporter: {fileID: 0}
   targetDay: 4
 --- !u!4 &1049095970
 Transform:
@@ -19164,17 +19167,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1883213340}
   m_CullTransparentMesh: 1
---- !u!114 &1898525268 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -206297814753226862, guid: 02c76a93f189bd1438ec8129175d6aea, type: 3}
-  m_PrefabInstance: {fileID: 4224052564485326713}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1913618225
 GameObject:
   m_ObjectHideFlags: 0
@@ -20170,7 +20162,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.00061961566}
+  m_AnchoredPosition: {x: 0, y: 0.00032365246}
   m_SizeDelta: {x: 580, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1984327455
@@ -23650,7 +23642,7 @@ PrefabInstance:
     - target: {fileID: 8017816202538737876, guid: 02c76a93f189bd1438ec8129175d6aea, type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1898525268}
+      objectReference: {fileID: 0}
     - target: {fileID: 8067184672081804067, guid: 02c76a93f189bd1438ec8129175d6aea, type: 3}
       propertyPath: m_Name
       value: StockRow
