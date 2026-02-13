@@ -11962,7 +11962,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1055676297}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1430611024}
+        m_TargetAssemblyTypeName: Player.PopupPanelSwitcher, Assembly-CSharp
+        m_MethodName: OpenChartPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1055676297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15434,6 +15446,11 @@ MonoBehaviour:
   tradePanel: {fileID: 800151969}
   portfolioPanel: {fileID: 930548762}
   openTradePanelOnEnable: 1
+  chartPanel: {fileID: 452913747}
+  myPortfolioPanel: {fileID: 842772290}
+  popupManager: {fileID: 1640317203}
+  chartPanelId: ChartPanel
+  myPortfolioPanelId: MyPortfolioPanel
 --- !u!1 &1435326461
 GameObject:
   m_ObjectHideFlags: 0
@@ -22979,7 +22996,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2008752439}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1430611024}
+        m_TargetAssemblyTypeName: Player.PopupPanelSwitcher, Assembly-CSharp
+        m_MethodName: OpenMyPortfolioPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2008752439
 MonoBehaviour:
   m_ObjectHideFlags: 0

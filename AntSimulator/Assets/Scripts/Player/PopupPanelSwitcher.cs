@@ -1,14 +1,24 @@
 using System;
 using UnityEngine;
+using Utils;
 
 namespace Player
 {
     public class PopupPanelSwitcher : MonoBehaviour
     {
-        [Header("Popup Panels")]
+        [Header("Right Panels (PanelSwitchButton)")]
         [SerializeField] private GameObject tradePanel;
         [SerializeField] private GameObject portfolioPanel;
         [SerializeField] private bool openTradePanelOnEnable = true;
+
+        [Header("Mid Panels (Chart/MyPortfolio Buttons)")]
+        [SerializeField] private GameObject chartPanel;
+        [SerializeField] private GameObject myPortfolioPanel;
+
+        [Header("Popup Manager (Optional)")]
+        [SerializeField] private PopupManager popupManager;
+        [SerializeField] private string chartPanelId = "ChartPanel";
+        [SerializeField] private string myPortfolioPanelId = "MyPortfolioPanel";
 
         private bool isPortfolioPanelOpen;
         public event Action<bool> PortfolioPanelActiveChanged;
@@ -17,39 +27,80 @@ namespace Player
 
         private void OnEnable()
         {
-            SetPortfolioPanelActive(!openTradePanelOnEnable);
+            SetRightPortfolioPanelActive(!openTradePanelOnEnable);
         }
 
         public void TogglePanel()
         {
-            SetPortfolioPanelActive(!isPortfolioPanelOpen);
+            SetRightPortfolioPanelActive(!isPortfolioPanelOpen);
         }
 
         public void OpenTradePanel()
         {
-            SetPortfolioPanelActive(false);
+            SetRightPortfolioPanelActive(false);
+        }
+
+        public void OpenChartPanel()
+        {
+            SetMidPortfolioPanelActive(false);
         }
 
         public void OpenPortfolioPanel()
         {
-            SetPortfolioPanelActive(true);
+            SetRightPortfolioPanelActive(true);
         }
 
-        private void SetPortfolioPanelActive(bool active)
+        public void OpenMyPortfolioPanel()
+        {
+            SetMidPortfolioPanelActive(true);
+        }
+
+        private void SetRightPortfolioPanelActive(bool active)
         {
             isPortfolioPanelOpen = active;
 
-            if (tradePanel != null)
-            {
-                tradePanel.SetActive(!active);
-            }
-
-            if (portfolioPanel != null)
-            {
-                portfolioPanel.SetActive(active);
-            }
+            SetPanelActive(tradePanel, !active);
+            SetPanelActive(portfolioPanel, active);
 
             PortfolioPanelActiveChanged?.Invoke(active);
+        }
+
+        private void SetMidPortfolioPanelActive(bool openPortfolioPanel)
+        {
+            var shouldOpenChart = !openPortfolioPanel;
+            var shouldOpenPortfolio = openPortfolioPanel;
+
+            SetPanelActive(chartPanel, shouldOpenChart);
+            SetPanelActive(myPortfolioPanel, shouldOpenPortfolio);
+
+            SetPanelByPopupId(chartPanelId, shouldOpenChart);
+            SetPanelByPopupId(myPortfolioPanelId, shouldOpenPortfolio);
+        }
+
+        private void SetPanelByPopupId(string popupId, bool active)
+        {
+            if (popupManager == null || string.IsNullOrWhiteSpace(popupId))
+            {
+                return;
+            }
+
+            if (active)
+            {
+                popupManager.Open(popupId);
+                return;
+            }
+
+            popupManager.Close(popupId);
+        }
+
+        private static void SetPanelActive(GameObject panel, bool active)
+        {
+            if (panel == null)
+            {
+                return;
+            }
+
+            panel.SetActive(active);
         }
     }
 }
