@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: PPAP_u 8
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: PPAP
+  direction: 0
+  title: "\uC640 \uD30C\uC778\uC560\uD50C ai\uD1F4\uBB3C\uC774\uB77C\uACE0 \uB180\uB824\uB300\uB358\uB370
+    ai \uC548\uB4E4\uC5B4\uAC00\uC11C \uC2B9\uC790\uB418\uC5C8\uAD6C\uB0B0\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B\u314B"
+  body: 
