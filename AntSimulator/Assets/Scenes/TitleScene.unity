@@ -501,6 +501,7 @@ MonoBehaviour:
   fadePanel: {fileID: 1887879440}
   screenFadeDuration: 2
   logoRect: {fileID: 886714569}
+  logoCanvasGroup: {fileID: 886714572}
   logoEndPosition: {x: 0, y: 0}
   logoMoveDuration: 1.5
   buttons:
@@ -1292,6 +1293,7 @@ GameObject:
   - component: {fileID: 886714569}
   - component: {fileID: 886714571}
   - component: {fileID: 886714570}
+  - component: {fileID: 886714572}
   m_Layer: 5
   m_Name: Logo
   m_TagString: Untagged
@@ -1356,6 +1358,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886714568}
   m_CullTransparentMesh: 1
+--- !u!225 &886714572
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886714568}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &934609825 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 500277554916019286, guid: 9997e02d4ab588f44a4d00d2098a0b54, type: 3}

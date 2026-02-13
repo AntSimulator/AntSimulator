@@ -1,6 +1,8 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SaveManager : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class SaveManager : MonoBehaviour
             data.day = gsc.currentDay;
             data.timer = gsc.stateTimer;
             data.stateName = gsc.currentStateName;
+            data.sceneName = SceneManager.GetActiveScene().name;
         }
         else
         {
@@ -54,6 +57,8 @@ public class SaveManager : MonoBehaviour
 
     public void LoadFromSlot(int slotIndex)
     {
+
+        StartCoroutine(LoadRoutine(slotIndex));
         currentSlotIndex = slotIndex;
         string path = GetSavePath(slotIndex);
 
@@ -83,6 +88,55 @@ public class SaveManager : MonoBehaviour
 
             //SceneManager.LoadScene("");
         }
+    }
+
+    IEnumerator LoadRoutine(int slotIndex)
+    {
+        currentSlotIndex = slotIndex;
+        string path = GetSavePath(slotIndex);
+
+        if (!File.Exists(path))
+        {
+            Debug.Log("저장된 파일이 없습니다.");
+            yield break;
+        }
+
+        string json = File.ReadAllText(path);
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+        if (ScreenFader.Instance != null)
+            yield return ScreenFader.Instance.FadeOut();
+
+        string targetScene = string.IsNullOrEmpty(data.sceneName) ? "IntroScene" : data.sceneName;
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        gsc = FindObjectOfType<GameStateController>();
+
+        if (gsc != null)
+        {
+            gsc.currentDay = data.day;
+            gsc.LoadState(data.stateName, data.timer);
+
+            if (gsc.calendarUI != null)
+            {
+                gsc.calendarUI.HighLightToday(gsc.currentDay);
+            }
+
+            Debug.Log($"로드 완료! {targetScene} 씬으로 이동했습니다.");
+        }
+        else
+        {
+            Debug.LogError("이동한 씬에 GameStateController가 없습니다!");
+        }
+
+        if (ScreenFader.Instance != null)
+            yield return ScreenFader.Instance.FadeIn();
     }
 
     public void ExitGame()

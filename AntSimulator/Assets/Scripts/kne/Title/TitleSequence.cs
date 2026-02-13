@@ -10,6 +10,7 @@ public class TitleSequence : MonoBehaviour
 
     [Header("로고 이동 설정")]
     public RectTransform logoRect;
+    public CanvasGroup logoCanvasGroup;
     public Vector2 logoEndPosition = Vector2.zero;
     public float logoMoveDuration = 1.5f; 
     private Vector2 logoStartPosition; 
@@ -23,6 +24,8 @@ public class TitleSequence : MonoBehaviour
     {
         fadePanel.color = new Color(0, 0, 0, 1);
         logoStartPosition = logoRect.anchoredPosition;
+        if (logoCanvasGroup != null) logoCanvasGroup.alpha = 0f;
+
         foreach (var btn in buttons)
         {
             btn.alpha = 0f;
@@ -53,6 +56,10 @@ public class TitleSequence : MonoBehaviour
             timer += Time.deltaTime;
             float t = Mathf.SmoothStep(0f, 1f, timer / logoMoveDuration);
             logoRect.anchoredPosition = Vector2.Lerp(logoStartPosition, logoEndPosition, t);
+            if (logoCanvasGroup != null)
+            {
+                logoCanvasGroup.alpha = t;
+            }
             yield return null;
         }
 

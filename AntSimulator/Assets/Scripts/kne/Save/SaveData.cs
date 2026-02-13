@@ -7,6 +7,7 @@ public class SaveData
     public float timer;
     public string stateName;
     public string saveTime;
+    public string sceneName;
 
     
 }
