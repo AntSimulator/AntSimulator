@@ -50,7 +50,7 @@ namespace Player
 
             if (popupPanelSwitcher != null)
             {
-                popupPanelSwitcher.PortfolioPanelActiveChanged += HandlePortfolioPanelActiveChanged;
+                //popupPanelSwitcher.PortfolioPanelActiveChanged += HandlePortfolioPanelActiveChanged;
             }
 
             if (string.IsNullOrWhiteSpace(selectedStockCode) && playerController != null)
@@ -68,7 +68,7 @@ namespace Player
 
             if (popupPanelSwitcher != null)
             {
-                popupPanelSwitcher.PortfolioPanelActiveChanged -= HandlePortfolioPanelActiveChanged;
+                //popupPanelSwitcher.PortfolioPanelActiveChanged -= HandlePortfolioPanelActiveChanged;
             }
         }
 
