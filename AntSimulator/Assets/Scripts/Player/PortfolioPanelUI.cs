@@ -12,7 +12,6 @@ namespace Player
     public class PortfolioPanelUI : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private PopupPanelSwitcher popupPanelSwitcher;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private MarketSimulator marketSimulator;
 
@@ -48,11 +47,6 @@ namespace Player
         {
             StockSelectionEvents.OnStockSelected += HandleStockSelected;
 
-            if (popupPanelSwitcher != null)
-            {
-                //popupPanelSwitcher.PortfolioPanelActiveChanged += HandlePortfolioPanelActiveChanged;
-            }
-
             if (string.IsNullOrWhiteSpace(selectedStockCode) && playerController != null)
             {
                 selectedStockCode = playerController.SelectedStockId;
@@ -65,11 +59,6 @@ namespace Player
         private void OnDisable()
         {
             StockSelectionEvents.OnStockSelected -= HandleStockSelected;
-
-            if (popupPanelSwitcher != null)
-            {
-                //popupPanelSwitcher.PortfolioPanelActiveChanged -= HandlePortfolioPanelActiveChanged;
-            }
         }
 
         private void Update()
@@ -96,23 +85,8 @@ namespace Player
             RefreshSelectedStockView();
         }
 
-        private void HandlePortfolioPanelActiveChanged(bool isActive)
-        {
-            if (!isActive)
-            {
-                return;
-            }
-
-            RefreshSelectedStockView();
-        }
-
         private void ResolveReferences()
         {
-            if (popupPanelSwitcher == null)
-            {
-                popupPanelSwitcher = FindObjectOfType<PopupPanelSwitcher>();
-            }
-
             if (playerController == null)
             {
                 playerController = FindObjectOfType<PlayerController>();
