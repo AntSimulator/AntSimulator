@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Player
@@ -10,6 +11,9 @@ namespace Player
         [SerializeField] private bool openTradePanelOnEnable = true;
 
         private bool isPortfolioPanelOpen;
+        public event Action<bool> PortfolioPanelActiveChanged;
+
+        public bool IsPortfolioPanelOpen => isPortfolioPanelOpen;
 
         private void OnEnable()
         {
@@ -44,6 +48,8 @@ namespace Player
             {
                 portfolioPanel.SetActive(active);
             }
+
+            PortfolioPanelActiveChanged?.Invoke(active);
         }
     }
 }

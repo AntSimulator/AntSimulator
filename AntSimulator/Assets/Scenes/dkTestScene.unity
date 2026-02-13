@@ -7768,7 +7768,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1689140721}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999714
+  m_Size: 0.9999973
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9938,6 +9938,7 @@ GameObject:
   - component: {fileID: 930548763}
   - component: {fileID: 930548765}
   - component: {fileID: 930548764}
+  - component: {fileID: 930548766}
   m_Layer: 5
   m_Name: PortfolioPanel
   m_TagString: Untagged
@@ -10002,6 +10003,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930548762}
   m_CullTransparentMesh: 1
+--- !u!114 &930548766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930548762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da574a34afddd894197b419df2188d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PortfolioPanelUI
+  popupPanelSwitcher: {fileID: 1430611024}
+  playerController: {fileID: 843853582}
+  marketSimulator: {fileID: 1049095968}
+  portfolioContent: {fileID: 0}
+  ownedStockRectPrefab: {fileID: 1310247036101277178, guid: 190cff9af851c5145aa91c7d33123b5c, type: 3}
+  clearExistingChildrenOnInit: 1
 --- !u!1 &936149323
 GameObject:
   m_ObjectHideFlags: 0
@@ -20557,7 +20576,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.0010173691}
+  m_AnchoredPosition: {x: 0, y: 0.001016054}
   m_SizeDelta: {x: 580, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1984327455
