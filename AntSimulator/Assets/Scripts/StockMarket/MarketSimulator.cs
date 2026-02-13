@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using Unity.Mathematics;
 using UnityEngine;
+using System;
 
 public class MarketSimulator : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class MarketSimulator : MonoBehaviour
 
     [Header("Recording")] public RunRecorder runRecorder;
     public GameStateController gameStateController;
+    
+    public event Action<EventDefinition, int, int> OnEventRevealed;
 
     void Start()
     {
@@ -259,6 +262,7 @@ public class MarketSimulator : MonoBehaviour
                 if(def == null) continue;
                 
                 Debug.Log($"[EVENT REVEAL] event={def.eventId} title={def.title} (D{day} T{tick})");
+                OnEventRevealed?.Invoke(def, day, tick);
                 if (def.delist && !inst.delistApplied)
                 {
                     inst.delistApplied = true;

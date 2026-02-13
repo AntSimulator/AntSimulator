@@ -47,7 +47,7 @@ public class GlobalCommunityFeedUI : MonoBehaviour
         if (globalCommunity == null || content == null || itemPrefab == null) return;
 
         var posts = globalCommunity.GetPosts();
-        for (int i = 0; i < posts.Count; i++)
+        for (int i = posts.Count - 1; i >= 0; i--)
             AddRowOnBottom(posts[i]);
     }
 
