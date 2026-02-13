@@ -6,7 +6,7 @@ using Utils.Core;
 
 namespace Utils.UnityAdapter
 {
-    public static class StreamingAssetsJsonLoader
+    public static class PersistentJsonLoader
     {
         public static async Task<TextLoadResult> LoadTextAsync(string fileName)
         {
@@ -15,7 +15,7 @@ namespace Utils.UnityAdapter
                 return TextLoadResult.Fail("fileName is null or empty.", string.Empty);
             }
 
-            var path = Path.Combine(Application.streamingAssetsPath, fileName);
+            var path = Path.Combine(Application.persistentDataPath, fileName);
 
             if (path.Contains("://") || path.Contains("jar:"))
             {

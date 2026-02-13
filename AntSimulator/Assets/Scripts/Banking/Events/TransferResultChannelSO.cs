@@ -6,7 +6,7 @@ using Banking.Core;
 namespace Banking.Events
 {
     [CreateAssetMenu(
-        menuName = "AntSimulator/Events/Banking/Transfer Result Channel",
+        menuName = "Scriptable Objects/TransferResultChannel",
         fileName = "TransferResultChannel")]
     public class TransferResultChannelSO : ScriptableObject, ITransferResultPublisher
     {
