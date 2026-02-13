@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
-  m_Name: 61
+  m_Name: 00012
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
-  eventId: 51001
+  eventId: 00011
   title: 
-  description: "[\uB2E8\uB3C5] \uB178\uB7C9\uC870\uAC1C, 3\uC5B5 \uBC30\uB7F4 \uC6D0\uC720
-    \uB9E4\uC7A5 \uC0AC\uC2E4\uB85C \uD655\uC778... '\uC81C2\uC758 \uC911\uB3D9'
-    \uAFC8 \uC774\uB8EC\uB2E4"
-  scope: 2
-  sector: 4
-  targetStockIds:
-  - YSYL
-  probEffect: 0.5
+  description: "[\uD2B9\uC885] \"\uC81C2\uC758 \uBB38\uC5B4 \uAC8C\uC784 \uD0C4\uC0DD\"...
+    'K-POP Angel Hunters' \uACF5\uAC1C 3\uC77C \uB9CC\uC5D0 \uC2DC\uCCAD \uC2DC\uAC04
+    2\uC5B5 \uC2DC\uAC04 \uB3CC\uD30C"
+  scope: 1
+  sector: 0
+  targetStockIds: []
+  probEffect: 0.7
   isUp: 1
   depthEffect: 0.02
   durationDays: 3
