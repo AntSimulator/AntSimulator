@@ -27,6 +27,7 @@ namespace Player
         private const string CurrentPriceNode = "CurrentPrice";
         private const string TotalBuyQuantityNode = "TotalBuyQuantity";
         private const string AverageBuyPriceNode = "AverageBuyPrice";
+        private const string ProfitRateNode = "ProfitRate";
 
         private string selectedStockCode;
         private string selectedStockName;
@@ -36,6 +37,7 @@ namespace Player
         private TMP_Text currentPriceText;
         private TMP_Text totalBuyQuantityText;
         private TMP_Text averageBuyPriceText;
+        private TMP_Text profitRateText;
 
         private void Awake()
         {
@@ -72,7 +74,8 @@ namespace Player
 
         private void Update()
         {
-            if (string.IsNullOrWhiteSpace(selectedStockCode))
+            if (string.IsNullOrWhiteSpace(selectedStockCode) &&
+                string.IsNullOrWhiteSpace(playerController != null ? playerController.SelectedStockId : null))
             {
                 return;
             }
@@ -175,6 +178,7 @@ namespace Player
             currentPriceText = FindText(root, CurrentPriceNode);
             totalBuyQuantityText = FindText(root, TotalBuyQuantityNode);
             averageBuyPriceText = FindText(root, AverageBuyPriceNode);
+            profitRateText = FindText(root, ProfitRateNode);
         }
 
         private static TMP_Text FindText(Transform root, string nodeName)
@@ -200,13 +204,15 @@ namespace Player
                 return;
             }
 
+            var runtimeStockId = ResolveRuntimeStockId();
             var displayName = !string.IsNullOrWhiteSpace(selectedStockName)
                 ? selectedStockName
-                : ResolveStockDisplayName(selectedStockCode);
+                : ResolveStockDisplayName(runtimeStockId);
 
-            var currentPrice = GetMarketPrice(selectedStockCode);
+            var currentPrice = GetMarketPrice(runtimeStockId);
             var quantity = playerController != null ? playerController.GetSelectedQuantity() : 0;
             var avgBuyPrice = playerController != null ? playerController.GetSelectedAvgBuyPrice() : 0f;
+            var profitRate = CalculateProfitRate(currentPrice, avgBuyPrice, quantity);
 
             if (stockNameText != null)
             {
@@ -227,6 +233,54 @@ namespace Player
             {
                 averageBuyPriceText.text = $"Avg Buy: {avgBuyPrice:N2}";
             }
+
+            if (profitRateText != null)
+            {
+                profitRateText.text = $"Return: {profitRate:+0.00;-0.00;0.00}%";
+            }
+        }
+
+        private static float CalculateProfitRate(float currentPrice, float avgBuyPrice, int quantity)
+        {
+            if (quantity <= 0 || avgBuyPrice <= 0f)
+            {
+                return 0f;
+            }
+
+            return (currentPrice - avgBuyPrice) / avgBuyPrice * 100f;
+        }
+
+        private string ResolveRuntimeStockId()
+        {
+            var playerSelectedId = playerController != null ? playerController.SelectedStockId : null;
+            if (HasMarketStock(playerSelectedId))
+            {
+                return playerSelectedId;
+            }
+
+            if (HasMarketStock(selectedStockCode))
+            {
+                return selectedStockCode;
+            }
+
+            var resolvedByName = ResolveStockIdByDisplayName(selectedStockName);
+            if (HasMarketStock(resolvedByName))
+            {
+                return resolvedByName;
+            }
+
+            return selectedStockCode;
+        }
+
+        private bool HasMarketStock(string stockId)
+        {
+            if (string.IsNullOrWhiteSpace(stockId) || marketSimulator == null)
+            {
+                return false;
+            }
+
+            var stocks = marketSimulator.GetAllStocks();
+            return stocks != null && stocks.ContainsKey(stockId);
         }
 
         private float GetMarketPrice(string stockCode)
@@ -264,6 +318,31 @@ namespace Player
             }
 
             return stockCode;
+        }
+
+        private string ResolveStockIdByDisplayName(string stockName)
+        {
+            if (string.IsNullOrWhiteSpace(stockName) || marketSimulator == null || marketSimulator.stockDefinitions == null)
+            {
+                return null;
+            }
+
+            for (var i = 0; i < marketSimulator.stockDefinitions.Count; i++)
+            {
+                var def = marketSimulator.stockDefinitions[i];
+                if (def == null)
+                {
+                    continue;
+                }
+
+                if (string.Equals(def.displayName, stockName, System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(def.name, stockName, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return def.stockId;
+                }
+            }
+
+            return null;
         }
     }
 }
