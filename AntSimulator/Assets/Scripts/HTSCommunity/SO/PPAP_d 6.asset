@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: PPAP_d 6
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: PPAP
+  direction: 1
+  title: "\uD30C\uC778\uC560\uD50C\uC774\uB780 \uBE0C\uB79C\uB4DC \uC774\uBBF8\uC9C0
+    \uC790\uCCB4\uAC00 \uC774\uC81C\uB294 \uB354\uC774\uC0C1\uC740 \uACE0\uAE09\uC774
+    \uC544\uB2C8\uB77C \uB208\uD0F1\uC774\uACE0 \uAF34\uAE5D \uC785\uB2C8\uB2E4"
+  body: "\uC9C0\uAE08\uC740 \uCE74\uD398\uC5D0\uC11C \uCE74\uACF5\uC871\uB4E4 \uD30C\uC778\uC560\uD50C
+    \uB178\uD2B8\uBD81 \uD3BC\uCE58\uACE0 \uC788\uC73C\uBA74 \u3142* \uAF34\uAE5D
+    \uB5A8\uACE0\uC788\uB124 \uC774\uB798\uC694 \u314B\u314B"

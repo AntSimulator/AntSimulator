@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: PPAP_d 8
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: PPAP
+  direction: 1
+  title: "\uD655\uC2E0\uC758 \uD558\uB77D \uC885\uBAA9\uC774\uB77C PPAD \uD30C\uC778\uC560\uD50C
+    \uC778\uBC84\uC2A4\uC5D0 \uC2DC\uB4DC 50\uD37C \uD0DC\uC6E0\uB2E4"
+  body: 
