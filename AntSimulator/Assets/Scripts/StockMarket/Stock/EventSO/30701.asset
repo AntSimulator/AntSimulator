@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
+  m_Name: 30701
+  m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
+  eventId: 30701
+  title: 
+  description: "\uC0BC\uC218\uC0DD\uBA85, \uC790\uC0AC\uC8FC \uC18C\uAC01 \uBC0F
+    \uBC30\uB2F9 \uC131\uD5A5 35% \uD655\uB300 \uBC1C\uD45C\u2026 '\uC8FC\uC8FC \uAC00\uCE58
+    \uC81C\uACE0'\uC5D0 \uAE30\uAD00 \uD22C\uC790\uC790 \uC9D1\uC911 \uB9E4\uC218"
+  scope: 2
+  sector: 2
+  targetStockIds:
+  - SASU
+  probEffect: 0.2
+  isUp: 1
+  depthEffect: 0.02
+  durationDays: 1
+  delist: 0
+  delistStockIds: []
+  canBeCalendarEvent: 0
+  canBeHidden: 1
+  allowRepeatInRun: 0
