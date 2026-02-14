@@ -13,7 +13,7 @@ public class GameStateController : MonoBehaviour
     private IGameState currentState;
     public string currentStateName = "";
     public float stateTimer = 0f;
-    public int currentDay = 1;
+    public int currentDay = 0;
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
 
