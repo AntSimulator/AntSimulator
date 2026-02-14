@@ -31,6 +31,10 @@ public class OutroManager : MonoBehaviour
     void Start()
     {
         SetPageData(currentIndex);
+        if (ScreenFader.Instance != null)
+        {
+            StartCoroutine(ScreenFader.Instance.FadeIn());
+        }
     }
 
     public void Next()

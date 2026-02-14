@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
+using Player;
 
 public class GameStateController : MonoBehaviour
 {
@@ -24,6 +26,9 @@ public class GameStateController : MonoBehaviour
 
     [Header("Ending Settings")]
     public int targetDay = 5;
+    private long targetCash = 4000000;
+    private long ecurrentCash = 0;
+    private PlayerController _endingPlayer;
 
 
     void Start()
@@ -53,8 +58,8 @@ public class GameStateController : MonoBehaviour
         // ?? ???? Day start ?? ?? 
         OnDayStarted?.Invoke(currentDay);
         
-        
-        
+        _endingPlayer = FindObjectOfType<PlayerController>();
+
     }
 
     // Update is called once per frame
@@ -147,6 +152,16 @@ public class GameStateController : MonoBehaviour
         if (currentDay > targetDay)
         {
             ChangeState(new GameEndingState(this));
+            ecurrentCash = _endingPlayer.GetCash();
+
+            if(ecurrentCash >= targetCash)
+            {
+                SceneManager.LoadScene("GoodEndingScene");
+            }
+            else
+            {
+                SceneManager.LoadScene("BadEndingScene");
+            }
         }
         else
         {

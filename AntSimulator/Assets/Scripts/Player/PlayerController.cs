@@ -376,5 +376,11 @@ namespace Player
 
             return result;
         }
+
+        public long GetCash()
+        {
+            if (state == null) return 0;
+            return state.cash;
+        }
     }
 }
