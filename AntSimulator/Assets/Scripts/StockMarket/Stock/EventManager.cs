@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+
+
 
 public class EventManager : MonoBehaviour
 {
@@ -13,6 +17,8 @@ public class EventManager : MonoBehaviour
 
     public int ticksPerDay = 300;
     public int morningTick = 0;
+
+    public List<CalendarDayScheduleSO> calendarSchedules;
 
     public IReadOnlyList<EventInstance> ActiveEvents => active;
     public void Init(List<EventInstance> runEvents)

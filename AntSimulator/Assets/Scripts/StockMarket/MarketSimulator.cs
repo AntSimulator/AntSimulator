@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using Unity.Mathematics;
 using UnityEngine;
+using System;
 
 public class MarketSimulator : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class MarketSimulator : MonoBehaviour
 
     [Header("Recording")] public RunRecorder runRecorder;
     public GameStateController gameStateController;
+    
+    public event Action<EventDefinition, int, int> OnEventRevealed;
 
     void Start()
     {
@@ -40,6 +43,7 @@ public class MarketSimulator : MonoBehaviour
                 if (def == null) continue;
                 defMap[def.stockId] = def;
                 stocks[def.stockId] = new StockState(def.stockId, def.basePrice);
+                Debug.Log($"[DEF] {def.stockId} floatShares={def.floatShares} avgDailyVol={def.avgDailyVolume} ticksPerDay={ticksPerDay}");
             }
         }
         if(htsCommunity != null) htsCommunity.InitStocks(stocks.Keys);
@@ -198,8 +202,8 @@ public class MarketSimulator : MonoBehaviour
         //이벤트가 있으면 거래량도 늘어남
         double boostByEvent = 1.0;
 
-        boostByEvent *= (1.0 * def.eventToVolume * Mathf.Abs(dEvent));
-        boostByEvent *= (1.0 * def.eventToVolume * Mathf.Abs(pEvent));
+        boostByEvent += (1.0 * def.eventToVolume * Mathf.Abs(dEvent));
+        boostByEvent += (1.0 * def.eventToVolume * Mathf.Abs(pEvent));
 
         // 이벤트 있으면 최소 기본 버프
         if (Mathf.Abs(dEvent) > 0.0001f || Mathf.Abs(pEvent) > 0.0001f)
@@ -258,6 +262,7 @@ public class MarketSimulator : MonoBehaviour
                 if(def == null) continue;
                 
                 Debug.Log($"[EVENT REVEAL] event={def.eventId} title={def.title} (D{day} T{tick})");
+                OnEventRevealed?.Invoke(def, day, tick);
                 if (def.delist && !inst.delistApplied)
                 {
                     inst.delistApplied = true;

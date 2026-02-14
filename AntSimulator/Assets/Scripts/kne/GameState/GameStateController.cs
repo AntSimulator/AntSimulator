@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
@@ -23,7 +24,9 @@ public class GameStateController : MonoBehaviour
     public StockSeedExporter seedExporter;
 
     [Header("Ending Settings")]
-    public int targetDay = 4;
+    public int targetDay = 5;
+
+    [Header("Calendar Event Schedules")] public List<CalendarDayScheduleSO> calendarSchedules = new();
 
 
     void Start()
@@ -35,7 +38,7 @@ public class GameStateController : MonoBehaviour
         var runEvents = RunEventGenerator.Generate(
             eventDatabase,
             totalDays: targetDay,
-            calendarCount: targetDay,
+            calendarSchedules: calendarSchedules,
             hiddenCount: targetDay * 3);
 
         //??? ??? ??? + day 1 ?? ??
@@ -80,7 +83,7 @@ public class GameStateController : MonoBehaviour
         if(saveManager != null && isRestoring == false)
         {
             saveManager.AutoSave();
-            Debug.Log("ÀÚµ¿ ÀúÀåµÇ¾ú½À´Ï´Ù.");
+            Debug.Log("ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         } 
     }
 

@@ -197,6 +197,8 @@ public class HTSCommunityManager : MonoBehaviour
                         && string.Equals(t.stockId, stockId, StringComparison.Ordinal))
             .ToList();
 
+        Debug.Log($"[PickTemplate] stock={stockId} dir={direction} exact={exact.Count}");
+        
         if (exact.Count > 0)
             return exact[UnityEngine.Random.Range(0, exact.Count)];
 
@@ -206,6 +208,8 @@ public class HTSCommunityManager : MonoBehaviour
                         && t.direction == direction
                         && string.IsNullOrEmpty(t.stockId))
             .ToList();
+        
+        Debug.Log($"[PickTemplate] stock={stockId} dir={direction} generic={generic.Count}");
 
         if (generic.Count > 0)
             return generic[UnityEngine.Random.Range(0, generic.Count)];
@@ -241,5 +245,24 @@ public class HTSCommunityManager : MonoBehaviour
         int t = UnityEngine.Random.Range(0, tpd);
         if (t == morningTick) t = (t + 1) % tpd;
         return t;
+    }
+    
+    void Awake()
+    {
+        if (templates == null)
+        {
+            Debug.Log("[HTSCommunity] templates is null");
+            return;
+        }
+
+        var seen = new HashSet<int>();
+        int dup = 0;
+        foreach (var t in templates)
+        {
+            if (!t) continue;
+            if (!seen.Add(t.GetInstanceID())) dup++;
+        }
+
+        Debug.Log($"[HTSCommunity] templates={templates.Count}, unique={seen.Count}, dup={dup}");
     }
 }

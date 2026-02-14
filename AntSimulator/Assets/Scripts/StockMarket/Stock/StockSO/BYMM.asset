@@ -24,6 +24,6 @@ MonoBehaviour:
   stockId: BYMM
   sector: 3
   displayName: "\uBE44\uC698\uB4DC \uCF69\uACE0\uAE30"
-  floatShares: 50000000
-  avgDailyVolume: 500000
+  floatShares: 500000000
+  avgDailyVolume: 5000000
   noiseScale: 1

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: MRCX_d 8
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: MRCX
+  direction: 1
+  title: "\uC740\uD589\uC5D0\uC11C 6\uCC9C\uB9CC\uC6D0 \uB300\uCD9C\uBC1B\uACE0 \uC5EC\uAE30\uC11C
+    \uBAB0\uBE75\uD588\uB2E4\uAC00 -40\uD37C \uCC0D\uD798 \u314B\u314B"
+  body: "\uADF8\uB7EC\uAC8C \uC65C \uBE4C\uB824\uC92C\uB0D0 \uB0B4 \uB3C8 \uB2E4
+    \uBBF8\uB77C\uD074 ceo \uD55C\uD14C \uC788\uC73C\uB2C8\uAE4C \uBBF8\uB77C\uD074
+    ceo\uD55C\uD14C \uB2EC\uB77C\uACE0 \uD574\uB77C"
