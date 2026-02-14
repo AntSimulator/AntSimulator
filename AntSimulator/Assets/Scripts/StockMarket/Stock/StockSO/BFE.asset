@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: BFE
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 35000
-  maxUpPercent: 0.06
-  maxDownPercent: 0.06
+  basePrice: 3500
+  maxUpPercent: 0.006
+  maxDownPercent: 0.006
   volumeBoostK: 25
   volumeNoiseMin: 0.7
   volumeNoiseMax: 1.3

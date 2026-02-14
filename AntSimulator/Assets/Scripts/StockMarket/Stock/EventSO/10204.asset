@@ -10,23 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
-  m_Name: 51102
+  m_Name: 10204
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
-  eventId: 51102
+  eventId: 10204
   title: 
-  description: "[\uC1FC\uD06C] \"\uC57D\uC18D\uD55C \uB2E8\uAC00 \uBABB \uB9DE\uCD98\uB2E4\"...
-    \uC8FC\uC694 \uACE0\uAC1D\uC0AC\uB4E4 \uC62C\uB4DC\uC2A4\uCF00\uC77C\uACFC \uACC4\uC57D
-    \uC904\uD30C\uAE30 \uC120\uC5B8"
+  description: "\uC9E7\uC740\uBC14\uC9C0' \uACF5\uC2DD \uD574\uCCB4 \uC120\uC5B8...
+    \uBA64\uBC84\uB4E4 \"\uAC01\uC790\uC758 \uAE38 \uAC00\uAE30\uB85C\", \uD32C\uB4E4\uC5D0\uAC8C
+    \uB208\uBB3C\uC758 \uB9C8\uC9C0\uB9C9 \uC778\uC0AC"
   scope: 2
-  sector: 4
+  sector: 0
   targetStockIds:
-  - OMR
-  probEffect: 0.4
-  isUp: 0
-  depthEffect: 0.02
-  durationDays: 4
-  delist: 0
-  delistStockIds: []
+  - FMC
+  probEffect: 0.45
+  isUp: 1
+  depthEffect: 0.03
+  durationDays: 1
+  delist: 1
+  delistStockIds:
+  - FMC
+  - 
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
