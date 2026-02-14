@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 20602
   title: 
-  description: "\"\uD14C\uC2AC\uB78C \uB9E4\uAC01\uC124\uAE4C\uC9C0?\" \uB9C8\uC2A4\uD06C,
+  description: "\"\uD2F0\uC2AC\uB77C \uB9E4\uAC01\uC124\uAE4C\uC9C0?\" \uB9C8\uC2A4\uD06C,
     \uC804\uAE30\uCC28 \uD765\uBBF8 \uC783\uACE0 '\uC6B0\uC8FC \uC81C\uAD6D' \uAC74\uC124\uC5D0\uB9CC
     \uC804\uB150\uD55C\uB2E4\uB294 \uC18C\uBB38"
   scope: 2

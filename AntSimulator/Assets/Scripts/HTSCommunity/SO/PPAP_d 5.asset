@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
   stockId: PPAP
   direction: 1
-  title: "\uC544\uC774 *\u3163\uBC1C / *\uAC19\uB124"
-  body: 
+  title: "\uD558"
+  body: c8
