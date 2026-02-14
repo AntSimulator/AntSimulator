@@ -2340,7 +2340,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561601550072965257, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1237168.9
+      value: 1247988.8
       objectReference: {fileID: 0}
     - target: {fileID: 4374729863678750638, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchorMax.x
@@ -26263,6 +26263,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 292085237344707161, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
     - target: {fileID: 467448665747237864, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -26355,6 +26359,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BankingButton
       objectReference: {fileID: 0}
+    - target: {fileID: 2311827068550956793, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
     - target: {fileID: 3029761930169193934, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -26583,6 +26591,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 5190255377325946524, guid: 73f07ee4d33173c438dcfffffb2fa7c0, type: 3}
+    - target: {fileID: 5647546607041081333, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
+    - target: {fileID: 6386370711047108007, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
     - target: {fileID: 6483011432330425067, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -26599,6 +26615,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6687837166279199499, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
     - target: {fileID: 7203376754986366527, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -26631,6 +26651,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: JobsButton
       objectReference: {fileID: 0}
+    - target: {fileID: 7782746287883117375, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
+    - target: {fileID: 8132859515266751876, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
+    - target: {fileID: 8548478702516554672, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
+    - target: {fileID: 8708759345639920042, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
     - target: {fileID: 8823091411751766478, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
       propertyPath: m_Name
       value: DeliveryButton
