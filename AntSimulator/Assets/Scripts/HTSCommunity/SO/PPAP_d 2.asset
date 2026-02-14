@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
   stockId: PPAP
   direction: 1
-  title: "\uC598\uB294 \uB4A4\uC838\uB3C4 \uC5EC\uAE30\uC11C \uB354 \uC548 \uB5A8\uC5B4\uC9D0
-    \uCD94\uBBF8\uC560 \uAC00\uC790\uC787\u314B\u314B"
-  body: 
+  title: "\uC720\uD29C\uBC84 \uC0AC\uC120\uC774 \uC544\uBB34\uB9D0\uB3C4 \uC548\uD574\uC92B\uB294\uB370"
+  body: "\uC774\uAC8C\uBB54\uC77C\uC774\uC9C0?"

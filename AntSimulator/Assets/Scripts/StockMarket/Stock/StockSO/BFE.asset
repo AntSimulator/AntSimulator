@@ -21,7 +21,7 @@ MonoBehaviour:
   eventToVolatility: 1.1
   eventToVolume: 1.1
   communitySensitivity: 1
-  stockId: BPE
+  stockId: BFE
   sector: 6
   displayName: "\uBC14\uC774\uC790"
   floatShares: 50000000

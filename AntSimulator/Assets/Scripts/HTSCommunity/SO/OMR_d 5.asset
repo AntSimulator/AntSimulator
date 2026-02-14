@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: OMR_d 5
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: OMR
+  direction: 1
+  title: "\uC544\uB0B4\uD55C\uD0DC \uC774\uAC70\uC0C0\uB2E4\uACE0 \uB9D0\uD588\uB294\uB370"
+  body: "\uC9C0\uAE08 -30%;;;; \uD68C\uC0AC\uC774\uB984\uB4E3\uB354\uB2C8 \uC774\uB984\uBD80\uD130\uAC00
+    10\uC2A4\uCEA0\uAC19\uB2E4\uACE0\uD558\uB124\uC694  \uC9C0\uAE08 \uBCF4\uB2C8
+    \uC9C4\uC9DC \uC774\uB984\uB3C4 \uC774\uC0C1\uD558\uB124  \uB2E4\uC74C\uBD80\uD130\uB294
+    \uC544\uB0B4 \uD5C8\uB77D\uB9E1\uACE0 \uC0AC\uC57C\uACA0\uC2B5\uB2C8\uB2E4"

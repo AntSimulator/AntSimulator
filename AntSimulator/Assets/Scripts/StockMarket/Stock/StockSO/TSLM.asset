@@ -23,7 +23,7 @@ MonoBehaviour:
   communitySensitivity: 1
   stockId: TSLM
   sector: 1
-  displayName: "\uD14C\uC2AC\uB78C"
+  displayName: "\uD2F0\uC2AC\uB77C"
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1
