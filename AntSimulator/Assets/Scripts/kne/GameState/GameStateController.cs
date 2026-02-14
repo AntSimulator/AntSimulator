@@ -23,7 +23,7 @@ public class GameStateController : MonoBehaviour
     public StockSeedExporter seedExporter;
 
     [Header("Ending Settings")]
-    public int targetDay = 4;
+    public int targetDay = 5;
 
 
     void Start()
@@ -80,7 +80,7 @@ public class GameStateController : MonoBehaviour
         if(saveManager != null && isRestoring == false)
         {
             saveManager.AutoSave();
-            Debug.Log("ÀÚµ¿ ÀúÀåµÇ¾ú½À´Ï´Ù.");
+            Debug.Log("ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         } 
     }
 

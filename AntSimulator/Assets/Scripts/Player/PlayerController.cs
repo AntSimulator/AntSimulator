@@ -8,6 +8,9 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        private static readonly IReadOnlyDictionary<string, Holding> EmptyHoldings =
+            new Dictionary<string, Holding>();
+
         [System.Serializable]
         public class TestStock
         {
@@ -292,6 +295,11 @@ namespace Player
         }
 
         public int QtyStep => qtyStep;
+
+        public IReadOnlyDictionary<string, Holding> GetHoldings()
+        {
+            return state != null ? state.holdings : EmptyHoldings;
+        }
 
         public void SetQtyStep(string text)
         {
