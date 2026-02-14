@@ -355,7 +355,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3930409592379413700}
   m_HandleRect: {fileID: 1017153598249698976}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -855,10 +855,6 @@ PrefabInstance:
       propertyPath: m_overflowMode
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 8181810021357566490, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
-      propertyPath: bodyText
-      value: 
-      objectReference: {fileID: 2351127793702236193}
     - target: {fileID: 8330635706989890965, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -885,7 +881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8330635706989890965, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2634
+      value: 2895.3
       objectReference: {fileID: 0}
     - target: {fileID: 8330635706989890965, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
       propertyPath: m_SizeDelta.y
@@ -921,7 +917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8330635706989890965, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1317
+      value: 1447.65
       objectReference: {fileID: 0}
     - target: {fileID: 8330635706989890965, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -944,17 +940,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
---- !u!114 &2351127793702236193 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2102112850762440761, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
-  m_PrefabInstance: {fileID: 4435155877171941400}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &5625149643445804429 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8330635706989890965, guid: fd892569b267d40a2a907b3adf6744bc, type: 3}
