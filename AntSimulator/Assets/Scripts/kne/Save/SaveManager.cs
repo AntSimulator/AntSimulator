@@ -6,7 +6,7 @@ using System.Collections;
 
 public class SaveManager : MonoBehaviour
 {
-
+    public static SaveManager Instance;
     public GameStateController gsc;
     public int currentSlotIndex = 0;
 
@@ -15,19 +15,32 @@ public class SaveManager : MonoBehaviour
         return Application.persistentDataPath + "/SaveSlot_" + slotIndex + ".json";
     }
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void SaveToSlot(int slotIndex)
     {
-
         currentSlotIndex = slotIndex;
+        if (gsc == null) gsc = FindObjectOfType<GameStateController>();
 
         SaveData data = new SaveData();
+        data.sceneName = SceneManager.GetActiveScene().name;
 
         if (gsc != null)
         {
             data.day = gsc.currentDay;
             data.timer = gsc.stateTimer;
             data.stateName = gsc.currentStateName;
-            data.sceneName = SceneManager.GetActiveScene().name;
         }
         else
         {
@@ -81,6 +94,8 @@ public class SaveManager : MonoBehaviour
             {
                 gsc.calendarUI.HighLightToday(gsc.currentDay);
             }
+
+            SceneManager.LoadScene(data.sceneName);
         }
         else
         {
