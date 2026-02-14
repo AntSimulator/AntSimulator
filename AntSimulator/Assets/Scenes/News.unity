@@ -1247,8 +1247,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cba86f7229cca054ea461eb63655e5fe, type: 3}
---- !u!4 &1108538219 stripped
-Transform:
+--- !u!224 &1108538219 stripped
+RectTransform:
   m_CorrespondingSourceObject: {fileID: 4224382268944060936, guid: cba86f7229cca054ea461eb63655e5fe, type: 3}
   m_PrefabInstance: {fileID: 1108538218}
   m_PrefabAsset: {fileID: 0}
@@ -1677,9 +1677,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GlobalCommunityManager
   eventManager: {fileID: 1401095160}
   eventDb: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
-  ticksPerDay: 300
+  ticksPerDay: 180
   morningTick: 0
-  infoPostsPerDay: 3
+  infoPostsPerDay: 1
   templates:
   - {fileID: 11400000, guid: 6e2750b2ec94d457d93f98b44bb5c84d, type: 2}
   - {fileID: 11400000, guid: c3088e9402ba44d4caa3369ba2c55db0, type: 2}
@@ -1743,7 +1743,7 @@ MonoBehaviour:
   gameStateController: {fileID: 1401095162}
   marketSimulator: {fileID: 1401095161}
   eventManager: {fileID: 1401095160}
-  totalDays: 4
+  totalDays: 5
   runsFolderName: runs
   RunId: 
   RunFolderPath: 
@@ -1763,8 +1763,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EvnetManager
   runEvents: []
   db: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
-  ticksPerDay: 300
+  ticksPerDay: 180
   morningTick: 0
+  calendarSchedules: []
 --- !u!114 &1401095161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1798,7 +1799,7 @@ MonoBehaviour:
   tickIntervalSec: 1
   eventManager: {fileID: 1401095160}
   historyExporter: {fileID: 1401095155}
-  ticksPerDay: 300
+  ticksPerDay: 180
   runRecorder: {fileID: 1401095159}
   gameStateController: {fileID: 1401095162}
 --- !u!114 &1401095162
@@ -1823,7 +1824,8 @@ MonoBehaviour:
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1401095159}
   seedExporter: {fileID: 1401095154}
-  targetDay: 4
+  targetDay: 5
+  calendarSchedules: []
 --- !u!4 &1401095163
 Transform:
   m_ObjectHideFlags: 0
@@ -1870,9 +1872,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1108538219}
   - {fileID: 747855206}
   - {fileID: 521737170}
+  - {fileID: 1108538219}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

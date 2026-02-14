@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
@@ -25,6 +26,8 @@ public class GameStateController : MonoBehaviour
     [Header("Ending Settings")]
     public int targetDay = 5;
 
+    [Header("Calendar Event Schedules")] public List<CalendarDayScheduleSO> calendarSchedules = new();
+
 
     void Start()
     {
@@ -35,7 +38,7 @@ public class GameStateController : MonoBehaviour
         var runEvents = RunEventGenerator.Generate(
             eventDatabase,
             totalDays: targetDay,
-            calendarCount: targetDay,
+            calendarSchedules: calendarSchedules,
             hiddenCount: targetDay * 3);
 
         //??? ??? ??? + day 1 ?? ??
