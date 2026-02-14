@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BFE
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
   basePrice: 35000
-  maxUpPercent: 0.08
-  maxDownPercent: 0.08
+  maxUpPercent: 0.06
+  maxDownPercent: 0.06
   volumeBoostK: 25
   volumeNoiseMin: 0.7
   volumeNoiseMax: 1.3
