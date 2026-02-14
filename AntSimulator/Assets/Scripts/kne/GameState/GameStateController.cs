@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
@@ -30,6 +31,8 @@ public class GameStateController : MonoBehaviour
     private long ecurrentCash = 0;
     private PlayerController _endingPlayer;
 
+    [Header("Calendar Event Schedules")] public List<CalendarDayScheduleSO> calendarSchedules = new();
+
 
     void Start()
     {
@@ -40,7 +43,7 @@ public class GameStateController : MonoBehaviour
         var runEvents = RunEventGenerator.Generate(
             eventDatabase,
             totalDays: targetDay,
-            calendarCount: targetDay,
+            calendarSchedules: calendarSchedules,
             hiddenCount: targetDay * 3);
 
         //??? ??? ??? + day 1 ?? ??

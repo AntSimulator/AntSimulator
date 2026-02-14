@@ -8220,7 +8220,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1689140721}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99998474
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12412,6 +12412,7 @@ MonoBehaviour:
   db: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   ticksPerDay: 300
   morningTick: 0
+  calendarSchedules: []
 --- !u!114 &1049095968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12470,7 +12471,12 @@ MonoBehaviour:
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1049095966}
   seedExporter: {fileID: 1049095961}
-  targetDay: 4
+  targetDay: 5
+  calendarSchedules:
+  - {fileID: 11400000, guid: 91751c34d8aca4d47a1834399e6ae552, type: 2}
+  - {fileID: 11400000, guid: bb608160781fc44c2bc2f0d93cf96a41, type: 2}
+  - {fileID: 11400000, guid: ecee4725a69e74edb86b92a6a6cb7c84, type: 2}
+  - {fileID: 11400000, guid: 20f23f7ebf9bf4932aa98fb58542fced, type: 2}
 --- !u!4 &1049095970
 Transform:
   m_ObjectHideFlags: 0
@@ -20547,9 +20553,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2123212650}
   - {fileID: 757244731}
   - {fileID: 1387852390}
+  - {fileID: 2123212650}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -21448,7 +21454,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.0016141214}
+  m_AnchoredPosition: {x: 0, y: -0.00014874137}
   m_SizeDelta: {x: 580, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1984327455
@@ -24451,8 +24457,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cba86f7229cca054ea461eb63655e5fe, type: 3}
---- !u!4 &2123212650 stripped
-Transform:
+--- !u!224 &2123212650 stripped
+RectTransform:
   m_CorrespondingSourceObject: {fileID: 4224382268944060936, guid: cba86f7229cca054ea461eb63655e5fe, type: 3}
   m_PrefabInstance: {fileID: 2123212649}
   m_PrefabAsset: {fileID: 0}
