@@ -21,7 +21,7 @@ MonoBehaviour:
   sector: 1
   targetStockIds:
   - PPAP
-  probEffect: 0.15
+  probEffect: 0.325
   isUp: 1
   depthEffect: 0.02
   durationDays: 2

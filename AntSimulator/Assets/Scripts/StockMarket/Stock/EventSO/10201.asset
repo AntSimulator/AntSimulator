@@ -21,7 +21,7 @@ MonoBehaviour:
   sector: 0
   targetStockIds:
   - FMC
-  probEffect: 0.3
+  probEffect: 0.225
   isUp: 1
   depthEffect: 0.03
   durationDays: 1

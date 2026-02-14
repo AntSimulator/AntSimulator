@@ -26,7 +26,7 @@ MonoBehaviour:
   - OMR
   - FADS
   - JPTI
-  probEffect: 0.8
+  probEffect: 0.5
   isUp: 1
   depthEffect: 0.02
   durationDays: 2
