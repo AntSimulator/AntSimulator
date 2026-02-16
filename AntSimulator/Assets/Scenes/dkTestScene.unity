@@ -207,6 +207,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3738696905433401197, guid: a546ecc6fc53f1a4d907c518600bdd7a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1049095973}
     - target: {fileID: 6408533220878384076, guid: a546ecc6fc53f1a4d907c518600bdd7a, type: 3}
       propertyPath: m_Name
       value: Calendar_window
@@ -500,6 +504,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 616762972792144570, guid: 6c1afaa1f979d934ba90b0e99d76a8bc, type: 3}
   m_PrefabInstance: {fileID: 265695004}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &141391754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4488380072980805066, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
+  m_PrefabInstance: {fileID: 1367772928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &153817312
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561601550072965257, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 8125875
+      value: 8624077
       objectReference: {fileID: 0}
     - target: {fileID: 4374729863678750638, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1210,6 +1219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Popup_Delivery
       objectReference: {fileID: 0}
+    - target: {fileID: 2571762354810805653, guid: 836c71e8773c55744ae2a4d8e2af6c30, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1049095972}
     - target: {fileID: 3437200162471501524, guid: 836c71e8773c55744ae2a4d8e2af6c30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3306,7 +3319,7 @@ MonoBehaviour:
   - id: Popup_Transfer
     root: {fileID: 665335592}
   - id: Popup_HTS
-    root: {fileID: 0}
+    root: {fileID: 141391754}
   - id: Popup_Delivery
     root: {fileID: 1578060833}
   - id: Popup_News
@@ -4081,11 +4094,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3776463213614494044, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -24.416706
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3776463213614494044, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -218.18353
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3776463213614494044, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4113,15 +4126,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4061219160265246016, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4061219160265246016, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4061219160265246016, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 4183292835563644528, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_Pivot.x
@@ -4187,6 +4200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Popup_HTS
       objectReference: {fileID: 0}
+    - target: {fileID: 4488380072980805066, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4509106605593067878, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -19.358925
@@ -4229,11 +4246,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5120080743039826557, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5120080743039826557, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5190707823006333635, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4390,6 +4407,14 @@ PrefabInstance:
     - target: {fileID: 6428557026980732899, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_SizeDelta.y
       value: 26.042223
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532748919250249084, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1049095972}
+    - target: {fileID: 6532748919250249084, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Close
       objectReference: {fileID: 0}
     - target: {fileID: 6728630903377266459, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6203,6 +6228,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Popup_Transfer
       objectReference: {fileID: 0}
+    - target: {fileID: 5981646142805357044, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1049095972}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6216,6 +6245,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2117548769}
     m_Modifications:
+    - target: {fileID: 211200453490312376, guid: e4dc9f60d879a5043b5d503d8a142cf8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1049095972}
+    - target: {fileID: 4416322090190262393, guid: e4dc9f60d879a5043b5d503d8a142cf8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1049095972}
     - target: {fileID: 4472148460381775588, guid: e4dc9f60d879a5043b5d503d8a142cf8, type: 3}
       propertyPath: m_Name
       value: Popup_OnlineBanking
