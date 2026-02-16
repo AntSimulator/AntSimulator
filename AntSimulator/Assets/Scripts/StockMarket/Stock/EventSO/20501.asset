@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
+  m_Name: 20501
+  m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
+  eventId: 20501
+  title: 
+  description: "\uC9DC\uD30C\uAC8C\uB9AC CEO, \uC5E5\uB514\uBE44\uC544 \uB099\uC218\uD6A8\uACFC
+    \uB178\uB9B0 '\uC5ED\uB300\uAE09 \uC5B8\uB860 \uD50C\uB808\uC774'\u2026 \"\uC591\uC790
+    \uB3D9\uB9F9 \uC544\uB2C8\uBA74 \uC8FD\uC74C\uBFD0\" \uBC30\uC218\uC9C4"
+  scope: 2
+  sector: 1
+  targetStockIds:
+  - JPTI
+  probEffect: 0.45
+  isUp: 1
+  depthEffect: 0.03
+  durationDays: 2
+  delist: 0
+  delistStockIds: []
+  canBeCalendarEvent: 0
+  canBeHidden: 1
+  allowRepeatInRun: 0

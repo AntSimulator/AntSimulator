@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
   stockId: 
   direction: 1
-  title: "\uB4E4\uACE0\uC788\uB2E4\uAC00 \uD6C4\uC190\uC5D0\uAC8C \uC99D\uC5EC\uD6C4
+  title: "\uB4E4\uACE0\uC788\uB2E4\uAC00 \uD6C4\uC190\uC5D0\uAC8C \uC99D\uC5EC \uD6C4
     \uC720\uC0B0\uC73C\uB85C \uB0A8\uACA8\uC8FC\uC790!"
   body: 

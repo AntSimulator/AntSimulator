@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: TSLM_d 9
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: TSLM
+  direction: 1
+  title: "\uB9C8\uC2A4\uD06C\uAC00 \uD2F0\uC2AC\uB77C \uBC84\uB9B0\uC9C0\uAC00 \uC5B8\uC820\uB370
+    \uC544\uC9C1\uAE4C\uC9C0\uB3C4 \u314B\u314B\u314B"
+  body: 

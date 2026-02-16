@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
+  m_Name: 61202
+  m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
+  eventId: 61202
+  title: 
+  description: "\uC2E4\uC801 \uAC00\uC774\uB358\uC2A4 \uD558\uD5A5 \uC870\uC815\uD55C
+    Korea Express Financial, \uCEE8\uD37C\uB7F0\uC2A4 \uCF5C \uC774\uD6C4 \uC2E4\uB9DD
+    \uB9E4\uBB3C \uC3DF\uC544\uC9C0\uBA70 \uAE09\uB77D"
+  scope: 2
+  sector: 5
+  targetStockIds:
+  - KREX
+  probEffect: 0.4
+  isUp: 0
+  depthEffect: 0.02
+  durationDays: 3
+  delist: 0
+  delistStockIds: []
+  canBeCalendarEvent: 0
+  canBeHidden: 1
+  allowRepeatInRun: 0

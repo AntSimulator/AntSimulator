@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 51003
   title: 
-  description: "\uB178\uB7C9\uC870\uAC1C, \uAD6D\uB0B4 \uC720\uC77C HALEU(\uACE0\uB18D\uCD95
-    \uC6B0\uB77C\uB284) \uC0DD\uC0B0 \uC131\uACF5... \uAD6D\uAC00 \uC548\uBCF4 \uD575\uC2EC
-    \uAE30\uC5C5 \uB4F1\uADF9"
+  description: "[\uAE34\uAE09] \uD2B8\uB78C\uD478 \uC815\uBD80, \uB7EC\uC2DC\uC544\uC0B0
+    \uC800\uB18D\uCD95 \uC6B0\uB77C\uB284 \uC218\uC785 \uC804\uBA74 \uAE08\uC9C0
+    \uC11C\uBA85... \"\uBD80\uD2F4\uC758 \uB3C8\uC904 \uB04A\uACA0\uB2E4\""
   scope: 2
   sector: 4
   targetStockIds:
   - YSYL
-  probEffect: 0.85
+  probEffect: 0.35
   isUp: 1
   depthEffect: 0.02
   durationDays: 3

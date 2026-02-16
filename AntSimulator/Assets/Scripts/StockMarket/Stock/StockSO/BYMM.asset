@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: BYMM
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 10000
-  maxUpPercent: 1
-  maxDownPercent: 1
+  basePrice: 1000
+  maxUpPercent: 0.006
+  maxDownPercent: 0.006
   volumeBoostK: 40
   volumeNoiseMin: 0.7
   volumeNoiseMax: 1.5
