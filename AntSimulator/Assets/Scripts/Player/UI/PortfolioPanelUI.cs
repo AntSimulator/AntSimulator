@@ -55,11 +55,13 @@ namespace Player.UI
             }
 
             RefreshSelectedStockView();
+            RegisterStatusBindings();
         }
 
         private void OnDisable()
         {
             StockSelectionEvents.OnStockSelected -= HandleStockSelected;
+            UnregisterStatusBindings();
         }
 
         private void Update()
@@ -185,9 +187,6 @@ namespace Player.UI
                 : ResolveStockDisplayName(runtimeStockId);
 
             var currentPrice = GetMarketPrice(runtimeStockId);
-            var quantity = playerController != null ? playerController.GetSelectedQuantity() : 0;
-            var avgBuyPrice = playerController != null ? playerController.GetSelectedAvgBuyPrice() : 0f;
-            var profitRate = CalculateProfitRate(currentPrice, avgBuyPrice, quantity);
 
             if (stockNameText != null)
             {
@@ -198,31 +197,6 @@ namespace Player.UI
             {
                 currentPriceText.text = $"Current: {currentPrice:N0}";
             }
-
-            if (totalBuyQuantityText != null)
-            {
-                totalBuyQuantityText.text = $"Holding: {quantity}";
-            }
-
-            if (averageBuyPriceText != null)
-            {
-                averageBuyPriceText.text = $"Avg Buy: {avgBuyPrice:N2}";
-            }
-
-            if (profitRateText != null)
-            {
-                profitRateText.text = $"Return: {profitRate:+0.00;-0.00;0.00}%";
-            }
-        }
-
-        private static float CalculateProfitRate(float currentPrice, float avgBuyPrice, int quantity)
-        {
-            if (quantity <= 0 || avgBuyPrice <= 0f)
-            {
-                return 0f;
-            }
-
-            return (currentPrice - avgBuyPrice) / avgBuyPrice * 100f;
         }
 
         private string ResolveRuntimeStockId()
@@ -318,6 +292,34 @@ namespace Player.UI
             }
 
             return null;
+        }
+
+        private void RegisterStatusBindings()
+        {
+            if (PlayerStatusUI.Instance == null) return;
+
+            if (totalBuyQuantityText != null)
+                PlayerStatusUI.Instance.RegisterBinding(StatusType.SelectedQuantity, totalBuyQuantityText, "Holding: {0}");
+
+            if (averageBuyPriceText != null)
+                PlayerStatusUI.Instance.RegisterBinding(StatusType.SelectedAvgBuyPrice, averageBuyPriceText, "Avg Buy: {0:N2}");
+
+            if (profitRateText != null)
+                PlayerStatusUI.Instance.RegisterBinding(StatusType.SelectedProfitRate, profitRateText, "Return: {0:+0.00;-0.00;0.00}%");
+        }
+
+        private void UnregisterStatusBindings()
+        {
+            if (PlayerStatusUI.Instance == null) return;
+
+            if (totalBuyQuantityText != null)
+                PlayerStatusUI.Instance.UnregisterBinding(StatusType.SelectedQuantity, totalBuyQuantityText);
+
+            if (averageBuyPriceText != null)
+                PlayerStatusUI.Instance.UnregisterBinding(StatusType.SelectedAvgBuyPrice, averageBuyPriceText);
+
+            if (profitRateText != null)
+                PlayerStatusUI.Instance.UnregisterBinding(StatusType.SelectedProfitRate, profitRateText);
         }
     }
 }

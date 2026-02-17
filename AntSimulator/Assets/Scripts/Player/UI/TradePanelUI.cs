@@ -14,8 +14,6 @@ namespace Player.UI
         [Header("UI Text")]
         [SerializeField] private TMP_Text stockNameText;
         [SerializeField] private TMP_Text currentPriceText;
-        [SerializeField] private TMP_Text stockBalanceText;
-        [SerializeField] private TMP_Text cashText;
 
         [Header("Input")]
         [SerializeField] private TMP_InputField quantityInput;
@@ -67,20 +65,12 @@ namespace Player.UI
         private void UpdateUI()
         {
             float currentPrice = GetMarketPrice(selectedStockCode);
-            long cash = playerController != null ? playerController.Cash : 0;
-            int quantity = playerController != null ? playerController.GetSelectedQuantity() : 0;
 
             if (stockNameText != null)
                 stockNameText.text = selectedStockName;
 
             if (currentPriceText != null)
                 currentPriceText.text = $"{currentPrice:N0}";
-
-            if (stockBalanceText != null)
-                stockBalanceText.text = $"{quantity}";
-
-            if (cashText != null)
-                cashText.text = $"{cash:N0}";
         }
 
         private float GetMarketPrice(string stockCode)

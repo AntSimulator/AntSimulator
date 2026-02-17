@@ -63,6 +63,12 @@ namespace Player.UI
         private void OnEnable()
         {
             RefreshView(forceRebuild: true);
+            RegisterSummaryBindings();
+        }
+
+        private void OnDisable()
+        {
+            UnregisterSummaryBindings();
         }
 
         private void Update()
@@ -244,7 +250,6 @@ namespace Player.UI
             var holdings = playerController.GetHoldings();
             var marketStocks = marketSimulator.GetAllStocks();
 
-            long totalStockEvaluation = 0;
             staleStockIds.Clear();
             foreach (var stockId in rowsByStockId.Keys)
             {
@@ -263,7 +268,6 @@ namespace Player.UI
                 var currentPrice = GetCurrentPrice(stockId, holding.avgBuyPrice, marketStocks);
                 var stockEvaluation = (long)Math.Round(currentPrice * holding.quantity);
                 var profitRate = CalculateProfitRate(currentPrice, holding.avgBuyPrice);
-                totalStockEvaluation += stockEvaluation;
 
                 var rowView = GetOrCreateRow(stockId, forceRebuild);
                 UpdateRow(rowView, stockId, currentPrice, holding.quantity, holding.avgBuyPrice, stockEvaluation, profitRate);
@@ -286,15 +290,6 @@ namespace Player.UI
                 rowsByStockId.Remove(stockId);
             }
 
-            if (stockEvaluationText != null)
-            {
-                stockEvaluationText.text = $"주식 평가금: {totalStockEvaluation:N0}";
-            }
-
-            if (cashText != null)
-            {
-                cashText.text = $"현재 현금: {playerController.Cash:N0}";
-            }
         }
 
         private float GetCurrentPrice(string stockId, float fallbackPrice, IReadOnlyDictionary<string, StockState> marketStocks)
@@ -547,8 +542,31 @@ namespace Player.UI
             return null;
         }
 
+        private void RegisterSummaryBindings()
+        {
+            if (PlayerStatusUI.Instance == null) return;
+
+            if (stockEvaluationText != null)
+                PlayerStatusUI.Instance.RegisterBinding(StatusType.StockEvaluation, stockEvaluationText, "주식 평가금: {0:N0}");
+
+            if (cashText != null)
+                PlayerStatusUI.Instance.RegisterBinding(StatusType.Cash, cashText, "현재 현금: {0:N0}");
+        }
+
+        private void UnregisterSummaryBindings()
+        {
+            if (PlayerStatusUI.Instance == null) return;
+
+            if (stockEvaluationText != null)
+                PlayerStatusUI.Instance.UnregisterBinding(StatusType.StockEvaluation, stockEvaluationText);
+
+            if (cashText != null)
+                PlayerStatusUI.Instance.UnregisterBinding(StatusType.Cash, cashText);
+        }
+
         private void OnDestroy()
         {
+            UnregisterSummaryBindings();
             rowsByStockId.Clear();
             staleStockIds.Clear();
         }

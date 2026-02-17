@@ -50,6 +50,9 @@ namespace Player.Runtime
         private string pendingSelectedStockId;
 
         public event Action<int, int> OnHpChanged;
+        public event Action<long> OnCashChanged;
+        public event Action OnHoldingsChanged;
+        public event Action<string> OnSelectedStockChanged;
 
         private void OnEnable()
         {
@@ -98,12 +101,16 @@ namespace Player.Runtime
 
         private void Start()
         {
-            if (!applySeedOnStart)
+            if (applySeedOnStart)
             {
-                return;
+                ApplySeedFromStockDefinitions();
+            }
+            else
+            {
+                OnSelectedStockChanged?.Invoke(SelectedStockId);
             }
 
-            ApplySeedFromStockDefinitions();
+            OnCashChanged?.Invoke(Cash);
         }
 
         private void EnsureDefaultStocks()
@@ -140,6 +147,7 @@ namespace Player.Runtime
                 selectedIndex = i;
                 tradingEngine.SelectByIndex(i);
                 pendingSelectedStockId = null;
+                OnSelectedStockChanged?.Invoke(stockId);
                 return true;
             }
 
@@ -183,6 +191,7 @@ namespace Player.Runtime
             else
             {
                 tradingEngine.SelectByIndex(selectedIndex);
+                OnSelectedStockChanged?.Invoke(SelectedStockId);
             }
 
             Debug.Log($"[Player] Seed applied cash={state.cash} stocks={testStocks.Length}");
@@ -236,6 +245,8 @@ namespace Player.Runtime
             else
             {
                 Debug.Log($"[BUY] {current.stockId} x{qtyStep} @ {tradingEngine.CurrentStock.currentPrice}");
+                OnCashChanged?.Invoke(Cash);
+                OnHoldingsChanged?.Invoke();
             }
         }
 
@@ -256,6 +267,8 @@ namespace Player.Runtime
             else
             {
                 Debug.Log($"[SELL] {current.stockId} x{qtyStep} @ {tradingEngine.CurrentStock.currentPrice}");
+                OnCashChanged?.Invoke(Cash);
+                OnHoldingsChanged?.Invoke();
             }
         }
 
@@ -349,7 +362,12 @@ namespace Player.Runtime
                     return;
                 }
 
+                var prev = state.cash;
                 state.SetCash(value);
+                if (state.cash != prev)
+                {
+                    OnCashChanged?.Invoke(state.cash);
+                }
             }
         }
 
