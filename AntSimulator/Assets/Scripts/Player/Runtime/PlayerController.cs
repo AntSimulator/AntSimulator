@@ -78,13 +78,23 @@ namespace Player.Runtime
             }
         }
 
+        private void EnsureHpInitialized()
+        {
+            if (hp != null)
+            {
+                return;
+            }
+
+            hp = new PlayerHp(startHp, maxHp);
+            hp.OnHpChanged += HandleHpChanged;
+        }
+
         private void Awake()
         {
             state = new PlayerState(startCash);
-            hp = new PlayerHp(startHp, maxHp);
+            EnsureHpInitialized();
             tradingEngine = new PlayerTradingEngine(state);
             seedPortfolioUseCase = new SeedPortfolioUseCase();
-            hp.OnHpChanged += HandleHpChanged;
 
             EnsureDefaultStocks();
             tradingEngine.ReplaceStocks(ToCoreStocks(testStocks));
@@ -111,6 +121,7 @@ namespace Player.Runtime
             }
 
             OnCashChanged?.Invoke(Cash);
+            OnHpChanged?.Invoke(CurrentHp, MaxHp);
         }
 
         private void EnsureDefaultStocks()
@@ -420,23 +431,40 @@ namespace Player.Runtime
             return state.cash;
         }
 
-        public int CurrentHp => hp != null ? hp.CurrentHp : 0;
+        public int CurrentHp
+        {
+            get
+            {
+                EnsureHpInitialized();
+                return hp.CurrentHp;
+            }
+        }
 
-        public int MaxHp => hp != null ? hp.MaxHp : 0;
+        public int MaxHp
+        {
+            get
+            {
+                EnsureHpInitialized();
+                return hp.MaxHp;
+            }
+        }
 
         public void AddHp(int amount)
         {
-            hp?.AddHp(amount);
+            EnsureHpInitialized();
+            hp.AddHp(amount);
         }
 
         public void DecreaseHp(int amount)
         {
-            hp?.DecreaseHp(amount);
+            EnsureHpInitialized();
+            hp.DecreaseHp(amount);
         }
 
         public void SetHp(int value)
         {
-            hp?.SetHp(value);
+            EnsureHpInitialized();
+            hp.SetHp(value);
         }
 
         private void HandleHpChanged(int currentHp, int currentMaxHp)
