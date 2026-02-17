@@ -1,12 +1,13 @@
 using TMPro;
 using UnityEngine;
+using Player.Runtime;
 using Stocks.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Player
+namespace Player.UI
 {
     [DisallowMultipleComponent]
     public class PortfolioPanelUI : MonoBehaviour

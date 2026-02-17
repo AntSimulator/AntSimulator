@@ -1,8 +1,9 @@
 using UnityEngine;
 using TMPro;
+using Player.Runtime;
 using Stocks.UI;
 
-namespace Player
+namespace Player.UI
 {
     public class TradePanelUI : MonoBehaviour
     {

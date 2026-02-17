@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XCharts.Example;
 
-namespace Player
+namespace Player.UI
 {
     public class PopupPanelSwitcher : MonoBehaviour
     {

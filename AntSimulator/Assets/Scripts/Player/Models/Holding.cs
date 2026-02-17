@@ -1,6 +1,6 @@
 using System;
 
-namespace Player
+namespace Player.Models
 {
     [Serializable]
     public class Holding

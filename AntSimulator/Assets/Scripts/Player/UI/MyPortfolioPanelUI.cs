@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Player.Models;
+using Player.Runtime;
 using Stocks.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Player
+namespace Player.UI
 {
     [DisallowMultipleComponent]
     public sealed class MyPortfolioPanelUI : MonoBehaviour

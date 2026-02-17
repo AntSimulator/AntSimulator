@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Player
+namespace Player.Models
 {
     [Serializable]
     public class PlayerState

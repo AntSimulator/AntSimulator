@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Player.Core;
+using Player.Models;
 using Stocks.Models;
 using Stocks.UI;
 
-namespace Player
+namespace Player.Runtime
 {
     public class PlayerController : MonoBehaviour
     {
@@ -27,6 +29,10 @@ namespace Player
         [SerializeField] private long startCash = 100000;
         [SerializeField] private int seedDefaultPrice = 1000;
 
+        [Header("HP Settings")]
+        [SerializeField] private int startHp = 100;
+        [SerializeField] private int maxHp = 100;
+
         [Header("Seed Source (Stock SO)")]
         [SerializeField] private bool applySeedOnStart = true;
         [SerializeField] private List<StockDefinition> seedStockDefinitions = new();
@@ -37,10 +43,13 @@ namespace Player
         [SerializeField] private bool seedOverrideStocks = true;
 
         private PlayerState state;
+        private PlayerHp hp;
         private PlayerTradingEngine tradingEngine;
         private SeedPortfolioUseCase seedPortfolioUseCase;
         private int selectedIndex;
         private string pendingSelectedStockId;
+
+        public event Action<int, int> OnHpChanged;
 
         private void OnEnable()
         {
@@ -69,12 +78,22 @@ namespace Player
         private void Awake()
         {
             state = new PlayerState(startCash);
+            hp = new PlayerHp(startHp, maxHp);
             tradingEngine = new PlayerTradingEngine(state);
             seedPortfolioUseCase = new SeedPortfolioUseCase();
+            hp.OnHpChanged += HandleHpChanged;
 
             EnsureDefaultStocks();
             tradingEngine.ReplaceStocks(ToCoreStocks(testStocks));
             tradingEngine.SelectByIndex(selectedIndex);
+        }
+
+        private void OnDestroy()
+        {
+            if (hp != null)
+            {
+                hp.OnHpChanged -= HandleHpChanged;
+            }
         }
 
         private void Start()
@@ -381,6 +400,30 @@ namespace Player
         {
             if (state == null) return 0;
             return state.cash;
+        }
+
+        public int CurrentHp => hp != null ? hp.CurrentHp : 0;
+
+        public int MaxHp => hp != null ? hp.MaxHp : 0;
+
+        public void AddHp(int amount)
+        {
+            hp?.AddHp(amount);
+        }
+
+        public void DecreaseHp(int amount)
+        {
+            hp?.DecreaseHp(amount);
+        }
+
+        public void SetHp(int value)
+        {
+            hp?.SetHp(value);
+        }
+
+        private void HandleHpChanged(int currentHp, int currentMaxHp)
+        {
+            OnHpChanged?.Invoke(currentHp, currentMaxHp);
         }
     }
 }
