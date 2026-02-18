@@ -253,8 +253,8 @@ namespace Stocks.UI
             if (!useDataZoom) return;
             if (!priceStick || !volumeChart) return;
 
-            _priceZoom = ConfigureDataZoom(priceStick);
-            _volumeZoom = ConfigureDataZoom(volumeChart);
+            _priceZoom = ConfigureDataZoom(priceStick, supportSlider: false);
+            _volumeZoom = ConfigureDataZoom(volumeChart, supportSlider: true);
 
             _priceZoom.startEndFunction = (ref float start, ref float end) =>
                 SyncZoom(_volumeZoom, volumeChart, start, end);
@@ -265,14 +265,14 @@ namespace Stocks.UI
             ApplyInitialZoom(dataCount);
         }
 
-        DataZoom ConfigureDataZoom(BaseChart chart)
+        DataZoom ConfigureDataZoom(BaseChart chart, bool supportSlider = true)
         {
             var zoom = chart.EnsureChartComponent<DataZoom>();
             zoom.enable = true;
             zoom.supportInside = true;
             zoom.supportInsideDrag = false;
             zoom.supportInsideScroll = true;
-            zoom.supportSlider = true;
+            zoom.supportSlider = supportSlider;
             zoom.supportMarquee = false;
             zoom.zoomLock = false;
             zoom.filterMode = DataZoom.FilterMode.Filter;
@@ -281,6 +281,15 @@ namespace Stocks.UI
             zoom.rangeMode = DataZoom.RangeMode.Percent;
             zoom.minZoomRatio = Mathf.Clamp(minZoomRatio, 0.01f, 1f);
             zoom.scrollSensitivity = scrollSensitivity;
+
+            if (supportSlider)
+            {
+                zoom.top = 0.8f;
+                zoom.bottom = 5f;
+                zoom.left = 75f;
+                zoom.right = 20f;
+            }
+
             return zoom;
         }
 
