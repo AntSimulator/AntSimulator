@@ -20,6 +20,13 @@ namespace Stocks.UI
         [Range(1f, 20f)] public float scrollSensitivity = 4f;
         public bool keepEndOnUpdate = true;
 
+        [Header("Chart Rect Layout")]
+        public bool forceChartRectToFillParent = true;
+        [Min(0f)] public float chartInsetLeft = 0f;
+        [Min(0f)] public float chartInsetRight = 0f;
+        [Min(0f)] public float chartInsetTop = 0f;
+        [Min(0f)] public float chartInsetBottom = 0f;
+
 
         [Header("JSON in StreamingAssets")]
         public string jsonFileName = "stocks_history.json";
@@ -59,6 +66,7 @@ namespace Stocks.UI
             _path = File.Exists(p) ? p : null;
             if (priceStick) priceStick.Init();
             if (volumeChart) volumeChart.Init();
+            ApplyChartRectLayout();
 
             Reload();
         }
@@ -110,6 +118,7 @@ namespace Stocks.UI
 
             if (priceStick) priceStick.RefreshChart();
             if (volumeChart) volumeChart.RefreshChart();
+            ApplyChartRectLayout();
         }
 
 
@@ -208,6 +217,7 @@ namespace Stocks.UI
             ClearChart(volumeChart);
             _barAnimated = false;
             _priceAnimated = false;
+            ApplyChartRectLayout();
         }
 
         static void ClearChart(BaseChart chart)
@@ -217,6 +227,25 @@ namespace Stocks.UI
             chart.Init();
             chart.RemoveData();
             chart.RefreshChart();
+        }
+
+        void ApplyChartRectLayout()
+        {
+            if (!forceChartRectToFillParent) return;
+
+            ApplyRectLayout(priceStick ? priceStick.rectTransform : null);
+            ApplyRectLayout(volumeChart ? volumeChart.rectTransform : null);
+        }
+
+        void ApplyRectLayout(RectTransform rt)
+        {
+            if (!rt) return;
+
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.offsetMin = new Vector2(chartInsetLeft, chartInsetBottom);
+            rt.offsetMax = new Vector2(-chartInsetRight, -chartInsetTop);
         }
 
         void SetupDataZoom(int dataCount)
@@ -241,9 +270,9 @@ namespace Stocks.UI
             var zoom = chart.EnsureChartComponent<DataZoom>();
             zoom.enable = true;
             zoom.supportInside = true;
-            zoom.supportInsideDrag = true;
+            zoom.supportInsideDrag = false;
             zoom.supportInsideScroll = true;
-            zoom.supportSlider = false;
+            zoom.supportSlider = true;
             zoom.supportMarquee = false;
             zoom.zoomLock = false;
             zoom.filterMode = DataZoom.FilterMode.Filter;
@@ -328,7 +357,7 @@ namespace Stocks.UI
             ConfigureTooltip(chart);
 
             var grid = chart.EnsureChartComponent<GridCoord>();
-            grid.left = 100; grid.right = 100; grid.top = 30; grid.bottom = 30;
+            grid.left = 75; grid.right = 20; grid.top = 20; grid.bottom = 50;
 
             chart.RemoveData();
             chart.AddSerie<Candlestick>("S1");
@@ -338,6 +367,9 @@ namespace Stocks.UI
             var serie = chart.series[0];
             serie.barWidth = 20;
             serie.barGap = 30;
+            
+            var xaxis = chart.EnsureChartComponent<XAxis>();
+            xaxis.type = XAxis.AxisType.Category;
 
             for (int i = 0; i < xLabels.Length; i++)
             {
@@ -358,7 +390,7 @@ namespace Stocks.UI
             ConfigureTooltip(chart);
 
             var grid = chart.EnsureChartComponent<GridCoord>();
-            grid.left = 0; grid.right = 0; grid.top = 150; grid.bottom = 100;
+            grid.left = 75; grid.right = 20; grid.top = 20; grid.bottom = 50;
 
             chart.RemoveData();
             chart.AddSerie<Bar>("S1");
@@ -368,6 +400,9 @@ namespace Stocks.UI
             var serie = chart.series[0];
             serie.barWidth = 20;
             serie.barGap = 30;
+            
+            var xaxis = chart.EnsureChartComponent<XAxis>();
+            xaxis.type = XAxis.AxisType.Category;
 
             for (int i = 0; i < xLabels.Length; i++)
             {
