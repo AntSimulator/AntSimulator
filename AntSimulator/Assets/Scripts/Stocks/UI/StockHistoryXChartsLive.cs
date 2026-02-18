@@ -304,8 +304,7 @@ namespace Stocks.UI
             if (keepEndOnUpdate)
             {
                 bool hasValidRange = _priceZoom.end > _priceZoom.start + 0.01f;
-                bool atEnd = hasValidRange && Mathf.Abs(_priceZoom.end - 100f) < 0.001f;
-                if (hasValidRange && !atEnd)
+                if (hasValidRange)
                 {
                     start = _priceZoom.start;
                     end = _priceZoom.end;
