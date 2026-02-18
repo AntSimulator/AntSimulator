@@ -309,12 +309,23 @@ namespace Stocks.UI
         }
 
 
+        static void ConfigureTooltip(BaseChart chart)
+        {
+            var tooltip = chart.EnsureChartComponent<Tooltip>();
+            tooltip.show = true;
+            tooltip.trigger = Tooltip.Trigger.Axis;
+            tooltip.triggerOn = Tooltip.TriggerOn.Click;
+            tooltip.position = Tooltip.Position.Auto;
+        }
+
         static void ApplyCandlestickChart(CandlestickChart chart, string title, string[] xLabels, OhlcPoint[] ohlc, bool animate = true)
         {
             if (!chart) return;
 
             var t = chart.EnsureChartComponent<Title>();
             t.show = false;
+
+            ConfigureTooltip(chart);
 
             var grid = chart.EnsureChartComponent<GridCoord>();
             grid.left = 100; grid.right = 100; grid.top = 30; grid.bottom = 30;
@@ -343,6 +354,8 @@ namespace Stocks.UI
 
             var t = chart.EnsureChartComponent<Title>();
             t.show = false;
+
+            ConfigureTooltip(chart);
 
             var grid = chart.EnsureChartComponent<GridCoord>();
             grid.left = 0; grid.right = 0; grid.top = 150; grid.bottom = 100;
