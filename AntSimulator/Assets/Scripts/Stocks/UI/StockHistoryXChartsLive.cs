@@ -39,6 +39,9 @@ namespace Stocks.UI
 
         private long _lastSize = -1;
 
+        bool _barAnimated;
+        bool _priceAnimated;
+
 
         void OnEnable()
         {
@@ -63,6 +66,8 @@ namespace Stocks.UI
         void HandleStockSelected(string code, string name)
         {
             _ = name;
+            _barAnimated = false;
+            _priceAnimated = false;
             ShowStock(code);
         }
 
@@ -186,8 +191,11 @@ namespace Stocks.UI
                 return;
             }
 
-            ApplyCandlestickChart(priceStick, $"{projection.DisplayName} PRICE", projection.XLabels, projection.Ohlc);
-            ApplyBarChart(volumeChart, $"{projection.DisplayName} VOLUME", projection.XLabels, projection.Volumes);
+            ApplyCandlestickChart(priceStick, $"{projection.DisplayName} PRICE", projection.XLabels, projection.Ohlc, !_priceAnimated);
+            ApplyBarChart(volumeChart, $"{projection.DisplayName} VOLUME", projection.XLabels, projection.Volumes, !_barAnimated);
+
+            _priceAnimated = true;
+            _barAnimated = true;
 
             _lastDataCount = projection.XLabels.Length;
             SetupDataZoom(_lastDataCount);
@@ -198,6 +206,8 @@ namespace Stocks.UI
         {
             ClearChart(priceStick);
             ClearChart(volumeChart);
+            _barAnimated = false;
+            _priceAnimated = false;
         }
 
         static void ClearChart(BaseChart chart)
@@ -299,7 +309,7 @@ namespace Stocks.UI
         }
 
 
-        static void ApplyCandlestickChart(CandlestickChart chart, string title, string[] xLabels, OhlcPoint[] ohlc)
+        static void ApplyCandlestickChart(CandlestickChart chart, string title, string[] xLabels, OhlcPoint[] ohlc, bool animate = true)
         {
             if (!chart) return;
 
@@ -311,6 +321,8 @@ namespace Stocks.UI
 
             chart.RemoveData();
             chart.AddSerie<Candlestick>("S1");
+            if (!animate)
+                chart.series[0].animation.enable = false;
 
             var serie = chart.series[0];
             serie.barWidth = 20;
@@ -325,7 +337,7 @@ namespace Stocks.UI
             chart.RefreshChart();
         }
 
-        static void ApplyBarChart(BarChart chart, string title, string[] xLabels, double[] values)
+        static void ApplyBarChart(BarChart chart, string title, string[] xLabels, double[] values, bool animate = true)
         {
             if (!chart) return;
 
@@ -337,6 +349,8 @@ namespace Stocks.UI
 
             chart.RemoveData();
             chart.AddSerie<Bar>("S1");
+            if (!animate)
+                chart.series[0].animation.enable = false;
 
             var serie = chart.series[0];
             serie.barWidth = 20;
