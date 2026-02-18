@@ -9,5 +9,6 @@ namespace Expenses
         public string displayName;
         public int dueDay;
         public long amount;
+        public string accountNumber;
     }
 }

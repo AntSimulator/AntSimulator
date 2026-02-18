@@ -2,7 +2,15 @@ using System;
 
 namespace Expenses
 {
-    public enum ExpenseFailReason { None, InsufficientFunds }
+    public enum ExpenseFailReason
+    {
+        None = 0,
+        InsufficientFunds,
+        InvalidAccount,
+        InvalidAmount,
+        MissedDeadline,
+        SystemError
+    }
 
     [Serializable]
     public struct ExpenseResult

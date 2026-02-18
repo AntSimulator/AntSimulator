@@ -707,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561601550072965257, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 11547301
+      value: 11796050
       objectReference: {fileID: 0}
     - target: {fileID: 4374729863678750638, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3630,7 +3630,8 @@ MonoBehaviour:
   expenseDefinitions:
   - {fileID: 11400000, guid: 65cb2c64c22c2194dab38ed799d3c3a4, type: 2}
   resultChannel: {fileID: 11400000, guid: fbfeed3be68a33e4697bef79a28f2b9b, type: 2}
-  playerController: {fileID: 843853582}
+  transferRequestChannel: {fileID: 11400000, guid: 6cd129c505dc343e292edd3e84a8760a, type: 2}
+  transferResultChannel: {fileID: 11400000, guid: 2e834ac73ace3db4ab4f792070c59d19, type: 2}
 --- !u!114 &1113427609 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 292085237344707161, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
