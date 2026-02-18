@@ -380,6 +380,10 @@ namespace Stocks.UI
             var xaxis = chart.EnsureChartComponent<XAxis>();
             xaxis.type = XAxis.AxisType.Category;
 
+            var yaxis = chart.EnsureChartComponent<YAxis>();
+            yaxis.splitNumber = 6;
+            yaxis.axisLabel.numericFormatter = "f0";
+
             for (int i = 0; i < xLabels.Length; i++)
             {
                 chart.AddXAxisData(xLabels[i]);
@@ -412,6 +416,10 @@ namespace Stocks.UI
             
             var xaxis = chart.EnsureChartComponent<XAxis>();
             xaxis.type = XAxis.AxisType.Category;
+
+            var yaxis = chart.EnsureChartComponent<YAxis>();
+            yaxis.splitNumber = 3;
+            yaxis.axisLabel.numericFormatter = "f0";
 
             for (int i = 0; i < xLabels.Length; i++)
             {
