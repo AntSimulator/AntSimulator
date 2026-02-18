@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: TSLM_d 1
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: TSLM
+  direction: 1
+  title: "\uB9C8\uC2A4\uD06C\uB77C\uB294 \uCC9C\uC7AC \uC0AC\uC5C5\uAC00\uB294 \uC790\uC2E0\uC774
+    \uAFC8\uAFB8\uB358 \uBAA8\uB4E0 \uAC83\uC744 \uD604\uC2E4\uB85C \uC774\uB904\uB0B4\uACE0
+    \uC788\uB2E4. \uC2EC\uC9C0\uC5B4 \uADF8\uB294 \uC9C0\uAE08 \uB2EC\uC774 \uC544\uB2CC
+    \uD654\uC131\uC744 \uD0D0\uD5D8\uD558\uB824\uB358 \uC5B4\uB9B4 \uC801 \uAFC8\uC744
+    \uC2E4\uD604\uD558\uB824\uD558\uACE0 \uC788\uB2E4."
+  body: "\uC544\uC27D\uC9C0\uB9CC \uADF8 \uC790\uAE08\uC740 \uD2F0\uC2AC\uB77C \uC8FC\uC8FC\uAC00
+    \uB300\uC904 \uC608\uC815\uC774\uB2E4."

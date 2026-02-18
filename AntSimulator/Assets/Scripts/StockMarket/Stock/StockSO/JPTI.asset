@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: JPTI
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 85000
-  maxUpPercent: 0.06
-  maxDownPercent: 0.06
+  basePrice: 8500
+  maxUpPercent: 0.006
+  maxDownPercent: 0.006
   volumeBoostK: 40
   volumeNoiseMin: 0.6
   volumeNoiseMax: 1.4
