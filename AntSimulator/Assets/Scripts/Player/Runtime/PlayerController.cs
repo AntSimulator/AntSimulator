@@ -42,6 +42,15 @@ namespace Player.Runtime
         [SerializeField] private string seedIconColor = "#FFFFFF";
         [SerializeField] private bool seedOverrideStocks = true;
 
+        [Header("HP Drain")]
+        [SerializeField] private bool drainHpEnabled = true;
+        [SerializeField] private float drainIntervalSeconds = 2f; // 2초마다
+        [SerializeField] private int drainAmount = 1;            // 1씩 감소
+        [SerializeField] private bool drainUseUnscaledTime = false; // TimeScale=0이어도 닳게 할거면 true
+
+        private float hpDrainTimer = 0f;
+        
+        
         private PlayerState state;
         private PlayerHp hp;
         private PlayerTradingEngine tradingEngine;
@@ -123,6 +132,12 @@ namespace Player.Runtime
             OnCashChanged?.Invoke(Cash);
             OnHpChanged?.Invoke(CurrentHp, MaxHp);
         }
+        
+        private void Update()
+        {
+            DrainHpTick();
+        }
+
 
         private void EnsureDefaultStocks()
         {
@@ -463,7 +478,7 @@ namespace Player.Runtime
         {
             get
             {
-                EnsureHpInitialized();
+                
                 return hp.CurrentHp;
             }
         }
@@ -472,32 +487,51 @@ namespace Player.Runtime
         {
             get
             {
-                EnsureHpInitialized();
                 return hp.MaxHp;
             }
         }
 
         public void AddHp(int amount)
         {
-            EnsureHpInitialized();
+            
             hp.AddHp(amount);
         }
 
         public void DecreaseHp(int amount)
         {
-            EnsureHpInitialized();
+
             hp.DecreaseHp(amount);
         }
 
         public void SetHp(int value)
         {
-            EnsureHpInitialized();
+            
             hp.SetHp(value);
         }
 
         private void HandleHpChanged(int currentHp, int currentMaxHp)
         {
             OnHpChanged?.Invoke(currentHp, currentMaxHp);
+        }
+        
+        private void DrainHpTick()
+        {
+            if (!drainHpEnabled) return;
+
+            EnsureHpInitialized(); // 혹시라도 안전하게
+
+            float dt = drainUseUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+            if (dt <= 0f) return;
+
+            hpDrainTimer += dt;
+            if (hpDrainTimer < drainIntervalSeconds) return;
+
+            // 2초 단위로 누적된 만큼 처리 (프레임 드랍 대비)
+            while (hpDrainTimer >= drainIntervalSeconds)
+            {
+                hpDrainTimer -= drainIntervalSeconds;
+                hp.DecreaseHp(drainAmount);
+            }
         }
     }
 }

@@ -1,35 +1,42 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Player.Runtime;
 
 public class purchaseManager : MonoBehaviour
 {
-    public GameObject purchaseChang; // ÀÎ½ºÆåÅÍ¿¡¼­ PurchaseChang µî·Ï
-    public int foodPrice = 230000;   // ¸ðµç Ç°¸ñ Á¤°¡ 23¸¸¿ø
+    public GameObject purchaseChang; // ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ PurchaseChang ï¿½ï¿½ï¿½
+    public int foodPrice = 230000;   // ï¿½ï¿½ï¿½ Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 23ï¿½ï¿½ï¿½ï¿½
+    
+    
+    [Header("Refs")]
+    public PlayerController player;  
+    public int healAmount = 10;   
 
-    // ½Ä´ç ¹öÆ°À» ´­·¶À» ¶§ È£Ãâ
+    // ï¿½Ä´ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½
     public void OpenPopup()
     {
-        purchaseChang.SetActive(true); // ÆË¾÷ ¶ç¿ì±â
+        purchaseChang.SetActive(true); // ï¿½Ë¾ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
-    // '¿¹' ¹öÆ°¿¡ ¿¬°áÇÒ ÇÔ¼ö
+    // 'ï¿½ï¿½' ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void OnClickYes()
     {
-        // 1. µ·ÀÌ ÃæºÐÇÑÁö È®ÀÎ (¿¹: StockManager ½ºÅ©¸³Æ® ¿¬µ¿)
-        // if (StockManager.instance.currentMoney >= foodPrice) {
+        if (player == null)
+        {
+            Debug.LogError("[purchaseManager] player is null");
+            return;
+        }
 
-        // 2. µ· Â÷°¨ ¹× HP Áõ°¡ ·ÎÁ÷ ½ÇÇà
-        Debug.Log(foodPrice + "¿ø °áÁ¦! HP È¸º¹ ¿Ï·á");
-
-        // 3. ÆË¾÷ ´Ý±â
+        player.Cash -= foodPrice;
+        player.AddHp(healAmount);
         purchaseChang.SetActive(false);
-        // }
+        Debug.Log($"{foodPrice}ì‚¬ìš© HP + {healAmount}");
     }
 
-    // '¾Æ´Ï¿À' ¹öÆ°¿¡ ¿¬°áÇÒ ÇÔ¼ö
+    // 'ï¿½Æ´Ï¿ï¿½' ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void OnClickNo()
     {
-        purchaseChang.SetActive(false); // ±×³É ´Ý±â
-        Debug.Log("Ã¢ Á¾·á");
+        purchaseChang.SetActive(false); // ï¿½×³ï¿½ ï¿½Ý±ï¿½
+        Debug.Log("Ã¢ ï¿½ï¿½ï¿½ï¿½");
     }
 }

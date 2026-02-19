@@ -707,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561601550072965257, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 11984941
+      value: 12249417
       objectReference: {fileID: 0}
     - target: {fileID: 4374729863678750638, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchorMax.x
@@ -859,6 +859,99 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8558544176500215117, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
   m_PrefabInstance: {fileID: 163810824}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &168221630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 168221631}
+  - component: {fileID: 168221634}
+  - component: {fileID: 168221633}
+  - component: {fileID: 168221632}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &168221631
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168221630}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1982632317}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &168221632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168221630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6721b48d443a649ba99ce9b13793eafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HpLowWarningFlicker
+  player: {fileID: 843853582}
+  overlay: {fileID: 168221633}
+  lowHpThreshold: 10
+  flickerSpeed: 2.4
+  maxAlpha: 0.35
+--- !u!114 &168221633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168221630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5188679, g: 0, b: 0, a: 0.49803922}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &168221634
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168221630}
+  m_CullTransparentMesh: 1
 --- !u!1 &237811840 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1770999387615078088, guid: a546ecc6fc53f1a4d907c518600bdd7a, type: 3}
@@ -2071,6 +2164,10 @@ MonoBehaviour:
   seedInitialAmount: 0
   seedIconColor: '#FFFFFF'
   seedOverrideStocks: 1
+  drainHpEnabled: 1
+  drainIntervalSeconds: 2
+  drainAmount: 1
+  drainUseUnscaledTime: 0
 --- !u!1 &873033468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,15 +3615,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c682ec8b5b323ad40a011d15a69fea1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStateController
+  saveManager: {fileID: 0}
   currentStateName: 
   stateTimer: 0
   currentDay: 1
-  calendarUI: {fileID: 1049095973}
+  calendarUI: {fileID: 0}
   stateInfoText: {fileID: 1778322629}
   eventManager: {fileID: 1049095967}
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1049095966}
-  market: {fileID: 1049095968}
+  market: {fileID: 0}
   seedExporter: {fileID: 1049095961}
   targetDay: 4
   calendarSchedules:
@@ -5534,7 +5632,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640317199}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!1 &1656442482
 GameObject:
   m_ObjectHideFlags: 0
@@ -6085,6 +6183,7 @@ RectTransform:
   m_Children:
   - {fileID: 293687004}
   - {fileID: 1640317200}
+  - {fileID: 168221631}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
