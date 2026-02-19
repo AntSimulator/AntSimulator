@@ -55,6 +55,7 @@ public class SaveManager : MonoBehaviour
             if(_savePlayer != null)
             {
                 data.saveCash = _savePlayer.GetCash();
+                data.saveHp = _savePlayer.CurrentHp;
                 data.saveStocks.Clear();
                 foreach (StockDefinition stock in allStocks)
                 {
@@ -169,6 +170,7 @@ public class SaveManager : MonoBehaviour
             if (_savePlayer != null)
             {
                 _savePlayer.SetSaveCash(data.saveCash);
+                _savePlayer.LoadSavedHp(data.saveHp);
                 foreach (StockSaveData saveData in data.saveStocks)
                 {
                     _savePlayer.SetQuantityByStockId(saveData.stockId, saveData.amount);

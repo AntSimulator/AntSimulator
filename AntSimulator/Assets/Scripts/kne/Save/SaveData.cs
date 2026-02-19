@@ -25,6 +25,7 @@ public class SaveData
     public string saveTime;
     public string sceneName;
     public long saveCash;
+    public int saveHp;
     public List<StockSaveData> saveStocks = new List<StockSaveData>();
     public List<StockPriceData> marketPrices = new List<StockPriceData>();
 

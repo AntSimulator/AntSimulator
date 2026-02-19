@@ -483,6 +483,11 @@ namespace Player.Runtime
             }
         }
 
+        public void LoadSavedHp(int savedValue)
+        {
+            hp.SetHp(savedValue);
+        }
+
         public int MaxHp
         {
             get
