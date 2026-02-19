@@ -707,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561601550072965257, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 11921276
+      value: 11949275
       objectReference: {fileID: 0}
     - target: {fileID: 4374729863678750638, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3660,7 +3660,7 @@ MonoBehaviour:
   gameStateController: {fileID: 1049095969}
   playerController: {fileID: 843853582}
   workOptions:
-  - timeToPassSeconds: 20
+  - timeToPassSeconds: 0
     rewardCash: 1000
   selectedWorkIndex: 0
 --- !u!114 &1113427609 stripped

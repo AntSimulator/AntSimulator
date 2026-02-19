@@ -19,6 +19,7 @@ public class GameStateController : MonoBehaviour
     public EventManager eventManager;
     public EventDatabaseSO eventDatabase;
     public RunRecorder runRecorder;
+    public MarketSimulator market;
 
     public System.Action<int> OnDayStarted;
 
