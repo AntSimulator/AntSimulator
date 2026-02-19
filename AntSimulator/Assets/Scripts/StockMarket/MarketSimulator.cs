@@ -92,6 +92,7 @@ public class MarketSimulator : MonoBehaviour
         
         runRecorder?.RecordTick();
         historyExporter?.OnTick();
+        eventManager?.OnTick();
     }
 
     private void UpdateStock(StockState stock, StockDefinition def)

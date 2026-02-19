@@ -36,9 +36,10 @@ public class EventManager : MonoBehaviour
         int morningIdx = UnityEngine.Random.Range(0, todayList.Count);
         for(int i = 0; i<todayList.Count; i++)
         {
+            
             var inst = todayList[i];
             if(inst == null)continue;
-            inst.remainingDays = inst.durationDays;
+            inst.remainingTicks = Mathf.Max(1, inst.durationTicks);
             inst.revealed = false;
             inst.delistApplied = false;
             if (i == morningIdx)
@@ -119,5 +120,19 @@ public class EventManager : MonoBehaviour
         var list = GetEventsStartingOnDay(today + 1);
         if (list.Count == 0) return null;
         return list[UnityEngine.Random.Range(0, list.Count)];
+    }
+    public void OnTick()
+    {
+        for (int i = 0; i < active.Count; i++)
+        {
+            var inst = active[i];
+            if (inst == null) continue;
+            if (!inst.revealed) continue;       // 공개 전에는 영향 X + 시간도 안 줄임
+
+            inst.remainingTicks--;
+        }
+
+        // ✅ 공개된 이벤트 중 시간이 끝난 것 제거
+        active.RemoveAll(e => e != null && e.revealed && e.remainingTicks <= 0);
     }
 }
