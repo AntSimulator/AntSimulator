@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
-  m_Name: Finance_good
+  m_Name: PPAP_bad
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
-  eventId: Finance_good
+  eventId: PPAP_bad
   title: 
   description: .
-  scope: 0
+  scope: 2
   sector: 0
-  targetStockIds: []
+  targetStockIds:
+  - PPAP
   probEffect: 0.5
   isUp: 0
   depthEffect: 0.02

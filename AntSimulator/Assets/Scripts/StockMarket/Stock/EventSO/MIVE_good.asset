@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
-  m_Name: Food_good
+  m_Name: MIVE_good
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
-  eventId: Food_good
+  eventId: MIVE_good
   title: 
-  description: 
+  description: .
   scope: 2
   sector: 0
-  targetStockIds: []
-  probEffect: 0
-  isUp: 0
-  depthEffect: 0
+  targetStockIds:
+  - MIVE
+  probEffect: 0.5
+  isUp: 1
+  depthEffect: 0.02
   durationDays: 1
   delist: 0
   delistStockIds: []
