@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 80784e67e19e94c21b42c5793c36c64b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rent: {fileID: 11400000, guid: 65cb2c64c22c2194dab38ed799d3c3a4, type: 2}
+  - utility: {fileID: 11400000, guid: 24eddfd5c50de45e1b2c7d55f416432b, type: 2}
+  - combinedText: {instanceID: 0}
+  - rentText: {instanceID: 0}
+  - utilityText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

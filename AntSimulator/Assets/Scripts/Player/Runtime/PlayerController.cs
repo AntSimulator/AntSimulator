@@ -26,7 +26,7 @@ namespace Player.Runtime
         [Header("Trade Settings")]
         [SerializeField] private int qtyStep = 1;
         [SerializeField] private int priceStep = 500;
-        [SerializeField] private long startCash = 100000;
+        [SerializeField] private long startCash = 2000000;
         [SerializeField] private int seedDefaultPrice = 1000;
 
         [Header("HP Settings")]
@@ -44,7 +44,7 @@ namespace Player.Runtime
 
         [Header("HP Drain")]
         [SerializeField] private bool drainHpEnabled = true;
-        [SerializeField] private float drainIntervalSeconds = 2f; // 2초마다
+        [SerializeField] private float drainIntervalSeconds = 3f; // 3초마다
         [SerializeField] private int drainAmount = 1;            // 1씩 감소
         [SerializeField] private bool drainUseUnscaledTime = false; // TimeScale=0이어도 닳게 할거면 true
 
