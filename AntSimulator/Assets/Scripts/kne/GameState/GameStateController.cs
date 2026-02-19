@@ -24,6 +24,7 @@ public class GameStateController : MonoBehaviour
     public System.Action<int> OnDayStarted;
 
     public StockSeedExporter seedExporter;
+    private bool isGameOver = false;
 
     [Header("Ending Settings")]
     public int targetDay = 5;
@@ -69,6 +70,12 @@ public class GameStateController : MonoBehaviour
     void Update()
     {
         currentState?.Tick();
+
+        if (!isGameOver && _endingPlayer != null && _endingPlayer.CurrentHp <= 0)
+        {
+            isGameOver = true;
+            StartCoroutine(GameOverRoutine());
+        }
 
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
@@ -178,5 +185,15 @@ public class GameStateController : MonoBehaviour
         {
             yield return StartCoroutine(ScreenFader.Instance.FadeIn());
         }
+    }
+
+    private System.Collections.IEnumerator GameOverRoutine()
+    {
+        if (ScreenFader.Instance != null)
+        {
+            yield return StartCoroutine(ScreenFader.Instance.FadeOut());
+        }
+        ChangeState(new GameEndingState(this));
+        SceneManager.LoadScene("StarveEndingScene");
     }
 }
