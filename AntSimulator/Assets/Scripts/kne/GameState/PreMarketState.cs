@@ -15,7 +15,13 @@ public class PreMarketState : IGameState
     public void Enter()
     {
         gsc.currentStateName = gameStateName;
-        Debug.Log($"[GameStateNName] ÇöÀç {gameStateName}»óÅÂ ÀÔ´Ï´Ù.");
+        Debug.Log($"[GameStateNName] ï¿½ï¿½ï¿½ï¿½ {gameStateName}ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.");
+        if (gsc.market != null)
+        {
+            gsc.market.simulateTicks = false;
+            gsc.market.allowEventReveal = true;
+            gsc.market.ProcessEventRevealNow(gsc.currentDay, 0);
+        }
         lastDisplayedSecond = -1;
     }
 
