@@ -1,12 +1,10 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class NewsUIController : MonoBehaviour
 {
-    [Header("Refs")]
-    public MarketSimulator market;
-
     [Header("UI")]
     [Tooltip("뉴스 팝업 전체 루트(패널). SetActive로 켜고 끔")]
     public GameObject popupRoot;
@@ -15,37 +13,27 @@ public class NewsUIController : MonoBehaviour
     public TMP_Text contentText;
 
     [Header("Behavior")]
-    [Tooltip("팝업이 떠있는 동안 게임 멈추기")]
-    public bool pauseGameWhileOpen = true;
-
-    [Tooltip("자동으로 닫히는 시간(초)")]
     public float autoCloseSeconds = 3f;
-
-    [Tooltip("클릭하면 즉시 닫기(루트에 버튼/투명 클릭 영역 붙이면 좋음)")]
     public bool clickToClose = true;
 
-    Coroutine _closeRoutine;
-    float _prevTimeScale = 1f;
+    private Coroutine _closeRoutine;
+    private Action _onClosed;
 
     void Awake()
     {
-        // 시작 시 숨김
         if (popupRoot != null) popupRoot.SetActive(false);
-    }
-
-    void OnEnable()
-    {
-        if (market != null)
-            market.OnEventRevealed += HandleEventRevealed;
     }
 
     void OnDisable()
     {
-        if (market != null)
-            market.OnEventRevealed -= HandleEventRevealed;
+        // 비활성화되면 콜백은 날려버림(중복 호출 방지)
+        _onClosed = null;
 
-        // 혹시 비활성화되며 멈춘 채로 남을 수 있어서 복구
-        RestoreTimeScaleIfNeeded();
+        if (_closeRoutine != null)
+        {
+            StopCoroutine(_closeRoutine);
+            _closeRoutine = null;
+        }
     }
 
     void Update()
@@ -53,53 +41,39 @@ public class NewsUIController : MonoBehaviour
         if (!clickToClose) return;
         if (popupRoot == null || !popupRoot.activeSelf) return;
 
-        // 마우스 클릭 또는 터치로 닫기
         if (Input.GetMouseButtonDown(0))
             Close();
     }
 
-    void HandleEventRevealed(EventDefinition def, int day, int tick)
-    {
-        if (def == null) return;
-
-        Open(def.description ?? "");
-    }
-
-    public void Open(string text)
+    // ✅ Router가 호출할 함수
+    public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
     {
         if (popupRoot == null || contentText == null) return;
 
-        // 내용 갱신
-        contentText.text = text;
+        _onClosed = onClosed;
 
-        // 팝업 표시
+        // description만 표시
+        contentText.text = def != null ? (def.description ?? "") : "";
+
         popupRoot.SetActive(true);
 
-        // 게임 멈추기 (Time.timeScale=0이면 WaitForSeconds가 안 돌아서 Realtime로 닫아야 함)
-        if (pauseGameWhileOpen)
-        {
-            _prevTimeScale = Time.timeScale;
-            Time.timeScale = 0f;
-        }
-
-        // 기존 자동닫기 코루틴 있으면 취소 후 재시작
         if (_closeRoutine != null) StopCoroutine(_closeRoutine);
         _closeRoutine = StartCoroutine(AutoCloseRoutine());
     }
 
     IEnumerator AutoCloseRoutine()
     {
-        // TimeScale=0이어도 동작하도록 real time 사용
         float t = 0f;
         while (t < autoCloseSeconds)
         {
             yield return null;
-            t += Time.unscaledDeltaTime;
+            t += Time.unscaledDeltaTime; // ✅ timeScale=0이어도 흘러감
         }
 
         Close();
     }
 
+    // 버튼에서 직접 연결할 수도 있게 public
     public void Close()
     {
         if (_closeRoutine != null)
@@ -111,12 +85,8 @@ public class NewsUIController : MonoBehaviour
         if (popupRoot != null)
             popupRoot.SetActive(false);
 
-        RestoreTimeScaleIfNeeded();
-    }
-
-    void RestoreTimeScaleIfNeeded()
-    {
-        if (pauseGameWhileOpen && Time.timeScale == 0f)
-            Time.timeScale = _prevTimeScale <= 0f ? 1f : _prevTimeScale;
+        var cb = _onClosed;
+        _onClosed = null;
+        cb?.Invoke(); // ✅ Router의 ShowNext 호출
     }
 }
