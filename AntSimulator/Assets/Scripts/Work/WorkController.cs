@@ -8,6 +8,9 @@ namespace Work
 {
     public class WorkController : MonoBehaviour
     {
+        private const float PreMarketDurationSeconds = 10f;
+        private const float MarketOpenDurationSeconds = 150f;
+
         [Serializable]
         public class WorkOption
         {
@@ -86,9 +89,17 @@ namespace Work
                 return;
             }
 
-            if (gameStateController != null && option.timeToPassSeconds > 0f)
+            if (gameStateController != null)
             {
-                gameStateController.stateTimer += option.timeToPassSeconds;
+                if (option.timeToPassSeconds == 0f)
+                {
+                    gameStateController.ChangeState(new SettlementState(gameStateController));
+                }
+                else if (option.timeToPassSeconds > 0f)
+                {
+                    gameStateController.stateTimer += option.timeToPassSeconds;
+                    TryChangeStateByElapsedTime();
+                }
             }
 
             if (playerController != null && option.rewardCash > 0)
@@ -99,5 +110,27 @@ namespace Work
             Debug.Log(
                 $"[Work] index={index} time+={option.timeToPassSeconds:F1}s reward+={option.rewardCash} cash={playerController?.Cash ?? 0}");
         }
+
+        private void TryChangeStateByElapsedTime()
+        {
+            if (gameStateController == null)
+            {
+                return;
+            }
+
+            if (gameStateController.currentStateName == "PreMarketState" &&
+                gameStateController.stateTimer >= PreMarketDurationSeconds)
+            {
+                gameStateController.ChangeState(new MarketOpenState(gameStateController));
+                return;
+            }
+
+            if (gameStateController.currentStateName == "MarketOpenState" &&
+                gameStateController.stateTimer >= MarketOpenDurationSeconds)
+            {
+                gameStateController.ChangeState(new SettlementState(gameStateController));
+            }
+        }
     }
 }
+
