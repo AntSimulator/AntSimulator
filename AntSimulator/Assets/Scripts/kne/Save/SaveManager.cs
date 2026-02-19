@@ -12,6 +12,7 @@ public class SaveManager : MonoBehaviour
     public GameStateController gsc;
     public int currentSlotIndex = 0;
     private PlayerController _savePlayer;
+    public MarketSimulator marketSimulator;
     [SerializeField] private List<StockDefinition> allStocks;
 
     public string GetSavePath(int slotIndex)
@@ -67,6 +68,20 @@ public class SaveManager : MonoBehaviour
                             amount = qty
                         });
                     }
+                }
+            }
+
+            if (marketSimulator != null)
+            {
+                data.marketPrices.Clear();
+
+                foreach (var kvp in marketSimulator.GetAllStocks())
+                {
+                    data.marketPrices.Add(new StockPriceData
+                    {
+                        stockId = kvp.Key,
+                        currentPrice = kvp.Value.currentPrice
+                    });
                 }
             }
         }
@@ -152,6 +167,20 @@ public class SaveManager : MonoBehaviour
                 foreach (StockSaveData saveData in data.saveStocks)
                 {
                     _savePlayer.SetQuantityByStockId(saveData.stockId, saveData.amount);
+                }
+            }
+
+            if (marketSimulator != null)
+            {
+                var allStocks = marketSimulator.GetAllStocks();
+
+                foreach (var savedStock in data.marketPrices)
+                {
+                    if (allStocks.TryGetValue(savedStock.stockId, out var stockState))
+                    {
+                        stockState.currentPrice = savedStock.currentPrice;
+                        stockState.prevPrice = savedStock.currentPrice;
+                    }
                 }
             }
 

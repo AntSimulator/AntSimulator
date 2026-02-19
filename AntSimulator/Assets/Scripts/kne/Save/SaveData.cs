@@ -8,6 +8,13 @@ public class StockSaveData
     public int amount;
 }
 
+[System.Serializable]
+public class StockPriceData
+{
+    public string stockId;
+    public float currentPrice;
+}
+
 
 [System.Serializable]
 public class SaveData
@@ -19,5 +26,6 @@ public class SaveData
     public string sceneName;
     public long saveCash;
     public List<StockSaveData> saveStocks = new List<StockSaveData>();
+    public List<StockPriceData> marketPrices = new List<StockPriceData>();
 
 }
