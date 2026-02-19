@@ -366,6 +366,18 @@ namespace Player.Runtime
             return state.GetQuantity(stockId);
         }
 
+        public void SetQuantityByStockId(string stockId, int amount)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(stockId))
+            {
+                return;
+            }
+
+            state.SetHolding(stockId, amount);
+
+            OnHoldingsChanged?.Invoke();
+        }
+
         public float GetSelectedAvgBuyPrice()
         {
             var current = tradingEngine?.CurrentStock;
@@ -439,6 +451,12 @@ namespace Player.Runtime
         {
             if (state == null) return 0;
             return state.cash;
+        }
+
+        public void SetSaveCash(long amount)
+        {
+            if (state == null) return;
+            state.cash = amount;
         }
 
         public int CurrentHp

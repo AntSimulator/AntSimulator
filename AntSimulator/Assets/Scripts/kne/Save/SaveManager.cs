@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Player.Runtime;
+using System.Collections.Generic;
 
 public class SaveManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class SaveManager : MonoBehaviour
     public GameStateController gsc;
     public int currentSlotIndex = 0;
     private PlayerController _savePlayer;
+    [SerializeField] private List<StockDefinition> allStocks;
 
     public string GetSavePath(int slotIndex)
     {
@@ -52,6 +54,20 @@ public class SaveManager : MonoBehaviour
             if(_savePlayer != null)
             {
                 data.saveCash = _savePlayer.GetCash();
+                data.saveStocks.Clear();
+                foreach (StockDefinition stock in allStocks)
+                {
+                    int qty = _savePlayer.GetQuantityByStockId(stock.stockId);
+
+                    if (qty > 0)
+                    {
+                        data.saveStocks.Add(new StockSaveData
+                        {
+                            stockId = stock.stockId,
+                            amount = qty
+                        });
+                    }
+                }
             }
         }
         else
@@ -123,6 +139,20 @@ public class SaveManager : MonoBehaviour
             if (gsc.calendarUI != null)
             {
                 gsc.calendarUI.HighLightToday(gsc.currentDay);
+            }
+
+            if (_savePlayer == null)
+            {
+                _savePlayer = FindObjectOfType<PlayerController>();
+            }
+
+            if (_savePlayer != null)
+            {
+                _savePlayer.SetSaveCash(data.saveCash);
+                foreach (StockSaveData saveData in data.saveStocks)
+                {
+                    _savePlayer.SetQuantityByStockId(saveData.stockId, saveData.amount);
+                }
             }
 
             Debug.Log($"로드 완료! {targetScene} 씬으로 이동했습니다.");

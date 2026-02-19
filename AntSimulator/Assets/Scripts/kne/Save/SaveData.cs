@@ -1,4 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class StockSaveData
+{
+    public string stockId;
+    public int amount;
+}
+
 
 [System.Serializable]
 public class SaveData
@@ -9,6 +18,6 @@ public class SaveData
     public string saveTime;
     public string sceneName;
     public long saveCash;
+    public List<StockSaveData> saveStocks = new List<StockSaveData>();
 
-    
 }
