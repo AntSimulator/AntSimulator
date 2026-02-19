@@ -356,6 +356,16 @@ namespace Player.Runtime
 
         public int GetSelectedQuantity() => tradingEngine?.GetCurrentQuantity() ?? 0;
 
+        public int GetQuantityByStockId(string stockId)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(stockId))
+            {
+                return 0;
+            }
+
+            return state.GetQuantity(stockId);
+        }
+
         public float GetSelectedAvgBuyPrice()
         {
             var current = tradingEngine?.CurrentStock;
