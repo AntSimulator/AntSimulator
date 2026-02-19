@@ -16,8 +16,13 @@ public class SettlementState : IGameState
     public void Enter()
     {
         gsc.currentStateName = gameStateName;
+        if (gsc.market != null)
+        {
+            gsc.market.simulateTicks = false;
+            gsc.market.allowEventReveal = false;
+        }
         isFinished = false;
-        Debug.Log($"[GameStateNName] ÇöÀç {gameStateName}»óÅÂ ÀÔ´Ï´Ù.");
+        Debug.Log($"[GameStateNName] ï¿½ï¿½ï¿½ï¿½ {gameStateName}ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.");
     }
 
     public void Tick() {

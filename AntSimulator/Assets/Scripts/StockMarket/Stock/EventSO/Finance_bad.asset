@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
+<<<<<<< HEAD
   m_Name: Finance_bad
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: Finance_bad
@@ -21,6 +22,23 @@ MonoBehaviour:
   - 
   probEffect: 0.5
   isUp: 1
+=======
+<<<<<<<< HEAD:AntSimulator/Assets/Scripts/StockMarket/Stock/EventSO/BFE_bad.asset
+  m_Name: BFE_bad
+========
+  m_Name: Finance_bad
+>>>>>>>> origin/merge_branch_1:AntSimulator/Assets/Scripts/StockMarket/Stock/EventSO/Finance_bad.asset
+  m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
+  eventId: BFE_bad
+  title: 
+  description: .
+  scope: 2
+  sector: 0
+  targetStockIds:
+  - BFE
+  probEffect: 0.5
+  isUp: 0
+>>>>>>> origin/merge_branch_1
   depthEffect: 0.02
   durationDays: 1
   delist: 0
