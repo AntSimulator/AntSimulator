@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using XCharts.Example;
@@ -6,6 +7,8 @@ namespace Player.UI
 {
     public class PopupPanelSwitcher : MonoBehaviour
     {
+        public static event Action<int> OnPanelChanged;
+
         [Header("Popup Panels")] [SerializeField] private List<GameObject> panels = new();
 
         [SerializeField] private int startIndex = 0;
@@ -17,6 +20,7 @@ namespace Player.UI
             if(panels == null || panels.Count == 0) return;
             _index = Mathf.Clamp(startIndex, 0, panels.Count - 1);
             ShowOnly(_index);
+            OnPanelChanged?.Invoke(_index);
         }
 
         public void NextPanel()
@@ -24,6 +28,7 @@ namespace Player.UI
             if(panels == null || panels.Count == 0) return;
             _index = (_index + 1) % panels.Count;
             ShowOnly(_index);
+            OnPanelChanged?.Invoke(_index);
         }
 
         public void ShowPanel(int index)
@@ -31,6 +36,7 @@ namespace Player.UI
             if(panels == null||panels.Count == 0) return;
             _index = Mathf.Clamp(index, 0, panels.Count - 1);
             ShowOnly(_index);
+            OnPanelChanged?.Invoke(_index);
         }
 
         public void ShowOnly(int activeIndex)
