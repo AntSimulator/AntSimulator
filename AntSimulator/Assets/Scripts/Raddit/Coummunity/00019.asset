@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
   eventId: 00019
   title: 00019
-  body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"
+  body: "[\uCC0C\uB77C\uC2DC] \"\uC62C\uD574 \uC0AC\uACE0\uAC00 \uB108\uBB34 \uC5C6\uB124?\"...
+    \uBCF4\uD5D8\uC0AC\uB4E4 \uC5ED\uB300\uAE09 '\uC5B4\uB2DD \uC11C\uD504\uB77C\uC774\uC988'
+    \uC900\uBE44 \uC911"

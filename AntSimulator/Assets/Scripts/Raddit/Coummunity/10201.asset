@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc15b5106db9481baec5d1c1b0288a9, type: 3}
   m_Name: 10201
   m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
-  eventId: 10201
-  title: 10201
-  body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"
+  eventId: 10103
+  title: '10103
+
+'
+  body: "[\uCC0C\uB77C\uC2DC] \uD1A1\uD1A1\uC5D0\uC11C\uB294 \uD604\uC7AC '\uC9E7\uC740\uBC14\uC9C0'
+    \uC2E0\uB4DC\uB86C \uC911? FMC \uC8FC\uAC00 \uACE0\uACF5\uD589\uC9C4 \uD560 \uAC83\uC73C\uB85C
+    \uAE30\uB300 \uB3FC"
