@@ -3,7 +3,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using Player;
+using Player.Runtime;
 
 public class SaveManager : MonoBehaviour
 {
