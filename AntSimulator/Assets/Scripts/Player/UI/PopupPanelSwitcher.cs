@@ -44,26 +44,8 @@ namespace Player.UI
             for (int i = 0; i < panels.Count; i++)
             {
                 if(panels[i] == null) continue;
-
-                // Keep panel GameObjects active so their subscriptions/lifecycle keep running.
-                if (!panels[i].activeSelf)
-                    panels[i].SetActive(true);
-
-                var canvasGroup = GetOrAddCanvasGroup(panels[i]);
-                bool isActive = i == activeIndex;
-                canvasGroup.alpha = isActive ? 1f : 0f;
-                canvasGroup.interactable = isActive;
-                canvasGroup.blocksRaycasts = isActive;
+                panels[i].SetActive(i == activeIndex);
             }
-        }
-
-        private static CanvasGroup GetOrAddCanvasGroup(GameObject panel)
-        {
-            var canvasGroup = panel.GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-                canvasGroup = panel.AddComponent<CanvasGroup>();
-
-            return canvasGroup;
         }
     }
 }
