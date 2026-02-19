@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: MIVE
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 10
-  eventProbWeight: 1
-  statementWeight: 1
-  newsWeight: 1
-  communityWeight: 1
-  eventDepthWeight: 1
-  maxUpPercent: 0.08
-  maxDownPercent: 0.08
-  name: "\uC7A5\uC218 \uB9D0\uBC8C"
-  ticker: MIVE
+  basePrice: 10000
+  maxUpPercent: 0.006
+  maxDownPercent: 0.006
+  volumeBoostK: 25
+  volumeNoiseMin: 0.7
+  volumeNoiseMax: 1.3
+  eventToVolatility: 1.1
+  eventToVolume: 1.1
+  communitySensitivity: 1
+  stockId: MIVE
+  sector: 0
+  displayName: "\uC7A5\uC218\uB9D0\uBC8C"
+  floatShares: 500000000
+  avgDailyVolume: 5000000
+  noiseScale: 1

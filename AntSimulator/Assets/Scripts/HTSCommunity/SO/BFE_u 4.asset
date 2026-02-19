@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: BFE_u 4
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: BFE
+  direction: 0
+  title: "\uBE44\uB9CC \uCE58\uB8CC\uC81C \uAC1C\uBC1C\uD55C\uB2E4\uB294 \uC370\uC774
+    \uC788\uB358\uB370 \uC9C0\uAE08 \uBE68\uB9AC \uCD94\uAC00 \uB9E4\uC218 \uD558\uC148
+    \u314B\u314B\uB354\uC624\uB978\uB2E4?"
+  body: 

@@ -4,9 +4,9 @@ public class SettlementState : IGameState
 {
     private string gameStateName = "SettlementState";
     private GameStateController gsc;
-    private float timer = 0f;
     private float duration = 20f;
     private int lastDisplayedSec = -1;
+    private bool isFinished = false;
 
     public SettlementState(GameStateController gsc)
     {
@@ -15,13 +15,16 @@ public class SettlementState : IGameState
 
     public void Enter()
     {
+        gsc.currentStateName = gameStateName;
+        isFinished = false;
         Debug.Log($"[GameStateNName] 현재 {gameStateName}상태 입니다.");
-        timer = 0f;
     }
 
     public void Tick() {
-        timer += Time.deltaTime;
-        float remainTime = duration - timer;
+        if (isFinished) return;
+
+        gsc.stateTimer += Time.deltaTime;
+        float remainTime = duration - gsc.stateTimer;
         int sec = Mathf.CeilToInt(remainTime);
         
         if(sec != lastDisplayedSec)
@@ -34,24 +37,12 @@ public class SettlementState : IGameState
             lastDisplayedSec = sec;
         }
         
-        if (timer >= duration) {
-            gsc.NextDay();
-            if(gsc.currentDay > gsc.targetDay)
-            {
-                gsc.ChangeState(new GameEndingState(gsc));
-            }
-            else
-            {
-                gsc.ChangeState(new PreMarketState(gsc));
-            }
+        if (gsc.stateTimer >= duration) {
+            isFinished = true;
+            gsc.StartDayTransition();
         }
     }
 
-    public void Exit() {
-        //if (gsc != null) 
-        //{
-        //    gsc.NextDay();
-        //}
-    }
+    public void Exit() {  }
     
 }

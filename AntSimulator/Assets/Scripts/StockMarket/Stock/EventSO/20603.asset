@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
+  m_Name: 20603
+  m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
+  eventId: 20603
+  title: 
+  description: "[\uAE34\uAE09] '\uC138\uAE30\uC758 \uACB0\uBCC4' \uD2B8\uB78C\uD478,
+    \uB9C8\uC2A4\uD06C \uD5A5\uD574 \"\uB9C8\uC57D \uC911\uB3C5\uC790... \uB2F9\uC7A5
+    \uB0A8\uC544\uACF5 \uB3CC\uC544\uAC00\uB77C\" \uB3C5\uC124"
+  scope: 2
+  sector: 1
+  targetStockIds:
+  - TSLM
+  probEffect: 0.4
+  isUp: 0
+  depthEffect: 0.02
+  durationDays: 3
+  delist: 0
+  delistStockIds: []
+  canBeCalendarEvent: 0
+  canBeHidden: 1
+  allowRepeatInRun: 0

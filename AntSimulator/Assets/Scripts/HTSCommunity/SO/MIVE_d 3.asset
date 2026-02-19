@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: MIVE_d 3
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: MIVE
+  direction: 1
+  title: "\uC560\uCD08\uC5D0 \uB178\uB798\uB3C4 \uBABB\uD574 \uB07C\uB3C4 \uC5C6\uC5B4
+    \uADFC\uB370 \uC774\uC81C \uD0C8\uC138\uAE4C\uC9C0\u2026.\uADF8\uB0E5 \uC81C\uBC1C
+    \uBA87\uB144\uC9C0\uB098\uC11C\uB3C4 \uC598 \uC790\uC219\uC774\uACE0 \uBB50\uACE0
+    \uC548\uBC1B\uC544\uC92C\uC73C\uBA74 \u2026\u3160\u3160"
+  body: 
