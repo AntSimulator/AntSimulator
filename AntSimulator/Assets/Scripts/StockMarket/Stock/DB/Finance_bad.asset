@@ -16,6 +16,7 @@ MonoBehaviour:
   presentationType: 1
   image: {fileID: 0}
   newsFallbackBody: 
-  calendarLines: []
+  calendarLines:
+  - 
   charsPerSecond: 45
   autoAdvanceSeconds: 0
