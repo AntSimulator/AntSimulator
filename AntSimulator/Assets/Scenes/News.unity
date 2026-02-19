@@ -351,8 +351,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 980873003}
   - {fileID: 864811120}
+  - {fileID: 980873003}
   - {fileID: 560927141}
   - {fileID: 231505435}
   - {fileID: 104643165}
@@ -1005,6 +1005,8 @@ GameObject:
   m_Component:
   - component: {fileID: 900402706}
   - component: {fileID: 900402707}
+  - component: {fileID: 900402709}
+  - component: {fileID: 900402708}
   m_Layer: 5
   m_Name: button
   m_TagString: Untagged
@@ -1087,6 +1089,44 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &900402708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900402705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &900402709
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900402705}
+  m_CullTransparentMesh: 1
 --- !u!1 &980873002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,17 +1151,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980873002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.82321, y: 0.82321, z: 0.82321}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 0.47164267, y: 0.47164267, z: 1.1458623}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1231167089}
   - {fileID: 900402706}
+  - {fileID: 1231167089}
   m_Father: {fileID: 135462856}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -101, y: 259}
+  m_AnchoredPosition: {x: -226, y: 206}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1108538218
@@ -1516,7 +1556,7 @@ MonoBehaviour:
   globalCommunity: {fileID: 1401095158}
   eventDb: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   content: {fileID: 1228129895}
-  itemPrefab: {fileID: 3157320377115122693}
+  itemPrefab: {fileID: 0}
   maxItems: 80
 --- !u!114 &1401095153
 MonoBehaviour:
@@ -1932,6 +1972,8 @@ MonoBehaviour:
   tickIntervalSec: 1
   eventManager: {fileID: 1401095160}
   historyExporter: {fileID: 1401095155}
+  simulateTicks: 0
+  allowEventReveal: 1
   ticksPerDay: 180
   runRecorder: {fileID: 1401095159}
   gameStateController: {fileID: 1401095162}
@@ -1956,6 +1998,7 @@ MonoBehaviour:
   eventManager: {fileID: 1401095160}
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1401095159}
+  market: {fileID: 0}
   seedExporter: {fileID: 1401095154}
   targetDay: 5
   calendarSchedules: []
@@ -2193,10 +2236,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1640980203549996631, guid: 576c3dd30a085d34b99fc17129a729e1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3157320377115122693}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 576c3dd30a085d34b99fc17129a729e1, type: 3}
 --- !u!114 &3157320377115122691 stripped
 MonoBehaviour:
@@ -2209,24 +2249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!1 &3157320377115122692 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1640980203549996631, guid: 576c3dd30a085d34b99fc17129a729e1, type: 3}
-  m_PrefabInstance: {fileID: 3157320377115122690}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3157320377115122693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3157320377115122692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e3a0f45d8458406ba6976b69df468d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GlobalPostRowView
-  bodyText: {fileID: 3157320377115122691}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
