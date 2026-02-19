@@ -16,8 +16,7 @@ MonoBehaviour:
   title: 
   description: "[\uD2B9\uC885] \uB0B4\uD55C \uACF5\uC5F0 \uC911 FADS \uACE0\uC704
     \uAC04\uBD80 \uBD88\uB95C \uD604\uC7A5 \uD3EC\uCC29...\uD2B8\uB78C\uD478 \"\uBD88\uB95C
-    \uBB3B\uC740 \uD68C\uC0AC \uC8FC\uC2DD\uC740 \uC4F0\uB808\uAE30... FADS \uC81C\uD488
-    \uC804\uBA74 \uC218\uC785 \uAE08\uC9C0 \uAC80\uD1A0\""
+    \uBB3B\uC740 \uD68C\uC0AC \uC8FC\uC2DD\uC740 \uC4F0\uB808\uAE30!!!\""
   scope: 2
   sector: 7
   targetStockIds:
@@ -25,7 +24,7 @@ MonoBehaviour:
   probEffect: 0.45
   isUp: 0
   depthEffect: 0.02
-  durationDays: 5
+  durationDays: 1
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

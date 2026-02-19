@@ -17,9 +17,11 @@ MonoBehaviour:
   description: "[\uAE34\uAE09] \"\uB9C8\uCE04\uD551 \uCCB4\uD3EC \uC644\uB8CC\"...
     \uBBF8\uAD70, \uBCA0\uB124\uC218\uC5D8\uB77C \uAE30\uC2B5 \uACF5\uC2B5\uC73C\uB85C
     \uB9C8\uB450\uB85C \uC804\uACA9 \uC555\uC1A1"
-  scope: 1
+  scope: 2
   sector: 4
-  targetStockIds: []
+  targetStockIds:
+  - YSHL
+  - FADS
   probEffect: 0.7
   isUp: 1
   depthEffect: 0.02

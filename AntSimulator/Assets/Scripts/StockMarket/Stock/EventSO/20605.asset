@@ -24,7 +24,7 @@ MonoBehaviour:
   probEffect: 0.4
   isUp: 1
   depthEffect: 0.02
-  durationDays: 3
+  durationDays: 1
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

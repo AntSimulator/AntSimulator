@@ -16,8 +16,8 @@ MonoBehaviour:
   maxUpPercent: 0.006
   maxDownPercent: 0.006
   volumeBoostK: 40
-  volumeNoiseMin: 0.7
-  volumeNoiseMax: 1.5
+  volumeNoiseMin: 0.8
+  volumeNoiseMax: 1.6
   eventToVolatility: 1.3
   eventToVolume: 1.3
   communitySensitivity: 1
