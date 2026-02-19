@@ -796,6 +796,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   gsc: {fileID: 0}
   currentSlotIndex: 0
+  marketSimulator: {fileID: 0}
+  allStocks:
+  - {fileID: 11400000, guid: 5d3b073e0be272040bf4985ed47a8e1f, type: 2}
+  - {fileID: 11400000, guid: 3c5b5a6ceb3d82144b1627e3fdfcb2ab, type: 2}
+  - {fileID: 11400000, guid: 896f774a7e3dffe469309d7268291e09, type: 2}
+  - {fileID: 11400000, guid: 2a59a3635d6214fc0b007c94f7c20fbf, type: 2}
+  - {fileID: 11400000, guid: 6d1afb4e59e66b8479fb215b4350bdf3, type: 2}
+  - {fileID: 11400000, guid: 904d0123f3bf59a448b3abd9f6e44883, type: 2}
+  - {fileID: 11400000, guid: abe2cbbd54e106d4a94211f6fc491979, type: 2}
+  - {fileID: 11400000, guid: c929ddb281e4f4ca5af476dc0caeee34, type: 2}
+  - {fileID: 11400000, guid: 8adc127e9aff88f47afb9b000b1be6e9, type: 2}
+  - {fileID: 11400000, guid: b301fc8abf5bc1949beaea3024f2f391, type: 2}
+  - {fileID: 11400000, guid: 51f96fc91ae58407a9c7f71f177746d1, type: 2}
+  - {fileID: 11400000, guid: 62c9726132db176429f5578c2fbd82cf, type: 2}
+  - {fileID: 11400000, guid: 9d6b6ccdfe7b0b6469961f5193bae44c, type: 2}
+  - {fileID: 11400000, guid: 3091dedda52269040ab2ca137854f054, type: 2}
+  - {fileID: 11400000, guid: 952ffe7dbc316a243b3aefd24253d9d5, type: 2}
 --- !u!4 &540243048
 Transform:
   m_ObjectHideFlags: 0

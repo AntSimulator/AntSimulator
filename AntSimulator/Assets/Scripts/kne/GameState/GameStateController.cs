@@ -7,7 +7,6 @@ using Player.Runtime;
 
 public class GameStateController : MonoBehaviour
 {
-    public SaveManager saveManager;
     private bool isRestoring = false;
 
     private IGameState currentState;
@@ -86,9 +85,9 @@ public class GameStateController : MonoBehaviour
         stateTimer = 0f;
         currentState?.Enter();
 
-        if(saveManager != null && isRestoring == false)
+        if(SaveManager.Instance != null && isRestoring == false)
         {
-            saveManager.AutoSave();
+            SaveManager.Instance.AutoSave();
             Debug.Log("�ڵ� ����Ǿ����ϴ�.");
         } 
     }
