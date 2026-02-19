@@ -297,4 +297,9 @@ public class MarketSimulator : MonoBehaviour
         if (!allowEventReveal) return;
         HandleEventRevealAndDelist(day, tickInDay);
     }
+
+    public void TickOnce()
+    {
+        Tick();
+    }
 }

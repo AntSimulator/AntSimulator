@@ -48,13 +48,7 @@ public class NewsUIController : MonoBehaviour
         if (!clickToClose) return;
         if (!_isOpen) return; // ✅ popupRoot 대신 이걸로 체크
 
-        // 마우스
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
-            Close();
-
-        // 터치(모바일)
-        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
-            Close();
+        
     }
 
     void HandleEventRevealed(EventDefinition def, int day, int tick)
@@ -109,6 +103,9 @@ public class NewsUIController : MonoBehaviour
 
         _isOpen = false;
         RestoreTimeScaleIfNeeded();
+        
+        _onClosed?.Invoke();   // ✅ 이거 꼭 필요
+        _onClosed = null;
     }
 
     void RestoreTimeScaleIfNeeded()
@@ -122,5 +119,10 @@ public class NewsUIController : MonoBehaviour
     {
         _onClosed = onClosed;
         Open(def != null ? (def.description ?? "") : "");
+    }
+    public void OnClickCloseButton()
+    {
+        Close();
+        _onClosed?.Invoke();
     }
 }
