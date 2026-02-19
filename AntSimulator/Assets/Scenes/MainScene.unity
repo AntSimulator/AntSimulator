@@ -707,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561601550072965257, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12249417
+      value: 12380638
       objectReference: {fileID: 0}
     - target: {fileID: 4374729863678750638, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3619,12 +3619,12 @@ MonoBehaviour:
   currentStateName: 
   stateTimer: 0
   currentDay: 1
-  calendarUI: {fileID: 0}
+  calendarUI: {fileID: 1049095973}
   stateInfoText: {fileID: 1778322629}
   eventManager: {fileID: 1049095967}
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1049095966}
-  market: {fileID: 0}
+  market: {fileID: 1049095968}
   seedExporter: {fileID: 1049095961}
   targetDay: 4
   calendarSchedules:
@@ -4769,6 +4769,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 7.2000046
       objectReference: {fileID: 0}
+    - target: {fileID: 7093021050625581420, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
+      propertyPath: htsCommunity
+      value: 
+      objectReference: {fileID: 1049095964}
     - target: {fileID: 7359008376829066234, guid: 504b83a17807d0a4f91e50d194c87e94, type: 3}
       propertyPath: m_SizeDelta.x
       value: 13.530945
