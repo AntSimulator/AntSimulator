@@ -73,12 +73,14 @@ namespace Banking.Runtime
             if (playerMoneyComponent == null)
             {
                 Debug.LogError("[Transfer] playerMoneyComponent is not assigned.");
+                RaiseSystemErrorResult(req, "playerMoneyComponent is not assigned.");
                 return;
             }
 
             if (!ReflectionCashAccessor.TryGetCash(playerMoneyComponent, cashMemberName, out var currentCash))
             {
                 Debug.LogError($"[Transfer] Cannot read cash member '{cashMemberName}' from {playerMoneyComponent.GetType().Name}.");
+                RaiseSystemErrorResult(req, $"Cannot read cash member '{cashMemberName}'.");
                 return;
             }
 
@@ -98,6 +100,7 @@ namespace Banking.Runtime
             if (!ReflectionCashAccessor.TrySetCash(playerMoneyComponent, cashMemberName, decision.NextCash))
             {
                 Debug.LogError($"[Transfer] Cannot write cash member '{cashMemberName}' to {playerMoneyComponent.GetType().Name}.");
+                RaiseSystemErrorResult(req, $"Cannot write cash member '{cashMemberName}'.");
                 return;
             }
 
@@ -106,6 +109,17 @@ namespace Banking.Runtime
                 $"to={req.toAccount}, amount={req.amount}, correlationId={req.correlationId}");
 
             resultChannel?.Raise(decision.Result);
+        }
+
+        private void RaiseSystemErrorResult(TransferRequest req, string message)
+        {
+            resultChannel?.Raise(new TransferResult
+            {
+                correlationId = req.correlationId ?? string.Empty,
+                success = false,
+                reason = TransferFailReason.SystemError,
+                message = message ?? "System error."
+            });
         }
     }
 }

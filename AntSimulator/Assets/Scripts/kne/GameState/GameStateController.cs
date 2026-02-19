@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
+using Player.Runtime;
 
 public class GameStateController : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class GameStateController : MonoBehaviour
     private IGameState currentState;
     public string currentStateName = "";
     public float stateTimer = 0f;
-    public int currentDay = 1;
+    public int currentDay = 0;
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
 
@@ -26,6 +28,9 @@ public class GameStateController : MonoBehaviour
 
     [Header("Ending Settings")]
     public int targetDay = 5;
+    private long targetCash = 4000000;
+    private long ecurrentCash = 0;
+    private PlayerController _endingPlayer;
 
     [Header("Calendar Event Schedules")] public List<CalendarDayScheduleSO> calendarSchedules = new();
 
@@ -57,8 +62,8 @@ public class GameStateController : MonoBehaviour
         // ?? ???? Day start ?? ?? 
         OnDayStarted?.Invoke(currentDay);
         
-        
-        
+        _endingPlayer = FindObjectOfType<PlayerController>();
+
     }
 
     // Update is called once per frame
@@ -151,6 +156,16 @@ public class GameStateController : MonoBehaviour
         if (currentDay > targetDay)
         {
             ChangeState(new GameEndingState(this));
+            ecurrentCash = _endingPlayer.GetCash();
+
+            if(ecurrentCash >= targetCash)
+            {
+                SceneManager.LoadScene("GoodEndingScene");
+            }
+            else
+            {
+                SceneManager.LoadScene("BadEndingScene");
+            }
         }
         else
         {

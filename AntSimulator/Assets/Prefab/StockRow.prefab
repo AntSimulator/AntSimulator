@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: StockName
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
+  m_sharedMaterial: {fileID: 5784363008385526455, guid: a3c1c354b0197144c8b42cc5ca6437f2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -251,7 +251,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -5.510851}
+  m_AnchoredPosition: {x: 50, y: -5.5108643}
   m_SizeDelta: {x: 100, y: 39.0217}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &595345942271772082
@@ -306,6 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Stocks.UI.StockRowView
   iconImage: {fileID: 2849753798275945779}
   nameText: {fileID: 5949842645215560402}
+  button: {fileID: 0}
 --- !u!114 &8034165942069035092
 MonoBehaviour:
   m_ObjectHideFlags: 0
