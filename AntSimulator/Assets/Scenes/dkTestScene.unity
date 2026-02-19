@@ -3206,12 +3206,12 @@ MonoBehaviour:
   currentStateName: 
   stateTimer: 0
   currentDay: 1
-  calendarUI: {fileID: 0}
+  calendarUI: {fileID: 1049095973}
   stateInfoText: {fileID: 1778322629}
   eventManager: {fileID: 1049095967}
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1049095966}
-  market: {fileID: 0}
+  market: {fileID: 1049095968}
   seedExporter: {fileID: 1049095961}
   targetDay: 4
   calendarSchedules:
