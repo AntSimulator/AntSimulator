@@ -13,9 +13,4 @@ MonoBehaviour:
   m_Name: Wed
   m_EditorClassIdentifier: Assembly-CSharp::CalendarDayScheduleSO
   dayOfWeek: 2
-  slots:
-  - goodEventId: Finance_good
-    badEventId: Finance_bad
-    goodChance: 0.5
-    revealTickInDay: 30
-    overrideDurationDays: 0
+  slots: []

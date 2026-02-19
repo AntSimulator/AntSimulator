@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: Finance_good
   title: 
-  description: 
-  scope: 2
+  description: .
+  scope: 0
   sector: 0
   targetStockIds: []
-  probEffect: 0
+  probEffect: 0.5
   isUp: 0
-  depthEffect: 0
+  depthEffect: 0.02
   durationDays: 1
   delist: 0
   delistStockIds: []
