@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Player;
+using Player.Runtime;
 
 public class GameStateController : MonoBehaviour
 {

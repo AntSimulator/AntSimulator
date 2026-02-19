@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Player.Models;
 using Stocks.Models;
 
 namespace Player.Core

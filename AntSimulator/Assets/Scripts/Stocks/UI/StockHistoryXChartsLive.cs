@@ -20,6 +20,13 @@ namespace Stocks.UI
         [Range(1f, 20f)] public float scrollSensitivity = 4f;
         public bool keepEndOnUpdate = true;
 
+        [Header("Chart Rect Layout")]
+        public bool forceChartRectToFillParent = true;
+        [Min(0f)] public float chartInsetLeft = 0f;
+        [Min(0f)] public float chartInsetRight = 0f;
+        [Min(0f)] public float chartInsetTop = 0f;
+        [Min(0f)] public float chartInsetBottom = 0f;
+
 
         [Header("JSON in StreamingAssets")]
         public string jsonFileName = "stocks_history.json";
@@ -39,6 +46,9 @@ namespace Stocks.UI
 
         private long _lastSize = -1;
 
+        bool _barAnimated;
+        bool _priceAnimated;
+
 
         void OnEnable()
         {
@@ -56,6 +66,7 @@ namespace Stocks.UI
             _path = File.Exists(p) ? p : null;
             if (priceStick) priceStick.Init();
             if (volumeChart) volumeChart.Init();
+            ApplyChartRectLayout();
 
             Reload();
         }
@@ -63,6 +74,8 @@ namespace Stocks.UI
         void HandleStockSelected(string code, string name)
         {
             _ = name;
+            _barAnimated = false;
+            _priceAnimated = false;
             ShowStock(code);
         }
 
@@ -105,6 +118,7 @@ namespace Stocks.UI
 
             if (priceStick) priceStick.RefreshChart();
             if (volumeChart) volumeChart.RefreshChart();
+            ApplyChartRectLayout();
         }
 
 
@@ -186,8 +200,11 @@ namespace Stocks.UI
                 return;
             }
 
-            ApplyCandlestickChart(priceStick, $"{projection.DisplayName} PRICE", projection.XLabels, projection.Ohlc);
-            ApplyBarChart(volumeChart, $"{projection.DisplayName} VOLUME", projection.XLabels, projection.Volumes);
+            ApplyCandlestickChart(priceStick, $"{projection.DisplayName} PRICE", projection.XLabels, projection.Ohlc, !_priceAnimated);
+            ApplyBarChart(volumeChart, $"{projection.DisplayName} VOLUME", projection.XLabels, projection.Volumes, !_barAnimated);
+
+            _priceAnimated = true;
+            _barAnimated = true;
 
             _lastDataCount = projection.XLabels.Length;
             SetupDataZoom(_lastDataCount);
@@ -198,6 +215,9 @@ namespace Stocks.UI
         {
             ClearChart(priceStick);
             ClearChart(volumeChart);
+            _barAnimated = false;
+            _priceAnimated = false;
+            ApplyChartRectLayout();
         }
 
         static void ClearChart(BaseChart chart)
@@ -209,13 +229,32 @@ namespace Stocks.UI
             chart.RefreshChart();
         }
 
+        void ApplyChartRectLayout()
+        {
+            if (!forceChartRectToFillParent) return;
+
+            ApplyRectLayout(priceStick ? priceStick.rectTransform : null);
+            ApplyRectLayout(volumeChart ? volumeChart.rectTransform : null);
+        }
+
+        void ApplyRectLayout(RectTransform rt)
+        {
+            if (!rt) return;
+
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.offsetMin = new Vector2(chartInsetLeft, chartInsetBottom);
+            rt.offsetMax = new Vector2(-chartInsetRight, -chartInsetTop);
+        }
+
         void SetupDataZoom(int dataCount)
         {
             if (!useDataZoom) return;
             if (!priceStick || !volumeChart) return;
 
-            _priceZoom = ConfigureDataZoom(priceStick);
-            _volumeZoom = ConfigureDataZoom(volumeChart);
+            _priceZoom = ConfigureDataZoom(priceStick, supportSlider: false);
+            _volumeZoom = ConfigureDataZoom(volumeChart, supportSlider: true);
 
             _priceZoom.startEndFunction = (ref float start, ref float end) =>
                 SyncZoom(_volumeZoom, volumeChart, start, end);
@@ -226,14 +265,14 @@ namespace Stocks.UI
             ApplyInitialZoom(dataCount);
         }
 
-        DataZoom ConfigureDataZoom(BaseChart chart)
+        DataZoom ConfigureDataZoom(BaseChart chart, bool supportSlider = true)
         {
             var zoom = chart.EnsureChartComponent<DataZoom>();
             zoom.enable = true;
             zoom.supportInside = true;
-            zoom.supportInsideDrag = true;
+            zoom.supportInsideDrag = false;
             zoom.supportInsideScroll = true;
-            zoom.supportSlider = false;
+            zoom.supportSlider = supportSlider;
             zoom.supportMarquee = false;
             zoom.zoomLock = false;
             zoom.filterMode = DataZoom.FilterMode.Filter;
@@ -242,6 +281,15 @@ namespace Stocks.UI
             zoom.rangeMode = DataZoom.RangeMode.Percent;
             zoom.minZoomRatio = Mathf.Clamp(minZoomRatio, 0.01f, 1f);
             zoom.scrollSensitivity = scrollSensitivity;
+
+            if (supportSlider)
+            {
+                zoom.top = 0.8f;
+                zoom.bottom = 5f;
+                zoom.left = 75f;
+                zoom.right = 20f;
+            }
+
             return zoom;
         }
 
@@ -256,8 +304,7 @@ namespace Stocks.UI
             if (keepEndOnUpdate)
             {
                 bool hasValidRange = _priceZoom.end > _priceZoom.start + 0.01f;
-                bool atEnd = hasValidRange && Mathf.Abs(_priceZoom.end - 100f) < 0.001f;
-                if (hasValidRange && !atEnd)
+                if (hasValidRange)
                 {
                     start = _priceZoom.start;
                     end = _priceZoom.end;
@@ -299,22 +346,42 @@ namespace Stocks.UI
         }
 
 
-        static void ApplyCandlestickChart(CandlestickChart chart, string title, string[] xLabels, OhlcPoint[] ohlc)
+        static void ConfigureTooltip(BaseChart chart)
+        {
+            var tooltip = chart.EnsureChartComponent<Tooltip>();
+            tooltip.show = true;
+            tooltip.trigger = Tooltip.Trigger.Axis;
+            tooltip.triggerOn = Tooltip.TriggerOn.Click;
+            tooltip.position = Tooltip.Position.Auto;
+        }
+
+        static void ApplyCandlestickChart(CandlestickChart chart, string title, string[] xLabels, OhlcPoint[] ohlc, bool animate = true)
         {
             if (!chart) return;
 
             var t = chart.EnsureChartComponent<Title>();
             t.show = false;
 
+            ConfigureTooltip(chart);
+
             var grid = chart.EnsureChartComponent<GridCoord>();
-            grid.left = 100; grid.right = 100; grid.top = 30; grid.bottom = 30;
+            grid.left = 75; grid.right = 20; grid.top = 20; grid.bottom = 50;
 
             chart.RemoveData();
             chart.AddSerie<Candlestick>("S1");
+            if (!animate)
+                chart.series[0].animation.enable = false;
 
             var serie = chart.series[0];
             serie.barWidth = 20;
             serie.barGap = 30;
+            
+            var xaxis = chart.EnsureChartComponent<XAxis>();
+            xaxis.type = XAxis.AxisType.Category;
+
+            var yaxis = chart.EnsureChartComponent<YAxis>();
+            yaxis.splitNumber = 6;
+            yaxis.axisLabel.numericFormatter = "f0";
 
             for (int i = 0; i < xLabels.Length; i++)
             {
@@ -325,22 +392,33 @@ namespace Stocks.UI
             chart.RefreshChart();
         }
 
-        static void ApplyBarChart(BarChart chart, string title, string[] xLabels, double[] values)
+        static void ApplyBarChart(BarChart chart, string title, string[] xLabels, double[] values, bool animate = true)
         {
             if (!chart) return;
 
             var t = chart.EnsureChartComponent<Title>();
             t.show = false;
 
+            ConfigureTooltip(chart);
+
             var grid = chart.EnsureChartComponent<GridCoord>();
-            grid.left = 0; grid.right = 0; grid.top = 150; grid.bottom = 100;
+            grid.left = 75; grid.right = 20; grid.top = 20; grid.bottom = 50;
 
             chart.RemoveData();
             chart.AddSerie<Bar>("S1");
+            if (!animate)
+                chart.series[0].animation.enable = false;
 
             var serie = chart.series[0];
             serie.barWidth = 20;
             serie.barGap = 30;
+            
+            var xaxis = chart.EnsureChartComponent<XAxis>();
+            xaxis.type = XAxis.AxisType.Category;
+
+            var yaxis = chart.EnsureChartComponent<YAxis>();
+            yaxis.splitNumber = 3;
+            yaxis.axisLabel.numericFormatter = "f0";
 
             for (int i = 0; i < xLabels.Length; i++)
             {
