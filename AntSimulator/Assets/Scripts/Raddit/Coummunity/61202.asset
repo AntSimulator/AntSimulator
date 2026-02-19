@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc15b5106db9481baec5d1c1b0288a9, type: 3}
+  m_Name: 61202
+  m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
+  eventId: 61202
+  title: "[\uCC0C\uB77C\uC2DC] KREX\uC758 \uAC00\uC774\uB358\uC2A4 \uD558\uD5A5\uC774
+    \uB2E8\uC21C\uD788 \uACBD\uAE30 \uCE68\uCCB4 \uB54C\uBB38\uC774 \uC544\uB2C8\uB77C,
+    \uB300\uADDC\uBAA8 \uBD80\uC2E4 \uCC44\uAD8C\uC774 \uD130\uC9C0\uAE30 \uC9C1\uC804\uC774\uB77C
+    \uBBF8\uB9AC \uBC11\uBC25 \uAE4C\uB294 \uAC70\uB77C\uB294 \uB0B4\uBD80 \uACE0\uBC1C
+    \uC720\uCD9C"
+  body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"

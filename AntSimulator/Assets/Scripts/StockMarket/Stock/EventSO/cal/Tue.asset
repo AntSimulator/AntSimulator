@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CalendarDayScheduleSO
   dayOfWeek: 1
   slots:
-  - goodEventId: Food_good
-    badEventId: Food_bad
+  - goodEventId: SYSP_good
+    badEventId: SYSP_bad
     goodChance: 0.5
-    revealTickInDay: 30
-    overrideDurationDays: 0
+    revealTickInDay: 100
+    overrideDurationDays: 1
+    isHidden: 0

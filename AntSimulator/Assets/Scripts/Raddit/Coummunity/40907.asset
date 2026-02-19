@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc15b5106db9481baec5d1c1b0288a9, type: 3}
+  m_Name: 40907
+  m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
+  eventId: 40907
+  title: "[\uCC0C\uB77C\uC2DC] \uC0AC\uC2E4 \uBE44\uC698\uB4DC \uCF69\uACE0\uAE30
+    \uB300\uC8FC\uC8FC\uAC00 \uC6CC\uB7F0 \uBC84\uD54F\uC758 \uC228\uACA8\uC9C4 \uC544\uB4E4\uC774\uB77C\uB294
+    \uC124\uC774 \uC778\uD130\uB137\uC5D0\uC11C \uD655\uC0B0\uC911"
+  body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"

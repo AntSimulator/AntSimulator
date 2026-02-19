@@ -14,15 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CalendarDayScheduleSO
   dayOfWeek: 4
   slots:
-  - goodEventId: Ent_good
-    badEventId: Ent_bad
+  - goodEventId: JNJA_good
+    badEventId: JNJA_bad
     goodChance: 0.5
-    revealTickInDay: 30
-    overrideDurationDays: 0
+    revealTickInDay: 50
+    overrideDurationDays: 1
     isHidden: 0
-  - goodEventId: Bio_good
-    badEventId: Bio_bad
+  - goodEventId: BFE_good
+    badEventId: BFE_bad
     goodChance: 0.5
-    revealTickInDay: 60
-    overrideDurationDays: 0
+    revealTickInDay: 80
+    overrideDurationDays: 1
+    isHidden: 0
+  - goodEventId: MIVE_good
+    badEventId: MIVE_bad
+    goodChance: 0.5
+    revealTickInDay: 110
+    overrideDurationDays: 1
+    isHidden: 0
+  - goodEventId: FMC_good
+    badEventId: FMC_bad
+    goodChance: 0.5
+    revealTickInDay: 140
+    overrideDurationDays: 1
     isHidden: 0

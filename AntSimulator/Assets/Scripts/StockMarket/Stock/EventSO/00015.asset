@@ -20,7 +20,11 @@ MonoBehaviour:
     \uC9C1\uC811 \uC124\uACC4\uD55C\uB2E4\""
   scope: 1
   sector: 6
-  targetStockIds: []
+  targetStockIds:
+  - JNJA
+  - BFE
+  - MRCX
+  - TSLM
   probEffect: 0.7
   isUp: 1
   depthEffect: 0.02
