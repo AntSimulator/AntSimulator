@@ -775,7 +775,7 @@ MonoBehaviour:
     dialogue: "\uAE002"
   - image: {fileID: 21300000, guid: 0a379f744aa4f6647b4d964a03704d4f, type: 3}
     dialogue: "\uAE003"
-  - image: {fileID: 21300000, guid: 96c5094dd26489f4cb39c4ad78307870, type: 3}
+  - image: {fileID: 21300000, guid: 7bd93a19a95b0df4ebcadfa8e096b93d, type: 3}
     dialogue: "\uAE004"
   - image: {fileID: 21300000, guid: f66800405679b7b4293146b871352690, type: 3}
     dialogue: "\uAE005"

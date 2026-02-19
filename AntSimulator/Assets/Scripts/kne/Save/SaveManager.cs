@@ -71,6 +71,11 @@ public class SaveManager : MonoBehaviour
                 }
             }
 
+            if (marketSimulator == null)
+            {
+                marketSimulator = FindObjectOfType<MarketSimulator>();
+            }
+
             if (marketSimulator != null)
             {
                 data.marketPrices.Clear();
@@ -168,6 +173,11 @@ public class SaveManager : MonoBehaviour
                 {
                     _savePlayer.SetQuantityByStockId(saveData.stockId, saveData.amount);
                 }
+            }
+
+            if (marketSimulator == null)
+            {
+                marketSimulator = FindObjectOfType<MarketSimulator>();
             }
 
             if (marketSimulator != null)

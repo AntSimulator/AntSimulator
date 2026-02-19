@@ -707,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561601550072965257, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 11953087
+      value: 11984941
       objectReference: {fileID: 0}
     - target: {fileID: 4374729863678750638, guid: 9eb94f5a3b108ea438cbcd76035d4add, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3501,6 +3501,8 @@ MonoBehaviour:
   tickIntervalSec: 1
   eventManager: {fileID: 1049095967}
   historyExporter: {fileID: 1049095962}
+  simulateTicks: 0
+  allowEventReveal: 1
   ticksPerDay: 180
   runRecorder: {fileID: 1049095966}
   gameStateController: {fileID: 1049095969}
@@ -3516,15 +3518,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c682ec8b5b323ad40a011d15a69fea1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStateController
-  saveManager: {fileID: 0}
   currentStateName: 
   stateTimer: 0
   currentDay: 1
-  calendarUI: {fileID: 0}
+  calendarUI: {fileID: 1049095973}
   stateInfoText: {fileID: 1778322629}
   eventManager: {fileID: 1049095967}
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1049095966}
+  market: {fileID: 1049095968}
   seedExporter: {fileID: 1049095961}
   targetDay: 4
   calendarSchedules:
@@ -6138,8 +6140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2361c0c21ba0342c79daef410e229977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewsUIController
-  market: {fileID: 1049095968}
+  popupRoot: {fileID: 0}
   contentText: {fileID: 265695005}
+  autoCloseSeconds: 3
+  clickToClose: 1
 --- !u!1 &2101469469
 GameObject:
   m_ObjectHideFlags: 0
