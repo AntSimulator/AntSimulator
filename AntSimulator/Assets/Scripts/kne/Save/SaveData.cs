@@ -8,6 +8,7 @@ public class SaveData
     public string stateName;
     public string saveTime;
     public string sceneName;
+    public long saveCash;
 
     
 }

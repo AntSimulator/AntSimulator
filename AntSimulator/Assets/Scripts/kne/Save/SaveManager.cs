@@ -3,12 +3,14 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Player;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance;
     public GameStateController gsc;
     public int currentSlotIndex = 0;
+    private PlayerController _savePlayer;
 
     public string GetSavePath(int slotIndex)
     {
@@ -41,6 +43,16 @@ public class SaveManager : MonoBehaviour
             data.day = gsc.currentDay;
             data.timer = gsc.stateTimer;
             data.stateName = gsc.currentStateName;
+
+            if(_savePlayer == null)
+            {
+                _savePlayer = FindObjectOfType<PlayerController>();
+            }
+
+            if(_savePlayer != null)
+            {
+                data.saveCash = _savePlayer.GetCash();
+            }
         }
         else
         {
@@ -72,37 +84,7 @@ public class SaveManager : MonoBehaviour
     {
 
         StartCoroutine(LoadRoutine(slotIndex));
-        currentSlotIndex = slotIndex;
-        string path = GetSavePath(slotIndex);
-
-        if (!File.Exists(path))
-        {
-            Debug.Log("저장된 파일이 없습니다.");
-            return;
-        }
-
-        string json = File.ReadAllText(path);
-
-        SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-        if (gsc != null)
-        {
-            gsc.currentDay = data.day;
-            gsc.LoadState(data.stateName, data.timer);
-
-            if (gsc.calendarUI != null)
-            {
-                gsc.calendarUI.HighLightToday(gsc.currentDay);
-            }
-
-            SceneManager.LoadScene(data.sceneName);
-        }
-        else
-        {
-            Debug.Log("타이틀화면");
-
-            //SceneManager.LoadScene("");
-        }
+        
     }
 
     IEnumerator LoadRoutine(int slotIndex)
