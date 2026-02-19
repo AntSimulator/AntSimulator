@@ -1,61 +1,85 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Utils.UI;
+using System;
+using UnityEngine.InputSystem;
 
 public class NewsUIController : MonoBehaviour
 {
-    [Header("UI")]
-    [Tooltip("뉴스 팝업 전체 루트(패널). SetActive로 켜고 끔")]
-    public GameObject popupRoot;
+    [Header("Refs")]
+    public MarketSimulator market;
+    public PopupManager popupManager;
 
-    [Tooltip("본문 텍스트(이벤트 description)")]
+    [Header("Popup Id")]
+    public string popupId = "Popup_News"; // PopupManager에 등록한 id
+
+    [Header("UI (Only content)")]
     public TMP_Text contentText;
 
     [Header("Behavior")]
+    public bool pauseGameWhileOpen = true;
     public float autoCloseSeconds = 3f;
     public bool clickToClose = true;
 
-    private Coroutine _closeRoutine;
+    Coroutine _closeRoutine;
+    float _prevTimeScale = 1f;
+    bool _isOpen;
+    
     private Action _onClosed;
 
-    void Awake()
+    void OnEnable()
     {
-        if (popupRoot != null) popupRoot.SetActive(false);
+        if (market != null)
+            market.OnEventRevealed += HandleEventRevealed;
     }
 
     void OnDisable()
     {
-        // 비활성화되면 콜백은 날려버림(중복 호출 방지)
-        _onClosed = null;
+        if (market != null)
+            market.OnEventRevealed -= HandleEventRevealed;
 
-        if (_closeRoutine != null)
-        {
-            StopCoroutine(_closeRoutine);
-            _closeRoutine = null;
-        }
+        RestoreTimeScaleIfNeeded();
     }
 
     void Update()
     {
+        
         if (!clickToClose) return;
-        if (popupRoot == null || !popupRoot.activeSelf) return;
+        if (!_isOpen) return; // ✅ popupRoot 대신 이걸로 체크
 
-        if (Input.GetMouseButtonDown(0))
+        // 마우스
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            Close();
+
+        // 터치(모바일)
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
             Close();
     }
 
-    // ✅ Router가 호출할 함수
-    public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
+    void HandleEventRevealed(EventDefinition def, int day, int tick)
     {
-        if (popupRoot == null || contentText == null) return;
+        if (def == null) return;
+        Open(def.description ?? "");
+    }
 
-        _onClosed = onClosed;
+    public void Open(string text)
+    {
+        if (contentText == null) return;
 
-        // description만 표시
-        contentText.text = def != null ? (def.description ?? "") : "";
+        contentText.text = text;
 
-        popupRoot.SetActive(true);
+        // 팝업 열기
+        if (popupManager != null)
+            popupManager.Open(popupId);
+
+        _isOpen = true;
+
+        if (pauseGameWhileOpen)
+        {
+            _prevTimeScale = Time.timeScale;
+            Time.timeScale = 0f;
+        }
 
         if (_closeRoutine != null) StopCoroutine(_closeRoutine);
         _closeRoutine = StartCoroutine(AutoCloseRoutine());
@@ -67,13 +91,11 @@ public class NewsUIController : MonoBehaviour
         while (t < autoCloseSeconds)
         {
             yield return null;
-            t += Time.unscaledDeltaTime; // ✅ timeScale=0이어도 흘러감
+            t += Time.unscaledDeltaTime;
         }
-
         Close();
     }
 
-    // 버튼에서 직접 연결할 수도 있게 public
     public void Close()
     {
         if (_closeRoutine != null)
@@ -82,11 +104,23 @@ public class NewsUIController : MonoBehaviour
             _closeRoutine = null;
         }
 
-        if (popupRoot != null)
-            popupRoot.SetActive(false);
+        if (popupManager != null)
+            popupManager.Close(popupId);
 
-        var cb = _onClosed;
-        _onClosed = null;
-        cb?.Invoke(); // ✅ Router의 ShowNext 호출
+        _isOpen = false;
+        RestoreTimeScaleIfNeeded();
+    }
+
+    void RestoreTimeScaleIfNeeded()
+    {
+        if (pauseGameWhileOpen && Time.timeScale == 0f)
+            Time.timeScale = _prevTimeScale <= 0f ? 1f : _prevTimeScale;
+    }
+    
+
+    public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
+    {
+        _onClosed = onClosed;
+        Open(def != null ? (def.description ?? "") : "");
     }
 }
