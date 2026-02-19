@@ -376,10 +376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2361c0c21ba0342c79daef410e229977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewsUIController
-  market: {fileID: 1401095161}
   popupRoot: {fileID: 135462852}
   contentText: {fileID: 3157320377115122691}
-  pauseGameWhileOpen: 1
   autoCloseSeconds: 3
   clickToClose: 1
 --- !u!1 &231505434
@@ -1073,7 +1071,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 900402708}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -1938,7 +1936,11 @@ MonoBehaviour:
   db: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   ticksPerDay: 180
   morningTick: 0
-  calendarSchedules: []
+  calendarSchedules:
+  - {fileID: 11400000, guid: bb608160781fc44c2bc2f0d93cf96a41, type: 2}
+  - {fileID: 11400000, guid: 91751c34d8aca4d47a1834399e6ae552, type: 2}
+  - {fileID: 11400000, guid: ecee4725a69e74edb86b92a6a6cb7c84, type: 2}
+  - {fileID: 11400000, guid: 20f23f7ebf9bf4932aa98fb58542fced, type: 2}
 --- !u!114 &1401095161
 MonoBehaviour:
   m_ObjectHideFlags: 0
