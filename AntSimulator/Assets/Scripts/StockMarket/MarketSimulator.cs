@@ -22,6 +22,9 @@ public class MarketSimulator : MonoBehaviour
     public EventManager eventManager;
     public StockHistoryExporter historyExporter;
 
+    public bool simulateTicks = false;
+    public bool allowEventReveal = true;
+
     [Header("Volume")] 
     public int ticksPerDay;
 
@@ -60,6 +63,8 @@ public class MarketSimulator : MonoBehaviour
 
     private void Update()
     {
+        if(!simulateTicks) return;
+        
         timer += Time.deltaTime;
         if (timer < tickIntervalSec) return;
         timer -= tickIntervalSec;
@@ -71,8 +76,11 @@ public class MarketSimulator : MonoBehaviour
     {
         tickInDay++;
 
-        HandleEventRevealAndDelist(gameStateController != null ? gameStateController.currentDay : 1, tickInDay);
-        
+        if (allowEventReveal)
+        {
+            HandleEventRevealAndDelist(gameStateController != null ? gameStateController.currentDay : 1, tickInDay);
+        }
+
         foreach (var kv in stocks)
             UpdateStock(kv.Value, defMap[kv.Key]);
 
@@ -282,5 +290,11 @@ public class MarketSimulator : MonoBehaviour
                 }
             }
         }
+    }
+    
+    public void ProcessEventRevealNow(int day, int tickInDay)
+    {
+        if (!allowEventReveal) return;
+        HandleEventRevealAndDelist(day, tickInDay);
     }
 }
