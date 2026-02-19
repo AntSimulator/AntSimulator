@@ -33,10 +33,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8964524400167378302}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 438.09717, y: -15.005}
+  m_SizeDelta: {x: 856.19434, y: 30.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8138264388992308003
 CanvasRenderer:
@@ -191,10 +191,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8964524400167378302}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 438.09717, y: -133.14}
+  m_SizeDelta: {x: 856.19434, y: 166.26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4549395825010529515
 CanvasRenderer:
@@ -338,6 +338,7 @@ GameObject:
   - component: {fileID: 1252546405127113032}
   - component: {fileID: 5382809903332139739}
   - component: {fileID: 2623745388333819245}
+  - component: {fileID: 1724352098649647733}
   m_Layer: 5
   m_Name: RabbitNews
   m_TagString: Untagged
@@ -548,3 +549,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalPostRowView
   bodyText: {fileID: 0}
+--- !u!114 &1724352098649647733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8012098473559614518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3a0f45d8458406ba6976b69df468d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlobalPostRowView
+  bodyText: {fileID: 7768859114260953261}
