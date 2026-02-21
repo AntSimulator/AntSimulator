@@ -783,8 +783,8 @@ MonoBehaviour:
       \uCC3E\uC544\uC624\uB294 \uC9D1\uC774 \uB418\uC5B4\uBC84\uB838\uB2E4."
   - image: {fileID: 21300000, guid: f66800405679b7b4293146b871352690, type: 3}
     dialogue: "\uADF8\uB807\uC9C0\uB9CC \uB098\uC5D0\uAC90 \uC544\uC9C1 200\uB9CC\uC6D0\uC774
-      \uB0A8\uC558\uB2E4. \uC774 200\uC744 \uBD88\uB824\uC11C \uB0A8\uC740 400\uC758
-      \uBE5A\uC744 \uAC1A\uC544\uBC84\uB9AC\uC790!"
+      \uB0A8\uC558\uB2E4.\n\uC774 200\uB9CC\uC6D0\uC744 \uBD88\uB824\uC11C \uB0A8\uC740
+      400\uB9CC\uC6D0\uC758 \uBE5A\uC744 \uAC1A\uC544\uBC84\uB9AC\uC790!"
   nextSceneName: MainScene
   fadeSpeed: 2
   displayImage: {fileID: 40702921}
