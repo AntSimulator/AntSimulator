@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using Player.Runtime;
 using Stocks.UI;
 
@@ -18,6 +19,7 @@ namespace Player.UI
 
         [Header("Input")]
         [SerializeField] private TMP_InputField quantityInput;
+        [SerializeField] private Button maxButton;
 
         private string selectedStockCode;
         private string selectedStockName;
@@ -28,6 +30,9 @@ namespace Player.UI
 
             if (quantityInput != null)
                 quantityInput.onEndEdit.AddListener(OnQuantityInputChanged);
+
+            if (maxButton != null)
+                maxButton.onClick.AddListener(OnMaxButtonClicked);
         }
 
         private void OnDisable()
@@ -36,6 +41,9 @@ namespace Player.UI
 
             if (quantityInput != null)
                 quantityInput.onEndEdit.RemoveListener(OnQuantityInputChanged);
+
+            if (maxButton != null)
+                maxButton.onClick.RemoveListener(OnMaxButtonClicked);
         }
 
         private void Start()
@@ -46,14 +54,43 @@ namespace Player.UI
 
         private void HandleStockSelected(string stockCode, string stockName)
         {
+            var hasChanged = !string.Equals(selectedStockCode, stockCode, System.StringComparison.Ordinal);
             selectedStockCode = stockCode;
             selectedStockName = stockName;
+
+            if (hasChanged && quantityInput != null)
+            {
+                quantityInput.SetTextWithoutNotify("0");
+            }
         }
 
         private void OnQuantityInputChanged(string text)
         {
             if (playerController != null)
                 playerController.SetQtyStep(text);
+        }
+
+        private void OnMaxButtonClicked()
+        {
+            if (quantityInput == null || playerController == null)
+            {
+                return;
+            }
+
+            var stockCode = !string.IsNullOrWhiteSpace(selectedStockCode)
+                ? selectedStockCode
+                : playerController.SelectedStockId;
+
+            if (string.IsNullOrWhiteSpace(stockCode))
+            {
+                return;
+            }
+
+            var currentPrice = GetMarketPrice(stockCode);
+            var maxQuantity = CalculateMaxBuyQuantity(playerController.Cash, currentPrice);
+
+            quantityInput.text = maxQuantity.ToString();
+            OnQuantityInputChanged(quantityInput.text);
         }
 
         private void Update()
@@ -99,6 +136,22 @@ namespace Player.UI
             }
 
             return 0f;
+        }
+
+        private static int CalculateMaxBuyQuantity(long cash, float currentPrice)
+        {
+            if (cash <= 0 || currentPrice <= 0f)
+            {
+                return 0;
+            }
+
+            var max = System.Math.Floor(cash / (double)currentPrice);
+            if (max >= int.MaxValue)
+            {
+                return int.MaxValue;
+            }
+
+            return (int)max;
         }
     }
 }
