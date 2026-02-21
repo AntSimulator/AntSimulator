@@ -8,6 +8,8 @@ public class EventInstance
     public int startDay;
     public int durationDays;
     public int remainingDays;
+    public int remainingTicks;
+    public int durationTicks;
     //public bool isHidden;
 
     public int revealTickInDay;

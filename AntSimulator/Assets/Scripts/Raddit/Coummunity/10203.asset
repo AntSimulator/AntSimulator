@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc15b5106db9481baec5d1c1b0288a9, type: 3}
   m_Name: 10203
   m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
-  eventId: 10202
-  title: 10202
-  body: "[\uBE44\uACF5\uAC1C \uC720\uCD9C] \uBA64\uBC84 \uC804\uC6D0 '\uC804\uC18D\uACC4\uC57D
+  eventId: 10203
+  title: "[\uBE44\uACF5\uAC1C \uC720\uCD9C] \uBA64\uBC84 \uC804\uC6D0 '\uC804\uC18D\uACC4\uC57D
     \uD574\uC9C0' \uC18C\uC1A1 \uC900\uBE44 \uC644\uB8CC... \"\uB178\uC608 \uACC4\uC57D
     \uB354\uB294 \uBABB \uCC38\uC544\" \uBC95\uC801 \uACF5\uBC29 \uC2DC\uC791\uB418\uBA74
     \uC8FC\uAC00\uB294 \uC9C0\uC625\uD589 \uAE09\uD589\uC5F4\uCC28"
+  body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"

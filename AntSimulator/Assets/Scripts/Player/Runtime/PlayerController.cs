@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Player.Core;
 using Player.Models;
 using Stocks.Models;
@@ -26,8 +27,10 @@ namespace Player.Runtime
         [Header("Trade Settings")]
         [SerializeField] private int qtyStep = 1;
         [SerializeField] private int priceStep = 500;
-        [SerializeField] private long startCash = 100000;
+        [SerializeField] private long startCash = 2000000;
         [SerializeField] private int seedDefaultPrice = 1000;
+        [SerializeField] private Button buyButton;
+        [SerializeField] private Button sellButton;
 
         [Header("HP Settings")]
         [SerializeField] private int startHp = 100;
@@ -42,6 +45,15 @@ namespace Player.Runtime
         [SerializeField] private string seedIconColor = "#FFFFFF";
         [SerializeField] private bool seedOverrideStocks = true;
 
+        [Header("HP Drain")]
+        [SerializeField] private bool drainHpEnabled = true;
+        [SerializeField] private float drainIntervalSeconds = 3f; // 3초마다
+        [SerializeField] private int drainAmount = 1;            // 1씩 감소
+        [SerializeField] private bool drainUseUnscaledTime = false; // TimeScale=0이어도 닳게 할거면 true
+
+        private float hpDrainTimer = 0f;
+        
+        
         private PlayerState state;
         private PlayerHp hp;
         private PlayerTradingEngine tradingEngine;
@@ -57,11 +69,29 @@ namespace Player.Runtime
         private void OnEnable()
         {
             StockSelectionEvents.OnStockSelected += OnStockSelectedFromRow;
+            if (buyButton != null)
+            {
+                buyButton.onClick.AddListener(Buy);
+            }
+
+            if (sellButton != null)
+            {
+                sellButton.onClick.AddListener(Sell);
+            }
         }
 
         private void OnDisable()
         {
             StockSelectionEvents.OnStockSelected -= OnStockSelectedFromRow;
+            if (buyButton != null)
+            {
+                buyButton.onClick.RemoveListener(Buy);
+            }
+
+            if (sellButton != null)
+            {
+                sellButton.onClick.RemoveListener(Sell);
+            }
         }
 
         private TestStock CurrentStock
@@ -123,6 +153,12 @@ namespace Player.Runtime
             OnCashChanged?.Invoke(Cash);
             OnHpChanged?.Invoke(CurrentHp, MaxHp);
         }
+        
+        private void Update()
+        {
+            DrainHpTick();
+        }
+
 
         private void EnsureDefaultStocks()
         {
@@ -366,6 +402,18 @@ namespace Player.Runtime
             return state.GetQuantity(stockId);
         }
 
+        public void SetQuantityByStockId(string stockId, int amount)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(stockId))
+            {
+                return;
+            }
+
+            state.SetHolding(stockId, amount);
+
+            OnHoldingsChanged?.Invoke();
+        }
+
         public float GetSelectedAvgBuyPrice()
         {
             var current = tradingEngine?.CurrentStock;
@@ -441,45 +489,75 @@ namespace Player.Runtime
             return state.cash;
         }
 
+        public void SetSaveCash(long amount)
+        {
+            if (state == null) return;
+            state.cash = amount;
+        }
+
         public int CurrentHp
         {
             get
             {
-                EnsureHpInitialized();
+                
                 return hp.CurrentHp;
             }
+        }
+
+        public void LoadSavedHp(int savedValue)
+        {
+            hp.SetHp(savedValue);
         }
 
         public int MaxHp
         {
             get
             {
-                EnsureHpInitialized();
                 return hp.MaxHp;
             }
         }
 
         public void AddHp(int amount)
         {
-            EnsureHpInitialized();
+            
             hp.AddHp(amount);
         }
 
         public void DecreaseHp(int amount)
         {
-            EnsureHpInitialized();
+
             hp.DecreaseHp(amount);
         }
 
         public void SetHp(int value)
         {
-            EnsureHpInitialized();
+            
             hp.SetHp(value);
         }
 
         private void HandleHpChanged(int currentHp, int currentMaxHp)
         {
             OnHpChanged?.Invoke(currentHp, currentMaxHp);
+        }
+        
+        private void DrainHpTick()
+        {
+            if (!drainHpEnabled) return;
+
+            EnsureHpInitialized(); // 혹시라도 안전하게
+
+            float dt = drainUseUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+            if (dt <= 0f) return;
+
+            hpDrainTimer += dt;
+            if (hpDrainTimer < drainIntervalSeconds) return;
+
+            // 2초 단위로 누적된 만큼 처리 (프레임 드랍 대비)
+            while (hpDrainTimer >= drainIntervalSeconds)
+            {
+                hpDrainTimer -= drainIntervalSeconds;
+                hp.DecreaseHp(drainAmount);
+            }
         }
     }
 }

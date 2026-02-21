@@ -26,6 +26,7 @@ public class EventDefinition : ScriptableObject
     [Header("변동폭 영향")] public float depthEffect;
 
     [Header("지속")] public int durationDays = 1;
+    public int durationTick = 90;
 
     [Header("상폐")] 
     public bool delist = false;
@@ -35,8 +36,18 @@ public class EventDefinition : ScriptableObject
     public bool canBeCalendarEvent = true;
     public bool canBeHidden = true;
     public bool allowRepeatInRun = false;
+    
+    [Header("Kind")]
+    public EventKind kind = EventKind.Normal;
 
 }
+public enum EventKind
+{
+    Normal,     // 뉴스
+    Calendar,   // 캘린더 연출
+    Ending      // 엔딩 등 특수
+}
+
 
 public enum EventScope
 {

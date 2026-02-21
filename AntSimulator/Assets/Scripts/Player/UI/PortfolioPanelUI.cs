@@ -46,21 +46,21 @@ namespace Player.UI
 
         private void OnEnable()
         {
+            ResolveReferences();
             StockSelectionEvents.OnStockSelected += HandleStockSelected;
-
-            if (string.IsNullOrWhiteSpace(selectedStockCode) && playerController != null)
-            {
-                selectedStockCode = playerController.SelectedStockId;
-                selectedStockName = ResolveStockDisplayName(selectedStockCode);
-            }
+            PopupPanelSwitcher.OnPanelChanged += HandlePopupPanelChanged;
+            SubscribePlayerSelection();
 
             RefreshSelectedStockView();
             RegisterStatusBindings();
+            RefreshSelectedStatusBindings();
         }
 
         private void OnDisable()
         {
             StockSelectionEvents.OnStockSelected -= HandleStockSelected;
+            PopupPanelSwitcher.OnPanelChanged -= HandlePopupPanelChanged;
+            UnsubscribePlayerSelection();
             UnregisterStatusBindings();
         }
 
@@ -77,6 +77,7 @@ namespace Player.UI
 
         public void RefreshSelectedStockView()
         {
+            SyncSelectedStockFromPlayer();
             EnsureOwnedStockRectInstance();
             UpdateOwnedStockRect();
         }
@@ -86,6 +87,26 @@ namespace Player.UI
             selectedStockCode = stockCode;
             selectedStockName = stockName ?? string.Empty;
             RefreshSelectedStockView();
+            RefreshSelectedStatusBindings();
+        }
+
+        private void HandlePopupPanelChanged(int _)
+        {
+            RefreshSelectedStockView();
+            RefreshSelectedStatusBindings();
+        }
+
+        private void HandlePlayerSelectedStockChanged(string stockId)
+        {
+            if (string.IsNullOrWhiteSpace(stockId))
+            {
+                return;
+            }
+
+            selectedStockCode = stockId;
+            selectedStockName = ResolveStockDisplayName(stockId);
+            RefreshSelectedStockView();
+            RefreshSelectedStatusBindings();
         }
 
         private void ResolveReferences()
@@ -104,6 +125,63 @@ namespace Player.UI
             {
                 portfolioContent = transform;
             }
+        }
+
+        private void SubscribePlayerSelection()
+        {
+            if (playerController == null)
+            {
+                return;
+            }
+
+            playerController.OnSelectedStockChanged -= HandlePlayerSelectedStockChanged;
+            playerController.OnSelectedStockChanged += HandlePlayerSelectedStockChanged;
+        }
+
+        private void UnsubscribePlayerSelection()
+        {
+            if (playerController == null)
+            {
+                return;
+            }
+
+            playerController.OnSelectedStockChanged -= HandlePlayerSelectedStockChanged;
+        }
+
+        private void SyncSelectedStockFromPlayer()
+        {
+            if (playerController == null)
+            {
+                return;
+            }
+
+            var playerSelectedId = playerController.SelectedStockId;
+            if (string.IsNullOrWhiteSpace(playerSelectedId))
+            {
+                return;
+            }
+
+            if (!string.Equals(selectedStockCode, playerSelectedId, System.StringComparison.OrdinalIgnoreCase))
+            {
+                selectedStockCode = playerSelectedId;
+                selectedStockName = ResolveStockDisplayName(playerSelectedId);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(selectedStockName))
+            {
+                selectedStockName = ResolveStockDisplayName(playerSelectedId);
+            }
+        }
+
+        private static void RefreshSelectedStatusBindings()
+        {
+            if (PlayerStatusUI.Instance == null)
+            {
+                return;
+            }
+
+            PlayerStatusUI.Instance.RefreshSelectedStockBindings();
         }
 
         private void EnsureOwnedStockRectInstance()
@@ -176,12 +254,17 @@ namespace Player.UI
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(selectedStockCode))
+            var runtimeStockId = ResolveRuntimeStockId();
+            if (string.IsNullOrWhiteSpace(runtimeStockId))
             {
                 return;
             }
 
-            var runtimeStockId = ResolveRuntimeStockId();
+            if (string.IsNullOrWhiteSpace(selectedStockCode))
+            {
+                selectedStockCode = runtimeStockId;
+            }
+
             var displayName = !string.IsNullOrWhiteSpace(selectedStockName)
                 ? selectedStockName
                 : ResolveStockDisplayName(runtimeStockId);

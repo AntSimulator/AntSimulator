@@ -7,7 +7,6 @@ using Player.Runtime;
 
 public class GameStateController : MonoBehaviour
 {
-    public SaveManager saveManager;
     private bool isRestoring = false;
 
     private IGameState currentState;
@@ -25,6 +24,7 @@ public class GameStateController : MonoBehaviour
     public System.Action<int> OnDayStarted;
 
     public StockSeedExporter seedExporter;
+    private bool isGameOver = false;
 
     [Header("Ending Settings")]
     public int targetDay = 5;
@@ -33,6 +33,15 @@ public class GameStateController : MonoBehaviour
     private PlayerController _endingPlayer;
 
     [Header("Calendar Event Schedules")] public List<CalendarDayScheduleSO> calendarSchedules = new();
+
+    [Header("PreMarket-off list")]
+    public List<MonoBehaviour> preMarketOffControllers = new List<MonoBehaviour>();
+
+    [Header("MarketOpen-off list")]
+    public List<MonoBehaviour> marketopenOffControllers = new List<MonoBehaviour>();
+
+    [Header("Settlement-off list")]
+    public List<MonoBehaviour> settlementOffControllers = new List<MonoBehaviour>();
 
 
     void Start()
@@ -71,11 +80,11 @@ public class GameStateController : MonoBehaviour
     {
         currentState?.Tick();
 
-        var keyboard = Keyboard.current;
-        if (keyboard == null) return;
-        if (keyboard.digit1Key.wasPressedThisFrame) ChangeState(new MarketOpenState(this));
-        if (keyboard.digit2Key.wasPressedThisFrame) ChangeState(new JailState(this));
-        if (keyboard.digit3Key.wasPressedThisFrame) ChangeState(new SettlementState(this));
+        if (!isGameOver && _endingPlayer != null && _endingPlayer.CurrentHp <= 0)
+        {
+            isGameOver = true;
+            StartCoroutine(GameOverRoutine());
+        }
         
     }
 
@@ -84,11 +93,14 @@ public class GameStateController : MonoBehaviour
         currentState?.Exit();
         currentState = newState;
         stateTimer = 0f;
+
+        UpdateControllerStates(newState);
+
         currentState?.Enter();
 
-        if(saveManager != null && isRestoring == false)
+        if(SaveManager.Instance != null && isRestoring == false)
         {
-            saveManager.AutoSave();
+            SaveManager.Instance.AutoSave();
             Debug.Log("�ڵ� ����Ǿ����ϴ�.");
         } 
     }
@@ -178,6 +190,47 @@ public class GameStateController : MonoBehaviour
         if (ScreenFader.Instance != null)
         {
             yield return StartCoroutine(ScreenFader.Instance.FadeIn());
+        }
+    }
+
+    private System.Collections.IEnumerator GameOverRoutine()
+    {
+        if (ScreenFader.Instance != null)
+        {
+            yield return StartCoroutine(ScreenFader.Instance.FadeOut());
+        }
+        ChangeState(new GameEndingState(this));
+        SceneManager.LoadScene("StarveEndingScene");
+    }
+
+    private void SetListEnabled(List<MonoBehaviour> list, bool isEnabled)
+    {
+        foreach (var controller in list)
+        {
+            if (controller != null)
+            {
+                controller.enabled = isEnabled;
+            }
+        }
+    }
+
+    private void UpdateControllerStates(IGameState newState)
+    {
+        SetListEnabled(preMarketOffControllers, true);
+        SetListEnabled(marketopenOffControllers, true);
+        SetListEnabled(settlementOffControllers, true);
+
+        if (newState is PreMarketState)
+        {
+            SetListEnabled(preMarketOffControllers, false);
+        }
+        else if (newState is MarketOpenState)
+        {
+            SetListEnabled(marketopenOffControllers, false);
+        }
+        else if (newState is SettlementState)
+        {
+            SetListEnabled(settlementOffControllers, false);
         }
     }
 }

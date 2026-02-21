@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0513d48e0cdc247eba164202d30b878c, type: 3}
+  m_Name: MIVE_bad
+  m_EditorClassIdentifier: Assembly-CSharp::EventPresentationSO
+  eventId: MIVE_bad
+  presentationType: 1
+  image: {fileID: 0}
+  newsFallbackBody: 
+  calendarLines:
+  - "1\uB144\uAC04\uC758 \uAE30\uB2E4\uB9BC.. \uADF8\uB4E4\uC774 \uB3CC\uC544\uC635\uB2C8\uB2E4."
+  - "\uBC84\uD130\uC18C\uB144\uB2E8\uC758 \"\uC57C\uB974\uB801\", \uD574\uC678 \uC720\uBA85
+    \uACE1 \uD45C\uC808 \uC758\uD639 \uC81C\uAE30... \uD32C\uB364 \uB0B4\uC5D0\uC11C\uB3C4
+    \uBE44\uD310 \uBAA9\uC18C\uB9AC \uCEE4\uC838 "
+  charsPerSecond: 45
+  autoAdvanceSeconds: 0

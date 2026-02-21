@@ -46,6 +46,13 @@ namespace Player.UI
             return type == StatusType.StockEvaluation || type == StatusType.SelectedProfitRate;
         }
 
+        public void RefreshSelectedStockBindings()
+        {
+            UpdateBindingsForType(StatusType.SelectedQuantity);
+            UpdateBindingsForType(StatusType.SelectedAvgBuyPrice);
+            UpdateBindingsForType(StatusType.SelectedProfitRate);
+        }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -322,6 +329,7 @@ namespace Player.UI
 
         private void HandleSelectedStockChanged(string stockId)
         {
+            _ = stockId;
             UpdateBindingsForType(StatusType.SelectedQuantity);
             UpdateBindingsForType(StatusType.SelectedAvgBuyPrice);
             UpdateBindingsForType(StatusType.SelectedProfitRate);

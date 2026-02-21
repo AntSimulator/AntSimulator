@@ -18,14 +18,13 @@ MonoBehaviour:
     \uC7AC\uD655\uC0B0...\uC815\uBD80, 'AI \uBC14\uC774\uC624 \uD30C\uC6B4\uB4DC\uB9AC'\uC5D0
     20\uC870 \uC6D0 \uAE34\uAE09 \uD22C\uC785... \"\uC774\uC81C AI\uAC00 \uBC31\uC2E0\uC744
     \uC9C1\uC811 \uC124\uACC4\uD55C\uB2E4\""
-  scope: 2
+  scope: 1
   sector: 6
   targetStockIds:
-  - MRCX
-  - JPTI
-  - TSLM
   - JNJA
   - BFE
+  - MRCX
+  - TSLM
   probEffect: 0.7
   isUp: 1
   depthEffect: 0.02

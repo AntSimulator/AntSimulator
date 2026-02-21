@@ -15,18 +15,19 @@ MonoBehaviour:
   eventId: 40801
   title: 
   description: "[\uB2E8\uB3C5] \uD2B8\uB78C\uD478 SNS, \"\uB9C8\uC57D\uBD88\uBCF6\uC74C\uBA74,
-    \uB0B4 \uC778\uC0DD \uCD5C\uACE0\uC758 \uB9DB\"\u2026 \uC11C\uC591\uC2DD\uD488
-    \uBD81\uBBF8 \uC218\uCD9C '\uBE44\uC0C1'"
+    \uB0B4 \uC778\uC0DD \uCD5C\uACE0\uC758 \uB9DB\"\u2026  \uC648\uB9C8\uD2B8 '\uC6C3\uB294\uB2E4'"
   scope: 2
   sector: 3
   targetStockIds:
-  - SYSP
-  probEffect: 0.4
+  - WMWT
+  probEffect: 0.8
   isUp: 1
   depthEffect: 0.02
   durationDays: 1
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

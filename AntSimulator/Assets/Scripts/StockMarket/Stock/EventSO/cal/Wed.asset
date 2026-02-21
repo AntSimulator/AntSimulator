@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2839ba7ad34514e33877f99a6b72c3af, type: 3}
   m_Name: Wed
   m_EditorClassIdentifier: Assembly-CSharp::CalendarDayScheduleSO
-  dayOfWeek: 2
+  dayOfWeek: 3
   slots:
   - goodEventId: Finance_good
     badEventId: Finance_bad
     goodChance: 0.5
-    revealTickInDay: 30
-    overrideDurationDays: 0
+    revealTickInDay: 100
+    overrideDurationDays: 1
+    isHidden: 0

@@ -3,31 +3,93 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Player.Runtime;
+using System.Collections.Generic;
 
 public class SaveManager : MonoBehaviour
 {
-
+    public static SaveManager Instance;
     public GameStateController gsc;
     public int currentSlotIndex = 0;
+    private PlayerController _savePlayer;
+    public MarketSimulator marketSimulator;
+    [SerializeField] private List<StockDefinition> allStocks;
 
     public string GetSavePath(int slotIndex)
     {
         return Application.persistentDataPath + "/SaveSlot_" + slotIndex + ".json";
     }
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void SaveToSlot(int slotIndex)
     {
-
         currentSlotIndex = slotIndex;
+        if (gsc == null) gsc = FindObjectOfType<GameStateController>();
 
         SaveData data = new SaveData();
+        data.sceneName = SceneManager.GetActiveScene().name;
 
         if (gsc != null)
         {
             data.day = gsc.currentDay;
             data.timer = gsc.stateTimer;
             data.stateName = gsc.currentStateName;
-            data.sceneName = SceneManager.GetActiveScene().name;
+
+            if(_savePlayer == null)
+            {
+                _savePlayer = FindObjectOfType<PlayerController>();
+            }
+
+            if(_savePlayer != null)
+            {
+                data.saveCash = _savePlayer.GetCash();
+                data.saveHp = _savePlayer.CurrentHp;
+                data.saveStocks.Clear();
+                foreach (StockDefinition stock in allStocks)
+                {
+                    int qty = _savePlayer.GetQuantityByStockId(stock.stockId);
+
+                    if (qty > 0)
+                    {
+                        data.saveStocks.Add(new StockSaveData
+                        {
+                            stockId = stock.stockId,
+                            amount = qty
+                        });
+                    }
+                }
+            }
+
+            if (marketSimulator == null)
+            {
+                marketSimulator = FindObjectOfType<MarketSimulator>();
+            }
+
+            if (marketSimulator != null)
+            {
+                data.marketPrices.Clear();
+
+                foreach (var kvp in marketSimulator.GetAllStocks())
+                {
+                    data.marketPrices.Add(new StockPriceData
+                    {
+                        stockId = kvp.Key,
+                        currentPrice = kvp.Value.currentPrice
+                    });
+                }
+            }
         }
         else
         {
@@ -59,35 +121,7 @@ public class SaveManager : MonoBehaviour
     {
 
         StartCoroutine(LoadRoutine(slotIndex));
-        currentSlotIndex = slotIndex;
-        string path = GetSavePath(slotIndex);
-
-        if (!File.Exists(path))
-        {
-            Debug.Log("저장된 파일이 없습니다.");
-            return;
-        }
-
-        string json = File.ReadAllText(path);
-
-        SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-        if (gsc != null)
-        {
-            gsc.currentDay = data.day;
-            gsc.LoadState(data.stateName, data.timer);
-
-            if (gsc.calendarUI != null)
-            {
-                gsc.calendarUI.HighLightToday(gsc.currentDay);
-            }
-        }
-        else
-        {
-            Debug.Log("타이틀화면");
-
-            //SceneManager.LoadScene("");
-        }
+        
     }
 
     IEnumerator LoadRoutine(int slotIndex)
@@ -126,6 +160,40 @@ public class SaveManager : MonoBehaviour
             if (gsc.calendarUI != null)
             {
                 gsc.calendarUI.HighLightToday(gsc.currentDay);
+            }
+
+            if (_savePlayer == null)
+            {
+                _savePlayer = FindObjectOfType<PlayerController>();
+            }
+
+            if (_savePlayer != null)
+            {
+                _savePlayer.SetSaveCash(data.saveCash);
+                _savePlayer.LoadSavedHp(data.saveHp);
+                foreach (StockSaveData saveData in data.saveStocks)
+                {
+                    _savePlayer.SetQuantityByStockId(saveData.stockId, saveData.amount);
+                }
+            }
+
+            if (marketSimulator == null)
+            {
+                marketSimulator = FindObjectOfType<MarketSimulator>();
+            }
+
+            if (marketSimulator != null)
+            {
+                var allStocks = marketSimulator.GetAllStocks();
+
+                foreach (var savedStock in data.marketPrices)
+                {
+                    if (allStocks.TryGetValue(savedStock.stockId, out var stockState))
+                    {
+                        stockState.currentPrice = savedStock.currentPrice;
+                        stockState.prevPrice = savedStock.currentPrice;
+                    }
+                }
             }
 
             Debug.Log($"로드 완료! {targetScene} 씬으로 이동했습니다.");

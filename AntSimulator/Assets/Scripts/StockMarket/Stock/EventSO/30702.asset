@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 30702
   title: 
-  description: "\uACBD\uAE30 \uCE68\uCCB4 \uC7A5\uB824\uC5D0 \uBCF4\uD5D8 \uD574\uC57D
-    \uD658\uAE09\uAE08 \uC0AC\uC0C1 \uCD5C\uB300\u2026 \uB300\uD615\uC0AC \uACE0\uAC1D
-    \uC774\uD0C8 \uAC00\uC18D\uD654\uC5D0 \uC7A5\uAE30 \uC218\uC775\uC131 \uC758\uAD6C\uC2EC
-    \uC99D\uD3ED"
+  description: "\uD2B8\uB78C\uD478 \uC815\uBD80, \uBA54\uB514\uCF00\uC5B4 \uBCF4\uC870\uAE08
+    '\uC0AC\uC2E4\uC0C1 \uB3D9\uACB0'... \uC720\uB2C8\uD2F0\uB4DC \uD5EC\uC2A4 \uD3ED\uB77D\uD558\uB098"
   scope: 2
   sector: 2
   targetStockIds:
   - SASU
-  probEffect: 0.375
+  probEffect: 0.9
   isUp: 0
   depthEffect: 0.02
   durationDays: 1
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

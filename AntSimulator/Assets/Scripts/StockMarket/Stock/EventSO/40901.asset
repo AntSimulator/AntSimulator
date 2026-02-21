@@ -14,16 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 40901
   title: 
-  description: "\"\uBE44\uC698\uB4DC \uCF69\uACE0\uAE30, \uC0AC\uC2E4\uC0C1 \uC0D8\uC22D\uC804\uC790\uC640
-    \uD611\uB825?\" \uC815\uCCB4\uBD88\uBA85\uC758 \uB8E8\uBA38 \uD655\uC0B0 \uC911"
+  description: "[\uCC0C\uB77C\uC2DC] \"\uBE44\uC698\uB4DC \uCF69\uACE0\uAE30, \uC0AC\uC2E4\uC0C1
+    \uC0D8\uC22D\uC804\uC790\uC640 \uD611\uB825?\" \uC815\uCCB4\uBD88\uBA85\uC758
+    \uB8E8\uBA38 \uD655\uC0B0 \uC911"
   scope: 2
   sector: 3
   targetStockIds:
   - BYMM
-  probEffect: 0.5
+  probEffect: 1
   isUp: 1
   depthEffect: 0.02
   durationDays: 1
+<<<<<<<< HEAD:AntSimulator/Assets/Scripts/StockMarket/Stock/EventSO/51003.asset
+========
+  durationTick: 60
+>>>>>>>> merge_branch_1:AntSimulator/Assets/Scripts/StockMarket/Stock/EventSO/40901.asset
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

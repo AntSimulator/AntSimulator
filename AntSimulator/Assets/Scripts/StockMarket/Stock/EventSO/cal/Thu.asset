@@ -14,9 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CalendarDayScheduleSO
   dayOfWeek: 3
   slots:
-  - goodEventId: Tech_good
-    badEventId: Tech_bad
+  - goodEventId: PPAP_good
+    badEventId: PPAP_bad
     goodChance: 0.5
-    revealTickInDay: 30
-    overrideDurationDays: 0
+    revealTickInDay: 50
+    overrideDurationDays: 1
+    isHidden: 0
+  - goodEventId: MRCX_good
+    badEventId: MRCX_bad
+    goodChance: 0.5
+    revealTickInDay: 80
+    overrideDurationDays: 1
+    isHidden: 0
+  - goodEventId: JPTI_good
+    badEventId: JPTI_bad
+    goodChance: 0.5
+    revealTickInDay: 110
+    overrideDurationDays: 1
+    isHidden: 0
+  - goodEventId: TSLM_good
+    badEventId: TSLM_bad
+    goodChance: 0.5
+    revealTickInDay: 140
+    overrideDurationDays: 1
     isHidden: 0

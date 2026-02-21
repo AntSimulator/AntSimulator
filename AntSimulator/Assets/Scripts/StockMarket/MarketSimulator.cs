@@ -92,6 +92,7 @@ public class MarketSimulator : MonoBehaviour
         
         runRecorder?.RecordTick();
         historyExporter?.OnTick();
+        eventManager?.OnTick();
     }
 
     private void UpdateStock(StockState stock, StockDefinition def)
@@ -296,5 +297,10 @@ public class MarketSimulator : MonoBehaviour
     {
         if (!allowEventReveal) return;
         HandleEventRevealAndDelist(day, tickInDay);
+    }
+
+    public void TickOnce()
+    {
+        Tick();
     }
 }

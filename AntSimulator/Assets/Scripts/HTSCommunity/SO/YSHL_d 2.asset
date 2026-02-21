@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
   m_Name: YSHL_d 2
   m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
-  stockId: YSHL
+  stockId: OKILL
   direction: 1
   title: "\uC815\uBD80 \uBBFF\uACE0 \uB4E4\uC5B4\uC654\uB2E4\uAC00 \uD604\uB780\uD55C
     \uBB34\uBE59\uC5D0 \uC7A0\uB3C4 \uBABB\uC790\uACA0\uB2E4 \uC9C0\uAE08"

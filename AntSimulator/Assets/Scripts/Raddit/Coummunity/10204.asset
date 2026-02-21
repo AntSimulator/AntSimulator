@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc15b5106db9481baec5d1c1b0288a9, type: 3}
   m_Name: 10204
   m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
-  eventId: 10202
-  title: 10202
-  body: "[\uCC0C\uB77C\uC2DC] \uCD5C\uADFC \uC5ED\uC8FC\uD589\uC5D0 \uC131\uACF5\uD55C
+  eventId: 10204
+  title: "[\uCC0C\uB77C\uC2DC] \uCD5C\uADFC \uC5ED\uC8FC\uD589\uC5D0 \uC131\uACF5\uD55C
     \uC544\uC774\uB3CC \uBA64\uBC84\uB4E4\uC774 \uC219\uC18C\uC5D0\uC11C \uB300\uAC70
     \uD0C8\uC8FC\uD55C \uC815\uD669 \uD3EC\uCC29.. \uC9C4\uC9DC \uAC08\uB77C\uC11C\uB098.."
+  body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"

@@ -14,19 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 61201
   title: 
-  description: "Korea Express Financial, \uBC30\uB2F9\uAE08 15% \uC778\uC0C1 \uBC0F
-    \uB300\uADDC\uBAA8 \uC790\uC0AC\uC8FC \uB9E4\uC785 \uACC4\uD68D \uBC1C\uD45C\u2026
-    \uC8FC\uC8FC \uD658\uC6D0 \uC815\uCC45 \uAC15\uD654\uC5D0 \uC2E0\uACE0\uAC00"
+  description: "[\uC18D\uBCF4] BISA, \uBD84\uAE30 \uBC30\uB2F9\uAE08 15.6% \uC804\uACA9
+    \uC778\uC0C1\u2026 300\uC5B5 \uB2EC\uB7EC \uADDC\uBAA8 \u2018\uC5ED\uB300\uAE09\u2019
+    \uC790\uC0AC\uC8FC \uB9E4\uC785 \uD504\uB85C\uADF8\uB7A8 \uAC00\uB3D9"
   scope: 2
   sector: 5
   targetStockIds:
-  - KREX
-  probEffect: 0.4
+  - BISA
+  probEffect: 0.8
   isUp: 1
   depthEffect: 0.02
   durationDays: 1
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

@@ -14,7 +14,6 @@ public class GlobalCommunityManager : MonoBehaviour
     public int morningTick = 0;
 
     [Header("Posts")]
-    [Tooltip("하루에 무조건 1개만 올라감")]
     public int infoPostsPerDay = 1;
 
     [Header("Post Templates (must contain ALL events)")]
@@ -23,12 +22,14 @@ public class GlobalCommunityManager : MonoBehaviour
     [Header("Debug")]
     public bool logWhenPosted = true;
 
-    // UI가 읽을 데이터
     public readonly List<CommunityPost> posts = new();
     public event Action<CommunityPost> OnPostCreated;
 
     private readonly List<ScheduledPost> todaySchedule = new();
     private int todayDay = -1;
+
+    // ✅ 캐시 맵
+    private Dictionary<string, CommunityPostSO> _templateMap;
 
     [Serializable]
     private class ScheduledPost
@@ -36,6 +37,44 @@ public class GlobalCommunityManager : MonoBehaviour
         public int day;
         public int tickInDay;
         public string linkedEventId;
+    }
+
+    void Awake()
+    {
+        BuildTemplateMap();
+    }
+
+    void OnValidate()
+    {
+        // 에디터에서 값 바꿀 때도 체크되게
+        BuildTemplateMap();
+    }
+
+    void BuildTemplateMap()
+    {
+        _templateMap = new Dictionary<string, CommunityPostSO>(StringComparer.Ordinal);
+
+        if (templates == null) return;
+
+        foreach (var t in templates)
+        {
+            if (t == null) continue;
+
+            var id = (t.eventId ?? "").Trim();
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogError($"[GlobalCommunity] CommunityPostSO '{t.name}' eventId 비어있음. 반드시 eventId 채워야함.");
+                continue;
+            }
+
+            if (_templateMap.ContainsKey(id))
+            {
+                Debug.LogError($"[GlobalCommunity] CommunityPostSO eventId 중복: '{id}'. 첫 번째='{_templateMap[id].name}', 중복='{t.name}'");
+                continue;
+            }
+
+            _templateMap[id] = t;
+        }
     }
 
     public void OnDayStarted(int day)
@@ -46,18 +85,15 @@ public class GlobalCommunityManager : MonoBehaviour
         if (eventDb == null && eventManager != null)
             eventDb = eventManager.db;
 
-        // 내일 터질 이벤트 하나 선택
-        string tomorrowEventId = eventManager != null
-            ? eventManager.PickTomorrowForeshadow(day)?.eventId
-            : null;
+        // ✅ 캘린더 이벤트 제외한 “내일 이벤트” 고르기
+        string tomorrowEventId = PickTomorrowForeshadowNonCalendar(day);
 
         if (string.IsNullOrEmpty(tomorrowEventId))
         {
-            Debug.LogWarning($"[GlobalCommunity] No tomorrow event found for Day{day}");
+            Debug.LogWarning($"[GlobalCommunity] No NON-CALENDAR tomorrow event found for Day{day}");
             return;
         }
 
-        // 하루에 1개만 올라가게 강제
         AddScheduled(new ScheduledPost
         {
             day = day,
@@ -69,6 +105,34 @@ public class GlobalCommunityManager : MonoBehaviour
 
         if (logWhenPosted)
             Debug.Log($"[GlobalCommunity] Day{day} schedule created: {todaySchedule.Count} posts (event={tomorrowEventId})");
+    }
+
+    // ✅ 핵심: “캘린더 이벤트는 foreshadow 금지”
+    private string PickTomorrowForeshadowNonCalendar(int today)
+    {
+        if (eventManager == null) return null;
+
+        var list = eventManager.GetEventsStartingOnDay(today + 1);
+        if (list == null || list.Count == 0) return null;
+
+        // 여기서 def를 찾아서 kind/flag로 캘린더 제외
+        var candidates = new List<string>();
+
+        foreach (var inst in list)
+        {
+            if (inst == null || string.IsNullOrEmpty(inst.eventId)) continue;
+            var def = eventDb != null ? eventDb.FindById(inst.eventId) : (eventManager.db != null ? eventManager.db.FindById(inst.eventId) : null);
+            if (def == null) continue;
+
+            // ✅ 너 프로젝트에 EventKind.Calendar가 있으면 그걸로
+            // 없으면 def.canBeCalendarEvent 같은 플래그 쓰지 말고 “kind”로 분리하는 게 맞음.
+            if (def.kind == EventKind.Calendar) continue;
+
+            candidates.Add(def.eventId);
+        }
+
+        if (candidates.Count == 0) return null;
+        return candidates[UnityEngine.Random.Range(0, candidates.Count)];
     }
 
     public void OnTick(int day, int tickInDay)
@@ -88,7 +152,7 @@ public class GlobalCommunityManager : MonoBehaviour
                 posts.Add(post);
 
                 if (logWhenPosted)
-                    Debug.Log($"[GlobalCommunity][D{day} T{tickInDay}] {post.title} | event={post.linkedEventId}");
+                    Debug.Log($"[GlobalCommunity][D{day} T{tickInDay}] title='{post.title}' | event={post.linkedEventId}");
 
                 OnPostCreated?.Invoke(post);
             }
@@ -101,24 +165,22 @@ public class GlobalCommunityManager : MonoBehaviour
 
     private CommunityPost CreatePostFromSchedule(ScheduledPost s)
     {
-        if (string.IsNullOrEmpty(s.linkedEventId))
+        var id = (s.linkedEventId ?? "").Trim();
+        if (string.IsNullOrEmpty(id))
         {
-            Debug.LogError("[GlobalCommunity] linkedEventId is null/empty. This should never happen.");
+            Debug.LogError("[GlobalCommunity] linkedEventId is null/empty.");
             return null;
         }
 
-        if (templates == null || templates.Count == 0)
+        if (_templateMap == null || _templateMap.Count == 0)
         {
-            Debug.LogError("[GlobalCommunity] templates list is empty.");
+            Debug.LogError("[GlobalCommunity] templateMap 비어있음. templates에 eventId 채워졌는지 확인.");
             return null;
         }
 
-        // eventId로 SO 찾기 (1:1 강제)
-        var so = templates.FirstOrDefault(t => t != null && t.eventId == s.linkedEventId);
-
-        if (so == null)
+        if (!_templateMap.TryGetValue(id, out var so) || so == null)
         {
-            Debug.LogError($"[GlobalCommunity] Missing CommunityPostSO for eventId={s.linkedEventId}. 반드시 있어야 함.");
+            Debug.LogError($"[GlobalCommunity] 템플릿 매칭 실패: eventId='{id}'. templates에 같은 eventId의 SO가 있어야 함.");
             return null;
         }
 
@@ -128,8 +190,8 @@ public class GlobalCommunityManager : MonoBehaviour
             day = s.day,
             tickInDay = s.tickInDay,
             title = so.title,
-            body = so.body,
-            linkedEventId = s.linkedEventId
+            body = so.title,
+            linkedEventId = id
         };
     }
 
