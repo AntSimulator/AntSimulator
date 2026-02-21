@@ -26,10 +26,11 @@ MonoBehaviour:
   - OMR
   - FADS
   - JPTI
-  probEffect: 0.5
+  probEffect: 1
   isUp: 1
   depthEffect: 0.02
   durationDays: 1
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
