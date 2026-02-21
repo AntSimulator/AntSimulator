@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0513d48e0cdc247eba164202d30b878c, type: 3}
   m_Name: FMC_good
   m_EditorClassIdentifier: Assembly-CSharp::EventPresentationSO
-  eventId: MIVE_good
+  eventId: FMC_good
   presentationType: 1
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 51a3d114347714fbda4c6eab1027ccbd, type: 3}
   newsFallbackBody: 
   calendarLines:
   - "1\uB144\uAC04\uC758 \uAE30\uB2E4\uB9BC.. \uADF8\uB4E4\uC774 \uB3CC\uC544\uC635\uB2C8\uB2E4."
