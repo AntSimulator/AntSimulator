@@ -21,11 +21,10 @@ MonoBehaviour:
   sector: 1
   targetStockIds:
   - JPTI
-  probEffect: 0.9
+  probEffect: 0.45
   isUp: 1
   depthEffect: 0.03
   durationDays: 1
-  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
