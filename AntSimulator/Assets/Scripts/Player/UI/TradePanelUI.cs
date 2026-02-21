@@ -13,6 +13,7 @@ namespace Player.UI
 
         [Header("UI Text")]
         [SerializeField] private TMP_Text stockNameText;
+        [SerializeField] private TMP_Text stockBalanceText;
         [SerializeField] private TMP_Text currentPriceText;
 
         [Header("Input")]
@@ -65,12 +66,26 @@ namespace Player.UI
         private void UpdateUI()
         {
             float currentPrice = GetMarketPrice(selectedStockCode);
+            int holdingQuantity = GetHoldingQuantity(selectedStockCode);
 
             if (stockNameText != null)
                 stockNameText.text = selectedStockName;
 
+            if (stockBalanceText != null)
+                stockBalanceText.text = $"보유수량 : {holdingQuantity:N0}";
+
             if (currentPriceText != null)
-                currentPriceText.text = $"{currentPrice:N0}";
+                currentPriceText.text = $"현재가 : {currentPrice:N0}";
+        }
+
+        private int GetHoldingQuantity(string stockCode)
+        {
+            if (playerController == null || string.IsNullOrWhiteSpace(stockCode))
+            {
+                return 0;
+            }
+
+            return playerController.GetQuantityByStockId(stockCode);
         }
 
         private float GetMarketPrice(string stockCode)
