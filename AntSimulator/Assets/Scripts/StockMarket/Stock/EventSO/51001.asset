@@ -21,9 +21,9 @@ MonoBehaviour:
   sector: 4
   targetStockIds:
   - OKILL
-  probEffect: 0.7
+  probEffect: 1
   isUp: 1
-  depthEffect: 0.02
+  depthEffect: 0.5
   durationDays: 1
   durationTick: 60
   delist: 0

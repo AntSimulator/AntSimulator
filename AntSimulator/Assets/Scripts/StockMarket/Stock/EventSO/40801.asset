@@ -20,9 +20,9 @@ MonoBehaviour:
   sector: 3
   targetStockIds:
   - WMWT
-  probEffect: 0.8
+  probEffect: 1
   isUp: 1
-  depthEffect: 0.02
+  depthEffect: 0.5
   durationDays: 1
   durationTick: 60
   delist: 0

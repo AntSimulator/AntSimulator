@@ -21,13 +21,15 @@ MonoBehaviour:
   sector: 6
   targetStockIds:
   - JNJA
-  probEffect: 0.9
+  probEffect: 1
   isUp: 0
-  depthEffect: 0.02
+  depthEffect: 0.5
   durationDays: 1
+  durationTick: 90
   delist: 1
   delistStockIds:
   - BPE
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0
