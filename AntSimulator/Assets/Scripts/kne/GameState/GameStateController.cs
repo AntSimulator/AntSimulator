@@ -34,6 +34,9 @@ public class GameStateController : MonoBehaviour
 
     [Header("Calendar Event Schedules")] public List<CalendarDayScheduleSO> calendarSchedules = new();
 
+    [Header("Controller 리스트")]
+    public List<MonoBehaviour> managedControllers = new List<MonoBehaviour>();
+
 
     void Start()
     {
@@ -195,5 +198,17 @@ public class GameStateController : MonoBehaviour
         }
         ChangeState(new GameEndingState(this));
         SceneManager.LoadScene("StarveEndingScene");
+    }
+
+    public void SetControllerState<T>(bool state) where T : MonoBehaviour
+    {
+        foreach (var controller in managedControllers)
+        {
+            if (controller is T)
+            {
+                controller.enabled = state;
+                return;
+            }
+        }
     }
 }
