@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Player.Core;
 using Player.Models;
 using Stocks.Models;
@@ -28,6 +29,8 @@ namespace Player.Runtime
         [SerializeField] private int priceStep = 500;
         [SerializeField] private long startCash = 2000000;
         [SerializeField] private int seedDefaultPrice = 1000;
+        [SerializeField] private Button buyButton;
+        [SerializeField] private Button sellButton;
 
         [Header("HP Settings")]
         [SerializeField] private int startHp = 100;
@@ -66,11 +69,29 @@ namespace Player.Runtime
         private void OnEnable()
         {
             StockSelectionEvents.OnStockSelected += OnStockSelectedFromRow;
+            if (buyButton != null)
+            {
+                buyButton.onClick.AddListener(Buy);
+            }
+
+            if (sellButton != null)
+            {
+                sellButton.onClick.AddListener(Sell);
+            }
         }
 
         private void OnDisable()
         {
             StockSelectionEvents.OnStockSelected -= OnStockSelectedFromRow;
+            if (buyButton != null)
+            {
+                buyButton.onClick.RemoveListener(Buy);
+            }
+
+            if (sellButton != null)
+            {
+                sellButton.onClick.RemoveListener(Sell);
+            }
         }
 
         private TestStock CurrentStock
