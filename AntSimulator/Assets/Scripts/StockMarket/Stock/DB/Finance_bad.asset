@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventPresentationSO
   eventId: Finance_bad
   presentationType: 1
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 7bb545ee997734ec69deed82d3a92c50, type: 3}
   newsFallbackBody: 
   calendarLines:
   - "\uC5F0\uC900 \uC815\uB840\uD68C\uC758 \uC7A5\uC5D0 \uD30C\uC6D4 \uC758\uC7A5\uC774

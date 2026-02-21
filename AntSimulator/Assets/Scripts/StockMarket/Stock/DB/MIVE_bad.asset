@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventPresentationSO
   eventId: MIVE_bad
   presentationType: 1
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: b04b9e3d4901641a3b601386b67d50cc, type: 3}
   newsFallbackBody: 
   calendarLines:
   - "1\uB144\uAC04\uC758 \uAE30\uB2E4\uB9BC.. \uADF8\uB4E4\uC774 \uB3CC\uC544\uC635\uB2C8\uB2E4."
