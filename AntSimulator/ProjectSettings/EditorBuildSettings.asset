@@ -17,13 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 4a8f19a9c2cd2a5499a284fd31059544
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BadEndingScene.unity
     guid: 0d62884791793df44a36c7329b821ec2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GoodEndingScene.unity
     guid: 42f66d97f9d18a441a45ae5b4f6b9d00
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StarveEndingScene.unity
     guid: e677e43d4f017be46b4d808551abc4dc
   m_configObjects:

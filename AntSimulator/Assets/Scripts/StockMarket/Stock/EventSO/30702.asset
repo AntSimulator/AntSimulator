@@ -22,10 +22,11 @@ MonoBehaviour:
   sector: 2
   targetStockIds:
   - SASU
-  probEffect: 0.375
+  probEffect: 0.7
   isUp: 0
   depthEffect: 0.02
   durationDays: 1
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

@@ -20,10 +20,11 @@ MonoBehaviour:
   sector: 6
   targetStockIds:
   - JNJA
-  probEffect: 0.45
+  probEffect: 0.9
   isUp: 0
   depthEffect: 0.02
   durationDays: 1
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

@@ -21,10 +21,11 @@ MonoBehaviour:
   sector: 1
   targetStockIds:
   - TSLM
-  probEffect: 0.4
+  probEffect: 0.8
   isUp: 0
   depthEffect: 0.02
   durationDays: 1
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
