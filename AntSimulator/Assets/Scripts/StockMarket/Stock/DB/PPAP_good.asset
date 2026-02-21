@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0513d48e0cdc247eba164202d30b878c, type: 3}
-  m_Name: Finance_good
+  m_Name: PPAP_good
   m_EditorClassIdentifier: Assembly-CSharp::EventPresentationSO
-  eventId: Ent_good
+  eventId: PPAP_good
   presentationType: 1
   image: {fileID: 0}
   newsFallbackBody: 

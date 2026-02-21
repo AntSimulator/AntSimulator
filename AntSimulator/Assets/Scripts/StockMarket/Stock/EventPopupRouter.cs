@@ -65,42 +65,45 @@ public class EventPopupRouter : MonoBehaviour
             return;
         }
 
-        var pres = presentationDb != null 
-            ? presentationDb.Find(def.eventId) 
-            : null;
+        var pres = presentationDb.Find(def.eventId);
 
-// ✅ pres 없으면 기본은 News로 처리
-        if (pres == null)
-        {
-            newsPopup.Show(null, def, day, tick, onClosed: ShowNext);
-            return;
-        } 
+        Debug.Log($"[Router] eventId={def.eventId} kind={def.kind} pres={(pres ? pres.presentationType.ToString() : "NULL")}");
 
         PauseIfNeeded();
 
-        switch (pres.presentationType)
+        // pres 없으면 기본은 News
+        if (pres == null)
         {
-            case EventPresentationType.Calendar:
+            if (newsPopup == null)
+            {
+                Debug.LogError("[EventPopupRouter] newsPopup is null");
+                ShowNext();
+                return;
+            }
+            newsPopup.Show(null, def, day, tick, ShowNext);
+            return;
+        }
+
+        switch (def.kind)
+        {
+            case EventKind.Calendar:
                 if (calendarPopup == null)
                 {
                     Debug.LogError("[EventPopupRouter] calendarPopup is null");
                     ShowNext();
                     return;
                 }
-                calendarPopup.Show(pres, def, day, tick, onClosed: ShowNext);
+                calendarPopup.Show(pres, def, day, tick, ShowNext);
                 break;
 
-            case EventPresentationType.News:
             default:
                 if (newsPopup == null)
                 {
-                    Debug.LogError("[EventPopupRouter] newsPopup(NewsUIController) is null");
+                    Debug.LogError("[EventPopupRouter] newsPopup is null");
                     ShowNext();
                     return;
                 }
-
-                // ✅ NewsUIController는 onClosed를 받도록 Show 함수로 맞춘다(아래 코드)
-                newsPopup.Show(pres, def, day, tick, onClosed: ShowNext);
+                newsPopup.Show(pres, def, day, tick, ShowNext);
                 break;
         }
     }

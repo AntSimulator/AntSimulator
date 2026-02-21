@@ -23,8 +23,10 @@ MonoBehaviour:
   isUp: 0
   depthEffect: 0.02
   durationDays: 1
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 1
   canBeHidden: 0
   allowRepeatInRun: 0
+  kind: 1
