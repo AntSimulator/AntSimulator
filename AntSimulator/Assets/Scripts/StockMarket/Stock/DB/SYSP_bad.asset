@@ -16,6 +16,8 @@ MonoBehaviour:
   presentationType: 1
   image: {fileID: 0}
   newsFallbackBody: 
-  calendarLines: []
+  calendarLines:
+  - "\u3134\u3147\u3139\u3134\u3139\u3134\u3147\u3139"
+  - "\u3134\u3147\u3139\u3134\u3139\u3134\u3147\u3139"
   charsPerSecond: 45
   autoAdvanceSeconds: 0
