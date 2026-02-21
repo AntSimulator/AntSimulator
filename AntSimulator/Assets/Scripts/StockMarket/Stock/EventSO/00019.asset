@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 00019
   title: 
-  description: "[\uC18D\uBCF4] \"\uC790\uC5F0\uC7AC\uD574 \uC2E4\uC885\"... \uBCF4\uD5D8\uAE08
-    \uC9C0\uAE09\uC561 90% \uAE09\uAC10\uD558\uBA70 \uBCF4\uD5D8\uC8FC \uC139\uD130
-    \uB098\uD640\uB85C '\uBD88\uAE30\uB465'"
+  description: "\"\uBCF4\uD5D8\uAE08 \uB3C4\uB451\uC740 \uC774\uC81C \uB05D\uB0AC\uB2E4...
+    AI \uB3C4\uC785 \uD6C4 \uD5EC\uC2A4\uCF00\uC5B4 \uC139\uD130 '\uC870 \uB2E8\uC704'
+    \uBE44\uC6A9 \uC808\uAC10 \uC7AD\uD31F\""
   scope: 1
   sector: 2
   targetStockIds: []
@@ -30,3 +30,4 @@ MonoBehaviour:
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

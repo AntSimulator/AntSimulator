@@ -10,26 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
-  m_Name: 00014
+  m_Name: 81504
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
-  eventId: 00014
+  eventId: 81504
   title: 
-  description: "[\uAE34\uAE09] \"\uB9C8\uCE04\uD551 \uCCB4\uD3EC \uC644\uB8CC\"...
-    \uBBF8\uAD70, \uBCA0\uB124\uC218\uC5D8\uB77C \uAE30\uC2B5 \uACF5\uC2B5\uC73C\uB85C
-    \uB9C8\uB450\uB85C \uC804\uACA9 \uC555\uC1A1"
+  description: "[\uC18D\uBCF4] \uCEE4\uD504 CEO, \"\uBA85\uBB38\uB300 \uBC15\uC0AC
+    \uB530\uB290\uB2C8 \uACF5\uC7A5 \uAC00\uB77C\" \uB3C5\uC124\u2026 \uAD50\uC721\uACC4
+    \uBC1C\uCE75, \uC8FC\uAC00\uB294 \uAE09\uB4F1"
   scope: 2
-  sector: 4
+  sector: 7
   targetStockIds:
   - PATR
-  - OMR
-  - OKILL
   probEffect: 0.7
   isUp: 1
   depthEffect: 0.02
-  durationDays: 3
+  durationDays: 1
   durationTick: 60
-  delist: 0
-  delistStockIds: []
+  delist: 1
+  delistStockIds:
+  - FADS
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0

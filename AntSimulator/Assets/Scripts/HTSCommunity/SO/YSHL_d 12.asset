@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
   m_Name: YSHL_d 12
   m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
-  stockId: YSHL
+  stockId: OKILL
   direction: 1
   title: "2026\uB144\uC740 \uBC18\uB3C4\uCCB4\uC758  \uD574 \uC785\uB2C8\uB2E4. \uBAA8\uB450\uB4E4
     \uD798\uB0B4\uC2DC\uAD6C \uC5D0\uB108\uC9C0\uB85C \uC190\uC2E4\uBCF8\uAC70 \uBC18\uB3C4\uCCB4\uC5D0\uC11C

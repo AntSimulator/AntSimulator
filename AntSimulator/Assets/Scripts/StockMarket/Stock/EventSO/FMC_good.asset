@@ -10,27 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
-  m_Name: 00014
+  m_Name: FMC_good
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
-  eventId: 00014
+  eventId: MIVE_good
   title: 
-  description: "[\uAE34\uAE09] \"\uB9C8\uCE04\uD551 \uCCB4\uD3EC \uC644\uB8CC\"...
-    \uBBF8\uAD70, \uBCA0\uB124\uC218\uC5D8\uB77C \uAE30\uC2B5 \uACF5\uC2B5\uC73C\uB85C
-    \uB9C8\uB450\uB85C \uC804\uACA9 \uC555\uC1A1"
+  description: .
   scope: 2
-  sector: 4
+  sector: 0
   targetStockIds:
-  - PATR
-  - OMR
-  - OKILL
-  probEffect: 0.7
+  - MIVE
+  probEffect: 0.5
   isUp: 1
   depthEffect: 0.02
-  durationDays: 3
+  durationDays: 1
   durationTick: 60
   delist: 0
   delistStockIds: []
-  canBeCalendarEvent: 0
-  canBeHidden: 1
+  canBeCalendarEvent: 1
+  canBeHidden: 0
   allowRepeatInRun: 0
-  kind: 0
+  kind: 1

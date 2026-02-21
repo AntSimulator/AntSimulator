@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 51002
   title: 
-  description: "[\uCDA9\uACA9] \uC6D0\uC790\uB825 \uD575\uC2EC \uC124\uACC4\uD300,
-    \uB3CC\uC5F0 \uC0AC\uD45C \uB358\uC9C0\uACE0 \uC911\uAD6D\uD589? '\uAE30\uC220
-    \uC720\uCD9C' \uBE44\uC0C1"
+  description: "[\uCDA9\uACA9] \uC624\uD0AC\uB7EC \uD575\uC2EC SMR \uC124\uACC4\uD300,
+    \uB3CC\uC5F0 \uC0AC\uD45C \uB358\uC9C0\uACE0 \uACBD\uC7C1\uC0AC \uC774\uC9C1?
+    '\uCC28\uC138\uB300 \uB178\uC2EC \uAE30\uC220' \uC720\uCD9C \uBE44\uC0C1"
   scope: 2
   sector: 4
   targetStockIds:
-  - YSYL
+  - OKILL
   probEffect: 0.8
   isUp: 0
   depthEffect: 0.02
@@ -31,3 +31,4 @@ MonoBehaviour:
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0
