@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 8308743064418972475}
   - component: {fileID: 1736153159011950968}
   - component: {fileID: 8787441704649572482}
-  - component: {fileID: 8261830560614566802}
   m_Layer: 5
   m_Name: Popup_OnlineBanking
   m_TagString: Untagged
@@ -216,32 +215,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8261830560614566802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4472148460381775588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &6041238350724690330
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,19 +856,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_SizeDelta.x
@@ -935,11 +908,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000015259
+      value: 542
       objectReference: {fileID: 0}
     - target: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000019073
+      value: -401
       objectReference: {fileID: 0}
     - target: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -957,9 +930,17 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4449830055293774477}
+    - target: {fileID: 1835210565425023138, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2092829036980584782, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       propertyPath: m_Name
       value: Popup_Transfer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092829036980584782, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -968,7 +949,28 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2092829036980584782, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4449830055293774477}
+    - targetCorrespondingSourceObject: {fileID: 2464360947809220883, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 505445056685065463}
   m_SourcePrefab: {fileID: 100100000, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+--- !u!1 &952877971877334137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2464360947809220883, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+  m_PrefabInstance: {fileID: 3389634155423233386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &505445056685065463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952877971877334137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3964dc557b144479bd4accb2ee688118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIDragger
+  targetWindow: {fileID: 3074841765795411115}
 --- !u!224 &3074841765795411115 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}

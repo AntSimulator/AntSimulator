@@ -55,8 +55,21 @@ namespace Player.UI
             for (int i = 0; i < panels.Count; i++)
             {
                 if(panels[i] == null || panels[i].panel == null) continue;
-                panels[i].panel.SetActive(i == activeIndex);
+                SetPanelVisible(panels[i].panel, i == activeIndex);
             }
+        }
+
+        private void SetPanelVisible(GameObject panel, bool isVisible)
+        {
+            var canvasGroup = panel.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = panel.AddComponent<CanvasGroup>();
+            }
+
+            canvasGroup.alpha = isVisible ? 1f : 0f;
+            canvasGroup.interactable = isVisible;
+            canvasGroup.blocksRaycasts = isVisible;
         }
 
         private void UpdateLabel(int activeIndex)
