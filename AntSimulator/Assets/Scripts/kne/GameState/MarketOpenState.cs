@@ -4,7 +4,7 @@ public class MarketOpenState : IGameState
 {
     private string gameStateName = "MarketOpenState";
     private GameStateController gsc;
-    private float duration = 150f;
+    private float duration = 150f;//원래 150
     private int lastDisplayedSec = -1;
     private float tickTimer;
 

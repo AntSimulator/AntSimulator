@@ -4,7 +4,7 @@ public class SettlementState : IGameState
 {
     private string gameStateName = "SettlementState";
     private GameStateController gsc;
-    private float duration = 20f;
+    private float duration = 20f;//원래 20초
     private int lastDisplayedSec = -1;
     private bool isFinished = false;
 
