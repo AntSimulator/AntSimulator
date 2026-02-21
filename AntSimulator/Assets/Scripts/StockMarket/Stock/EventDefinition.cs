@@ -26,7 +26,7 @@ public class EventDefinition : ScriptableObject
     [Header("변동폭 영향")] public float depthEffect;
 
     [Header("지속")] public int durationDays = 1;
-    public int durationTick = 60;
+    public int durationTick = 90;
 
     [Header("상폐")] 
     public bool delist = false;
