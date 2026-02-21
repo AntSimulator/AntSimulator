@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: JPTI
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 8500
-  maxUpPercent: 0.006
-  maxDownPercent: 0.006
-  volumeBoostK: 40
-  volumeNoiseMin: 0.6
-  volumeNoiseMax: 1.4
-  eventToVolatility: 1.4
-  eventToVolume: 1.4
+  basePrice: 18000
+  maxUpPercent: 0.1
+  maxDownPercent: 0.1
+  volumeBoostK: 15
+  volumeNoiseMin: 0.3
+  volumeNoiseMax: 2
+  eventToVolatility: 2.8
+  eventToVolume: 5
   communitySensitivity: 1
   stockId: JPTI
   sector: 1
   displayName: "\uC9DC\uD30C\uAC8C\uB9AC \uCEF4\uD4E8\uD130"
   floatShares: 50000000
-  avgDailyVolume: 5000000
+  avgDailyVolume: 500000
   noiseScale: 3
