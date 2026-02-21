@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: FMC
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 2700
-  maxUpPercent: 0.006
-  maxDownPercent: 0.006
-  volumeBoostK: 25
-  volumeNoiseMin: 0.7
-  volumeNoiseMax: 1.3
-  eventToVolatility: 1.1
-  eventToVolume: 1.1
+  basePrice: 8300
+  maxUpPercent: 0.1
+  maxDownPercent: 0.1
+  volumeBoostK: 15
+  volumeNoiseMin: 0.3
+  volumeNoiseMax: 2
+  eventToVolatility: 2.8
+  eventToVolume: 5
   communitySensitivity: 1
   stockId: FMC
   sector: 0

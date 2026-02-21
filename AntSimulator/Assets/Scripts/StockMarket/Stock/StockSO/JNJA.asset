@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: JNJA
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 35000
-  maxUpPercent: 0.006
-  maxDownPercent: 0.006
-  volumeBoostK: 25
-  volumeNoiseMin: 0.8
-  volumeNoiseMax: 1.5
-  eventToVolatility: 1.4
-  eventToVolume: 1.4
+  basePrice: 273000
+  maxUpPercent: 0.002
+  maxDownPercent: 0.002
+  volumeBoostK: 70
+  volumeNoiseMin: 0.9
+  volumeNoiseMax: 1.05
+  eventToVolatility: 1.1
+  eventToVolume: 1.2
   communitySensitivity: 1
   stockId: JNJA
   sector: 6
