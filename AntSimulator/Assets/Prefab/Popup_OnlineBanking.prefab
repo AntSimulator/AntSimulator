@@ -961,6 +961,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Popup_Transfer
       objectReference: {fileID: 0}
+    - target: {fileID: 2092829036980584782, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -968,7 +972,28 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2092829036980584782, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4449830055293774477}
+    - targetCorrespondingSourceObject: {fileID: 2464360947809220883, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 505445056685065463}
   m_SourcePrefab: {fileID: 100100000, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+--- !u!1 &952877971877334137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2464360947809220883, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
+  m_PrefabInstance: {fileID: 3389634155423233386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &505445056685065463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952877971877334137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3964dc557b144479bd4accb2ee688118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIDragger
+  targetWindow: {fileID: 3074841765795411115}
 --- !u!224 &3074841765795411115 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 407133785659621825, guid: 991e70ec5c95c9840a02eb402585b33c, type: 3}
