@@ -1,18 +1,16 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using Utils.UI;
-using System;
-using UnityEngine.InputSystem;
 
 public class NewsUIController : MonoBehaviour
 {
     [Header("Refs")]
-    public MarketSimulator market;
     public PopupManager popupManager;
 
     [Header("Popup Id")]
-    public string popupId = "Popup_News"; // PopupManager에 등록한 id
+    public string popupId = "Popup_News";
 
     [Header("UI (Only content)")]
     public TMP_Text contentText;
@@ -20,41 +18,17 @@ public class NewsUIController : MonoBehaviour
     [Header("Behavior")]
     public bool pauseGameWhileOpen = true;
     public float autoCloseSeconds = 3f;
-    public bool clickToClose = true;
 
     Coroutine _closeRoutine;
     float _prevTimeScale = 1f;
     bool _isOpen;
-    
+
     private Action _onClosed;
 
-    void OnEnable()
+    public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
     {
-        if (market != null)
-            market.OnEventRevealed += HandleEventRevealed;
-    }
-
-    void OnDisable()
-    {
-        if (market != null)
-            market.OnEventRevealed -= HandleEventRevealed;
-
-        RestoreTimeScaleIfNeeded();
-    }
-
-    void Update()
-    {
-        
-        if (!clickToClose) return;
-        if (!_isOpen) return; // ✅ popupRoot 대신 이걸로 체크
-
-        
-    }
-
-    void HandleEventRevealed(EventDefinition def, int day, int tick)
-    {
-        if (def == null) return;
-        Open(def.description ?? "");
+        _onClosed = onClosed;
+        Open(def != null ? (def.description ?? "") : "");
     }
 
     public void Open(string text)
@@ -63,7 +37,6 @@ public class NewsUIController : MonoBehaviour
 
         contentText.text = text;
 
-        // 팝업 열기
         if (popupManager != null)
             popupManager.Open(popupId);
 
@@ -90,6 +63,8 @@ public class NewsUIController : MonoBehaviour
         Close();
     }
 
+    public void OnClickCloseButton() => Close();
+
     public void Close()
     {
         if (_closeRoutine != null)
@@ -103,26 +78,15 @@ public class NewsUIController : MonoBehaviour
 
         _isOpen = false;
         RestoreTimeScaleIfNeeded();
-        
-        _onClosed?.Invoke();   // ✅ 이거 꼭 필요
+
+        var cb = _onClosed;
         _onClosed = null;
+        cb?.Invoke();   // ✅ 딱 1번만 호출
     }
 
     void RestoreTimeScaleIfNeeded()
     {
         if (pauseGameWhileOpen && Time.timeScale == 0f)
             Time.timeScale = _prevTimeScale <= 0f ? 1f : _prevTimeScale;
-    }
-    
-
-    public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
-    {
-        _onClosed = onClosed;
-        Open(def != null ? (def.description ?? "") : "");
-    }
-    public void OnClickCloseButton()
-    {
-        Close();
-        _onClosed?.Invoke();
     }
 }

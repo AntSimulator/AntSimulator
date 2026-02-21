@@ -36,8 +36,18 @@ public class EventDefinition : ScriptableObject
     public bool canBeCalendarEvent = true;
     public bool canBeHidden = true;
     public bool allowRepeatInRun = false;
+    
+    [Header("Kind")]
+    public EventKind kind = EventKind.Normal;
 
 }
+public enum EventKind
+{
+    Normal,     // 뉴스
+    Calendar,   // 캘린더 연출
+    Ending      // 엔딩 등 특수
+}
+
 
 public enum EventScope
 {

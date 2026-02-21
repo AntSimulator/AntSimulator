@@ -13,11 +13,21 @@ MonoBehaviour:
   m_Name: EventPresentationDB
   m_EditorClassIdentifier: Assembly-CSharp::EventPresentationDatabaseSO
   items:
-  - {fileID: 11400000, guid: b4c8248a7a4b1424ca7945b451da07cf, type: 2}
-  - {fileID: 11400000, guid: 10f47ea0e255d4ce4867262dfae81a1f, type: 2}
+  - {fileID: 11400000, guid: 02e1975c83e244d2882581ddf1b175f5, type: 2}
+  - {fileID: 11400000, guid: 3ff4ebf2d1362442797bcb92a91226e5, type: 2}
   - {fileID: 11400000, guid: b1aeb6aa53ef94b0fb8ef75b0ecc44c9, type: 2}
   - {fileID: 11400000, guid: 53943a136226448a581cdc0ec3bddcde, type: 2}
-  - {fileID: 11400000, guid: 45f78b90fcbee427f987272d8b8a6ac8, type: 2}
-  - {fileID: 11400000, guid: f9339d74e46b94683b8aa40b1fcd7600, type: 2}
-  - {fileID: 11400000, guid: b0c1926c84d894d88bb71ce30bf18956, type: 2}
-  - {fileID: 11400000, guid: 0c20bbf3c01fe473f9f922b19e0ed189, type: 2}
+  - {fileID: 11400000, guid: f77f3fa4a6a354d4493204f80d647543, type: 2}
+  - {fileID: 11400000, guid: 9727bdd8a51e94011a2d23a17dba7073, type: 2}
+  - {fileID: 11400000, guid: 7702ce127d52d4a1e9eb6cd098a2abc5, type: 2}
+  - {fileID: 11400000, guid: 11baa5c0070564ba5bb82bf4343ae21d, type: 2}
+  - {fileID: 11400000, guid: 1c8e4cf981c084db6bc67467e450bae4, type: 2}
+  - {fileID: 11400000, guid: 93f68d0649eac49ee9bda06f50ad6236, type: 2}
+  - {fileID: 11400000, guid: 2b66fc7b75d1a473b8e46a7082507837, type: 2}
+  - {fileID: 11400000, guid: ad5ff1c84ec344b329ac4b233e7e4535, type: 2}
+  - {fileID: 11400000, guid: 87521333212ff4b9aa8fba004685fa0b, type: 2}
+  - {fileID: 11400000, guid: 05f576fc6e0784fd89e49029953be5b9, type: 2}
+  - {fileID: 11400000, guid: 901c6e034356f451ca52a2e4cf6a8172, type: 2}
+  - {fileID: 11400000, guid: 2069b46238964432c943550bd2127d7c, type: 2}
+  - {fileID: 11400000, guid: d2924ce362750470ba0d712c7543c1cd, type: 2}
+  - {fileID: 11400000, guid: 6ad61f74cbc354e73bf019d0e2893b5e, type: 2}

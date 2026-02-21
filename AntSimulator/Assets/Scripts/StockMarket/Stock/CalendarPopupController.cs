@@ -3,24 +3,34 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils.UI;
 
 public class CalendarPopupController : MonoBehaviour
 {
+    [Header("Refs")]
+    public PopupManager popupManager;
+
+    [Header("Popup Id")]
+    public string popupId = "Popup_Calendar"; // PopupManager에 등록한 id
+
     [Header("UI")]
-    public GameObject root;
     public TMP_Text lineText;       // 아래에 한 줄씩 나오는 텍스트
     public Image eventImage;        // 이벤트 이미지
     public Button nextButtonArea;   // 패널 전체 클릭용(투명 버튼 추천)
     public Button closeButton;      // optional
 
-    [Header("Options")]
+    [Header("Behavior")]
+    public bool pauseGameWhileOpen = true;
     public bool allowSkipTypingOnClick = true;
 
     private Coroutine _co;
     private Action _onClosed;
 
+    private bool _isOpen;
     private bool _clicked;
     private bool _forceFinishLine;
+
+    private float _prevTimeScale = 1f;
 
     void Awake()
     {
@@ -29,15 +39,32 @@ public class CalendarPopupController : MonoBehaviour
 
         if (closeButton != null)
             closeButton.onClick.AddListener(Close);
+
+        // 시작 시 닫힘 상태로 맞추기(안전)
+        if (popupManager != null)
+            popupManager.Close(popupId);
+
+        _isOpen = false;
     }
 
     public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
     {
         _onClosed = onClosed;
 
-        if (root != null) root.SetActive(true);
-        else gameObject.SetActive(true);
+        // 1) 팝업 열기
+        if (popupManager != null)
+            popupManager.Open(popupId);
 
+        _isOpen = true;
+
+        // 2) 게임 멈추기
+        if (pauseGameWhileOpen)
+        {
+            _prevTimeScale = Time.timeScale;
+            Time.timeScale = 0f;
+        }
+
+        // 3) 이미지/텍스트 세팅
         if (eventImage != null)
         {
             eventImage.sprite = pres != null ? pres.image : null;
@@ -47,6 +74,7 @@ public class CalendarPopupController : MonoBehaviour
         if (lineText != null)
             lineText.text = "";
 
+        // 4) 코루틴 시작
         if (_co != null) StopCoroutine(_co);
         _co = StartCoroutine(RunCalendarCo(pres));
     }
@@ -55,8 +83,7 @@ public class CalendarPopupController : MonoBehaviour
     {
         if (pres == null || pres.calendarLines == null || pres.calendarLines.Count == 0)
         {
-            // 라인이 없으면 그냥 닫기
-            yield return new WaitForSecondsRealtime(0.2f);
+            yield return new WaitForSecondsRealtime(0.1f);
             Close();
             yield break;
         }
@@ -68,10 +95,9 @@ public class CalendarPopupController : MonoBehaviour
             // 타이핑
             yield return TypeLineCo(line, Mathf.Max(1f, pres.charsPerSecond));
 
-            // 다음 줄로 넘어가기 대기
+            // 다음 줄 대기
             if (pres.autoAdvanceSeconds > 0f)
             {
-                // 자동 + 클릭도 허용
                 _clicked = false;
                 float t = 0f;
                 while (t < pres.autoAdvanceSeconds && !_clicked)
@@ -82,14 +108,12 @@ public class CalendarPopupController : MonoBehaviour
             }
             else
             {
-                // 클릭 기다리기
                 _clicked = false;
                 while (!_clicked) yield return null;
             }
         }
 
-        // 끝나면 닫기
-        yield return new WaitForSecondsRealtime(0.15f);
+        yield return new WaitForSecondsRealtime(0.1f);
         Close();
     }
 
@@ -142,17 +166,33 @@ public class CalendarPopupController : MonoBehaviour
 
     public void Close()
     {
+        if (!_isOpen) return; // ✅ 중복 Close 방지
+
         if (_co != null)
         {
             StopCoroutine(_co);
             _co = null;
         }
 
-        if (root != null) root.SetActive(false);
-        else gameObject.SetActive(false);
+        // 팝업 닫기
+        if (popupManager != null)
+            popupManager.Close(popupId);
 
+        _isOpen = false;
+
+        // 타임스케일 복구
+        if (pauseGameWhileOpen && Time.timeScale == 0f)
+            Time.timeScale = _prevTimeScale <= 0f ? 1f : _prevTimeScale;
+
+        // ✅ 라우터 큐 진행
         var cb = _onClosed;
         _onClosed = null;
         cb?.Invoke();
+    }
+
+    // 버튼에서 직접 연결하고 싶으면 (옵션)
+    public void OnClickCloseButton()
+    {
+        Close();
     }
 }

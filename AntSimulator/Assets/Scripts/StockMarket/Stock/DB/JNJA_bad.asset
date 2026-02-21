@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0513d48e0cdc247eba164202d30b878c, type: 3}
-  m_Name: Food_good
+  m_Name: JNJA_bad
   m_EditorClassIdentifier: Assembly-CSharp::EventPresentationSO
-  eventId: Ent_bad
+  eventId: JNJA_bad
   presentationType: 1
-  image: {fileID: 21300000, guid: 8b757a53f682e47499238d79761e4f7f, type: 3}
+  image: {fileID: 0}
   newsFallbackBody: 
   calendarLines:
-  - "\u3141\u3139\u3147"
-  - "\u3141\u3139\u3147"
+  - "\u3139\u3141\u3147\u3134\u3141\u3147"
+  - "\u3139\u3141\u3147\u3134\u3141\u3147"
   charsPerSecond: 45
   autoAdvanceSeconds: 0
