@@ -9,7 +9,11 @@ public class HTSCommunityManager : MonoBehaviour
     public List<HTSCommunitySO> templates = new();
 
     [Header("Daily Base (per stock)")]
-    public int basePostsPerDayPerStock = 1; // 평소 하루 1개 정도
+    [Tooltip("하루 시작에 종목당 최소 몇 개를 예약할지")]
+    public int postsPerDayPerStock = 20;              // ✅ 종목당 최소 20개
+    [Tooltip("종목당 추가로 랜덤으로 더 뿌릴 개수(0~N)")]
+    public int extraRandomPostsPerDayPerStock = 0;    // ✅ 원하면 0~10 정도
+
     public bool scheduleBasePosts = true;
 
     [Header("Burst Trigger")]
@@ -30,12 +34,10 @@ public class HTSCommunityManager : MonoBehaviour
 
     [Header("Debug")]
     public bool logWhenPosted = true;
+    public bool logTemplateStats = false; // 템플릿 부족 원인 찾을 때만 true 추천
 
     // ====== Output ======
-    // stockId별 게시글 리스트
     private readonly Dictionary<string, List<HTSPost>> postsByStock = new();
-
-    // UI 이벤트
     public event Action<string, HTSPost> OnStockPostCreated;
 
     // 오늘의 예약 스케줄
@@ -74,7 +76,7 @@ public class HTSCommunityManager : MonoBehaviour
         return postsByStock.TryGetValue(stockId, out var list) ? list : Array.Empty<HTSPost>();
     }
 
-    // ---- 하루 시작: “기본 글” 예약 ----
+    // ---- 하루 시작: 종목당 최소 N개 예약 ----
     public void OnDayStarted(int day)
     {
         todayDay = day;
@@ -82,9 +84,19 @@ public class HTSCommunityManager : MonoBehaviour
 
         if (!scheduleBasePosts) return;
 
-        foreach (var stockId in postsByStock.Keys.ToList())
+        var stockIds = postsByStock.Keys.Where(k => !string.IsNullOrEmpty(k)).ToList();
+        if (stockIds.Count == 0)
         {
-            for (int i = 0; i < basePostsPerDayPerStock; i++)
+            if (logWhenPosted) Debug.Log($"[HTSCommunity] Day{day} no stocks registered");
+            return;
+        }
+
+        int perStockBase = Mathf.Max(0, postsPerDayPerStock);
+
+        foreach (var stockId in stockIds)
+        {
+            // 1) 종목당 기본(최소) 예약
+            for (int i = 0; i < perStockBase; i++)
             {
                 AddSchedule(new Scheduled
                 {
@@ -94,10 +106,34 @@ public class HTSCommunityManager : MonoBehaviour
                     direction = UnityEngine.Random.value < 0.5f ? HTSReactionDirection.Up : HTSReactionDirection.Down
                 });
             }
+
+            // 2) 종목당 추가 랜덤 예약(옵션)
+            if (extraRandomPostsPerDayPerStock > 0)
+            {
+                int extra = UnityEngine.Random.Range(0, extraRandomPostsPerDayPerStock + 1);
+                for (int i = 0; i < extra; i++)
+                {
+                    AddSchedule(new Scheduled
+                    {
+                        day = day,
+                        tickInDay = RandomTickAvoidMorning(),
+                        stockId = stockId,
+                        direction = UnityEngine.Random.value < 0.5f ? HTSReactionDirection.Up : HTSReactionDirection.Down
+                    });
+                }
+            }
         }
 
         schedule.Sort((a, b) => a.tickInDay.CompareTo(b.tickInDay));
-        if (logWhenPosted) Debug.Log($"[HTSCommunity] Day{day} scheduled base posts: {schedule.Count}");
+
+        if (logWhenPosted)
+        {
+            int total = schedule.Count;
+            Debug.Log($"[HTSCommunity] Day{day} scheduled={total} (stocks={stockIds.Count}, perStock={perStockBase}, extraPerStock=0~{extraRandomPostsPerDayPerStock})");
+        }
+
+        if (logTemplateStats)
+            LogTemplateStats(stockIds);
     }
 
     // ---- 틱마다 호출: 1) 예약 글 처리 2) 급변하면 즉시 글 생성 ----
@@ -136,13 +172,10 @@ public class HTSCommunityManager : MonoBehaviour
 
         int count = CalcBurstCount(retAbs, relVol, volatilityMultiplier, hasEventEffect, communitySensitivity);
 
-        // 상승/하락 방향은 가격으로 결정 (동일하면 Up 처리)
         var direction = (currentPrice >= prevPrice) ? HTSReactionDirection.Up : HTSReactionDirection.Down;
 
         for (int i = 0; i < count; i++)
-        {
             CreateAndAddPost(stockId, day, tickInDay, direction);
-        }
     }
 
     // ===================== 내부 =====================
@@ -163,7 +196,11 @@ public class HTSCommunityManager : MonoBehaviour
     private void CreateAndAddPost(string stockId, int day, int tickInDay, HTSReactionDirection direction)
     {
         var template = PickTemplate(stockId, direction);
-        if (template == null) return;
+        if (template == null)
+        {
+            // 템플릿 없으면 해당 종목/방향 글은 생성 불가
+            return;
+        }
 
         var post = new HTSPost
         {
@@ -197,8 +234,6 @@ public class HTSCommunityManager : MonoBehaviour
                         && string.Equals(t.stockId, stockId, StringComparison.Ordinal))
             .ToList();
 
-        Debug.Log($"[PickTemplate] stock={stockId} dir={direction} exact={exact.Count}");
-        
         if (exact.Count > 0)
             return exact[UnityEngine.Random.Range(0, exact.Count)];
 
@@ -208,11 +243,13 @@ public class HTSCommunityManager : MonoBehaviour
                         && t.direction == direction
                         && string.IsNullOrEmpty(t.stockId))
             .ToList();
-        
-        Debug.Log($"[PickTemplate] stock={stockId} dir={direction} generic={generic.Count}");
 
         if (generic.Count > 0)
             return generic[UnityEngine.Random.Range(0, generic.Count)];
+
+        // ✅ 여기까지 왔으면 템플릿 자체가 부족한 거
+        if (logWhenPosted)
+            Debug.LogWarning($"[HTSCommunity] Missing template: stock={stockId} dir={direction} (need at least generic Up/Down templates)");
 
         return null;
     }
@@ -246,7 +283,14 @@ public class HTSCommunityManager : MonoBehaviour
         if (t == morningTick) t = (t + 1) % tpd;
         return t;
     }
-    
+
+    private void LogTemplateStats(List<string> stockIds)
+    {
+        int genUp = templates.Count(t => t != null && string.IsNullOrEmpty(t.stockId) && t.direction == HTSReactionDirection.Up);
+        int genDown = templates.Count(t => t != null && string.IsNullOrEmpty(t.stockId) && t.direction == HTSReactionDirection.Down);
+        Debug.Log($"[HTSCommunity] template stats: total={templates.Count}, genericUp={genUp}, genericDown={genDown}, stocks={stockIds.Count}");
+    }
+
     void Awake()
     {
         if (templates == null)

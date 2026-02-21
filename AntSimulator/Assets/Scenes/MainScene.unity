@@ -3073,6 +3073,7 @@ GameObject:
   - component: {fileID: 1049095977}
   - component: {fileID: 1049095978}
   - component: {fileID: 1049095979}
+  - component: {fileID: 1049095980}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -3568,7 +3569,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f5c7321d4c560584ba114425a5b982d8, type: 2}
   - {fileID: 11400000, guid: a1fe0c7d3751ba14ab143e4fb5245748, type: 2}
   - {fileID: 11400000, guid: 571759b4f33e3a24b9d1543ca4425a15, type: 2}
-  basePostsPerDayPerStock: 2
+  postsPerDayPerStock: 20
+  extraRandomPostsPerDayPerStock: 0
   scheduleBasePosts: 1
   moveBurstThreshold: 0.02
   volumeBurstRelThreshold: 2.5
@@ -3578,6 +3580,7 @@ MonoBehaviour:
   ticksPerDay: 40
   morningTick: 0
   logWhenPosted: 1
+  logTemplateStats: 0
 --- !u!114 &1049095965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3930,7 +3933,7 @@ MonoBehaviour:
   popupId: Popup_News
   contentText: {fileID: 265695005}
   pauseGameWhileOpen: 1
-  autoCloseSeconds: 3
+  autoCloseSeconds: 10
 --- !u!114 &1049095979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3951,6 +3954,23 @@ MonoBehaviour:
   closeButton: {fileID: 162193088}
   pauseGameWhileOpen: 1
   allowSkipTypingOnClick: 1
+--- !u!114 &1049095980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049095960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2327dd2c00d7f40f08b230cedcc8adf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventPopupRouter
+  market: {fileID: 1049095968}
+  presentationDb: {fileID: 11400000, guid: 898085b62796446fdb071be3fdc54c98, type: 2}
+  newsPopup: {fileID: 1049095978}
+  calendarPopup: {fileID: 1049095979}
+  pauseGameWhilePopup: 1
 --- !u!1 &1067026678 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8268411238544368223, guid: 9c5030f481da410459747fddadedd13c, type: 3}
