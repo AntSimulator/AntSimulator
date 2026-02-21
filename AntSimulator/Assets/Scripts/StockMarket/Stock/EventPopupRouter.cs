@@ -65,16 +65,16 @@ public class EventPopupRouter : MonoBehaviour
             return;
         }
 
-        // ✅ Find vs FindById 프로젝트마다 달라서 둘 중 하나로 맞춰
-        var pres = presentationDb.Find(def.eventId);
-        // var pres = presentationDb.FindById(def.eventId);
+        var pres = presentationDb != null 
+            ? presentationDb.Find(def.eventId) 
+            : null;
 
+// ✅ pres 없으면 기본은 News로 처리
         if (pres == null)
         {
-            Debug.LogError($"[EventPopupRouter] Missing EventPresentationSO for eventId={def.eventId}");
-            ShowNext(); // 다음으로 넘어감
+            newsPopup.Show(null, def, day, tick, onClosed: ShowNext);
             return;
-        }
+        } 
 
         PauseIfNeeded();
 

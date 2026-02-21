@@ -504,9 +504,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1590022796}
   - {fileID: 6178858}
   - {fileID: 1644518551}
+  - {fileID: 1590022796}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -576,6 +576,7 @@ MonoBehaviour:
   db: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   ticksPerDay: 180
   morningTick: 0
+  calendarSchedules: []
 --- !u!114 &1479401490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,6 +598,8 @@ MonoBehaviour:
   tickIntervalSec: 1
   eventManager: {fileID: 1479401489}
   historyExporter: {fileID: 1479401494}
+  simulateTicks: 0
+  allowEventReveal: 1
   ticksPerDay: 150
   runRecorder: {fileID: 1479401488}
   gameStateController: {fileID: 1479401491}
@@ -612,14 +615,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c682ec8b5b323ad40a011d15a69fea1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStateController
+  currentStateName: 
+  stateTimer: 0
   currentDay: 1
   calendarUI: {fileID: 1590022797}
   stateInfoText: {fileID: 1644518552}
   eventManager: {fileID: 1479401489}
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1479401488}
+  market: {fileID: 0}
   seedExporter: {fileID: 1479401493}
   targetDay: 4
+  calendarSchedules: []
 --- !u!4 &1479401492
 Transform:
   m_ObjectHideFlags: 0
@@ -651,7 +658,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c929ddb281e4f4ca5af476dc0caeee34, type: 2}
   - {fileID: 11400000, guid: 51f96fc91ae58407a9c7f71f177746d1, type: 2}
   - {fileID: 11400000, guid: 2a59a3635d6214fc0b007c94f7c20fbf, type: 2}
-  fileName: stocks_seed.json
+  currentBalance: 100000
+  initialAmount: 0
+  iconColor: '#FFFFFF'
 --- !u!114 &1479401494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,13 +735,10 @@ MonoBehaviour:
   ticksPerDay: 300
   morningTick: 0
   infoPostsPerDay: 3
-  memePostsPerDay: 2
-  bragPostsPerDay: 1
-  lossPostsPerDay: 1
   templates: []
   logWhenPosted: 1
---- !u!4 &1590022796 stripped
-Transform:
+--- !u!224 &1590022796 stripped
+RectTransform:
   m_CorrespondingSourceObject: {fileID: 4224382268944060936, guid: cba86f7229cca054ea461eb63655e5fe, type: 3}
   m_PrefabInstance: {fileID: 1980993666}
   m_PrefabAsset: {fileID: 0}
