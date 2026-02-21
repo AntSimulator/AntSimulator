@@ -184,7 +184,7 @@ public class GameStateController : MonoBehaviour
             ChangeState(new PreMarketState(this));
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
 
         if (ScreenFader.Instance != null)
