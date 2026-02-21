@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
-  m_Name: SYSP
+  m_Name: WMWT
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
   basePrice: 12000
   maxUpPercent: 0.06
@@ -21,9 +21,9 @@ MonoBehaviour:
   eventToVolatility: 1.4
   eventToVolume: 1.4
   communitySensitivity: 1
-  stockId: SYSP
+  stockId: WMWT
   sector: 3
-  displayName: "\uC11C\uC591\uC2DD\uD488"
+  displayName: "\uC648\uB9C8\uD2B8"
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1

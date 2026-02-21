@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
-  m_Name: KREX
+  m_Name: UMH
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 20000
-  maxUpPercent: 0.002
-  maxDownPercent: 0.002
+  basePrice: 13000
+  maxUpPercent: 0.006
+  maxDownPercent: 0.006
   volumeBoostK: 25
   volumeNoiseMin: 0.7
-  volumeNoiseMax: 1.5
-  eventToVolatility: 1.2
-  eventToVolume: 1.2
+  volumeNoiseMax: 1.3
+  eventToVolatility: 1.1
+  eventToVolume: 1.1
   communitySensitivity: 1
-  stockId: KREX
-  sector: 5
-  displayName: Korea Express Finalcial
+  stockId: UMH
+  sector: 2
+  displayName: "\uC720\uB2C8\uD2F0\uB4DC \uD5EC\uC2A4"
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1

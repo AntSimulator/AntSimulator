@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 81502
   title: 
-  description: "[\uD2B9\uC885] \uB0B4\uD55C \uACF5\uC5F0 \uC911 FADS \uACE0\uC704
-    \uAC04\uBD80 \uBD88\uB95C \uD604\uC7A5 \uD3EC\uCC29...\uD2B8\uB78C\uD478 \"\uBD88\uB95C
-    \uBB3B\uC740 \uD68C\uC0AC \uC8FC\uC2DD\uC740 \uC4F0\uB808\uAE30!!!\""
+  description: "[\uC18D\uBCF4] \uC601 \uAD6D\uD68C \"\uBBF8\uAD6D \uAE30\uC5C5\uC5D0
+    \uAD6D\uBC29 \uB370\uC774\uD130 \uD1B5\uC9F8\uB85C \uB118\uAE30\uB098\"\u2026
+    \uBE68\uB791\uD280\uC5B4 \uACC4\uC57D \uBB34\uD6A8 \uC18C\uC1A1 \uAC00\uB098?"
   scope: 2
   sector: 7
   targetStockIds:
-  - FADS
+  - PATR
   probEffect: 0.9
   isUp: 0
   depthEffect: 0.02
@@ -31,3 +31,4 @@ MonoBehaviour:
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
   m_Name: SYSP_d 16
   m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
-  stockId: SYSP
+  stockId: WMWT
   direction: 1
   title: "\uACF5\uD3EC\uC5D0 \uC0AC\uB77C\uACE0 \uD588\uB294\uB370 \uC9C0\uAE08\uC774
     \uADF8\uB54C\uC778\uAC00"
