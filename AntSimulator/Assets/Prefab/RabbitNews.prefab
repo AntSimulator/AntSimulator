@@ -547,4 +547,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e3a0f45d8458406ba6976b69df468d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalPostRowView
+  headerText: {fileID: 5584293255606374202}
   bodyText: {fileID: 7768859114260953261}
