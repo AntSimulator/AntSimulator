@@ -52,7 +52,7 @@ public static class RunEventGenerator
 
                     // ✅ (권장) EventInstance에 revealTickInDay 필드가 있으면 여기서 넣어라:
                     // inst.revealTickInDay = slot.revealTickInDay;
-
+                    inst.durationTicks = 60;
                     result.Add(inst);
                 }
             }
@@ -66,7 +66,7 @@ public static class RunEventGenerator
         foreach (var def in hiddenPool)
         {
             int day = UnityEngine.Random.Range(1, totalDays + 1);
-            result.Add(new EventInstance(def.eventId, day, def.durationDays, isHidden: true));
+            result.Add(new EventInstance(def.eventId, day, def.durationTick, isHidden: true));
         }
 
         return result;
