@@ -79,12 +79,6 @@ public class GameStateController : MonoBehaviour
             isGameOver = true;
             StartCoroutine(GameOverRoutine());
         }
-
-        var keyboard = Keyboard.current;
-        if (keyboard == null) return;
-        if (keyboard.digit1Key.wasPressedThisFrame) ChangeState(new MarketOpenState(this));
-        if (keyboard.digit2Key.wasPressedThisFrame) ChangeState(new JailState(this));
-        if (keyboard.digit3Key.wasPressedThisFrame) ChangeState(new SettlementState(this));
         
     }
 
