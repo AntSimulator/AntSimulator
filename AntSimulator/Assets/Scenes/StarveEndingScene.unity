@@ -576,9 +576,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OutroManager
   pages:
   - image: {fileID: 21300000, guid: 0e280793dc6effe4caaf7d22ad4a7795, type: 3}
-    dialogue: "\uAE00 1"
+    dialogue: "\uBC25\uC744 \uC81C\uB54C\uC81C\uB54C \uBA39\uC9C0 \uBABB\uD588\uB2E4\u2026"
   - image: {fileID: 21300000, guid: 196a418c3bf4c0b43b3e7f156a40b69f, type: 3}
-    dialogue: "\uAE00 2"
+    dialogue: "\uC601\uC591\uC2E4\uC870\uB85C \uC0AC\uB9DD\uD588\uB2E4."
   nextSceneName: TitleScene
   fadeSpeed: 2
   displayImage: {fileID: 928945182}
@@ -841,7 +841,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -408}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 1920, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2133518594
 MonoBehaviour:
