@@ -20,7 +20,7 @@ MonoBehaviour:
   scope: 2
   sector: 5
   targetStockIds:
-  - KREX
+  - BISA
   probEffect: 0.8
   isUp: 1
   depthEffect: 0.02
