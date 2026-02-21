@@ -26,7 +26,7 @@ public class ScreenFader : MonoBehaviour
 
         while (timer < fadeDuration)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             c.a = timer / fadeDuration;
             blackScreen.color = c;
             yield return null;
@@ -43,7 +43,7 @@ public class ScreenFader : MonoBehaviour
 
         while (timer < fadeDuration)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             c.a = 1f - (timer / fadeDuration);
             blackScreen.color = c;
             yield return null;
