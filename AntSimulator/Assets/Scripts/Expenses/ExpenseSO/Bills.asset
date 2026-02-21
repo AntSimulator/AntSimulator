@@ -15,5 +15,5 @@ MonoBehaviour:
   expenseId: 1
   displayName: Bills
   dueDay: 2
-  amount: 15000
+  amount: 150000
   accountNumber: 5023948353245679

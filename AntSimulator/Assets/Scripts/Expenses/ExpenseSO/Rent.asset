@@ -15,5 +15,5 @@ MonoBehaviour:
   expenseId: 1
   displayName: Rent
   dueDay: 3
-  amount: 20000
+  amount: 200000
   accountNumber: 9032485932167834
