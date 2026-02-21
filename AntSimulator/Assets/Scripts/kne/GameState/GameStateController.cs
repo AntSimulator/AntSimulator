@@ -34,8 +34,14 @@ public class GameStateController : MonoBehaviour
 
     [Header("Calendar Event Schedules")] public List<CalendarDayScheduleSO> calendarSchedules = new();
 
-    [Header("Controller 리스트")]
-    public List<MonoBehaviour> managedControllers = new List<MonoBehaviour>();
+    [Header("PreMarket-off list")]
+    public List<MonoBehaviour> preMarketOffControllers = new List<MonoBehaviour>();
+
+    [Header("MarketOpen-off list")]
+    public List<MonoBehaviour> marketopenOffControllers = new List<MonoBehaviour>();
+
+    [Header("Settlement-off list")]
+    public List<MonoBehaviour> settlementOffControllers = new List<MonoBehaviour>();
 
 
     void Start()
@@ -87,6 +93,9 @@ public class GameStateController : MonoBehaviour
         currentState?.Exit();
         currentState = newState;
         stateTimer = 0f;
+
+        UpdateControllerStates(newState);
+
         currentState?.Enter();
 
         if(SaveManager.Instance != null && isRestoring == false)
@@ -194,15 +203,34 @@ public class GameStateController : MonoBehaviour
         SceneManager.LoadScene("StarveEndingScene");
     }
 
-    public void SetControllerState<T>(bool state) where T : MonoBehaviour
+    private void SetListEnabled(List<MonoBehaviour> list, bool isEnabled)
     {
-        foreach (var controller in managedControllers)
+        foreach (var controller in list)
         {
-            if (controller is T)
+            if (controller != null)
             {
-                controller.enabled = state;
-                return;
+                controller.enabled = isEnabled;
             }
+        }
+    }
+
+    private void UpdateControllerStates(IGameState newState)
+    {
+        SetListEnabled(preMarketOffControllers, true);
+        SetListEnabled(marketopenOffControllers, true);
+        SetListEnabled(settlementOffControllers, true);
+
+        if (newState is PreMarketState)
+        {
+            SetListEnabled(preMarketOffControllers, false);
+        }
+        else if (newState is MarketOpenState)
+        {
+            SetListEnabled(marketopenOffControllers, false);
+        }
+        else if (newState is SettlementState)
+        {
+            SetListEnabled(settlementOffControllers, false);
         }
     }
 }
