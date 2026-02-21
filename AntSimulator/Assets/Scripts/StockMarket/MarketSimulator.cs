@@ -135,7 +135,7 @@ public class MarketSimulator : MonoBehaviour
             (pEvent, dEvent) = eventManager.GetEffectsForStock(stock.stockId, def.sector);
 
         // 확률: 50% 기준에서 퍼센트포인트 더하기
-        float upThreshold = 40f + (pEvent * 100f);
+        float upThreshold = 50f + (pEvent * 100f);
         upThreshold = Mathf.Clamp(upThreshold, 0f, 100f);
 
         float downThreshold = 100f - upThreshold;
