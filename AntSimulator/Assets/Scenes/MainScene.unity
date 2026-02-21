@@ -5935,7 +5935,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -661.30035, y: -420.731}
+  m_AnchoredPosition: {x: -661.30035, y: -368}
   m_SizeDelta: {x: 1059.8291, y: 982.1871}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1420429904
@@ -5972,7 +5972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7999,6 +7999,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2117548769}
     m_Modifications:
+    - target: {fileID: 5357297241927823807, guid: a422b37e3631fda4f9af85119c553e3f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.0961
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357297241927823807, guid: a422b37e3631fda4f9af85119c553e3f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.0961
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357297241927823807, guid: a422b37e3631fda4f9af85119c553e3f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.0961
+      objectReference: {fileID: 0}
     - target: {fileID: 6502122857908663829, guid: a422b37e3631fda4f9af85119c553e3f, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0

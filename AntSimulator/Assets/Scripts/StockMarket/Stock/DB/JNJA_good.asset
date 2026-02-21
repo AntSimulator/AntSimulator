@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventPresentationSO
   eventId: JNJA_good
   presentationType: 1
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: b6b59b4215b2849a8819dc4f4ecc2943, type: 3}
   newsFallbackBody: 
   calendarLines:
   - "\uC804 \uC138\uACC4 \uC218\uBC31\uB9CC \uD658\uC790\uB4E4\uC758 \uD76C\uB9DD\uC774
