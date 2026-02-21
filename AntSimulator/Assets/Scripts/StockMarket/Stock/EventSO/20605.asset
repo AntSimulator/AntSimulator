@@ -21,7 +21,7 @@ MonoBehaviour:
   sector: 1
   targetStockIds:
   - TSLM
-  probEffect: 0.9
+  probEffect: 1
   isUp: 1
   depthEffect: 0.5
   durationDays: 1

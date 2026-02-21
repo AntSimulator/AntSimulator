@@ -23,7 +23,7 @@ MonoBehaviour:
   - BYMM
   probEffect: 1
   isUp: 0
-  depthEffect: 0.1
+  depthEffect: 0.5
   durationDays: 1
   durationTick: 60
   delist: 0
