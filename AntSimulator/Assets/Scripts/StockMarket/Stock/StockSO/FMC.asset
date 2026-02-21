@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FMC
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
   basePrice: 8300
-  maxUpPercent: 0.1
-  maxDownPercent: 0.1
+  maxUpPercent: 0.06
+  maxDownPercent: 0.06
   volumeBoostK: 15
   volumeNoiseMin: 0.3
   volumeNoiseMax: 2

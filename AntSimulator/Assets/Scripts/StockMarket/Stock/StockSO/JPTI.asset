@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: JPTI
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
   basePrice: 18000
-  maxUpPercent: 0.1
-  maxDownPercent: 0.1
+  maxUpPercent: 0.08
+  maxDownPercent: 0.08
   volumeBoostK: 15
   volumeNoiseMin: 0.3
   volumeNoiseMax: 2

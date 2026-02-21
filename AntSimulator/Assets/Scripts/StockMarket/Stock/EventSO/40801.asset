@@ -22,7 +22,7 @@ MonoBehaviour:
   - WMWT
   probEffect: 0.8
   isUp: 1
-  depthEffect: 0.02
+  depthEffect: 0.1
   durationDays: 1
   durationTick: 60
   delist: 0

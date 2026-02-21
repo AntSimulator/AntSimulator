@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: OMR
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
   basePrice: 15000
-  maxUpPercent: 0.1
-  maxDownPercent: 0.1
+  maxUpPercent: 0.06
+  maxDownPercent: 0.06
   volumeBoostK: 15
   volumeNoiseMin: 0.3
   volumeNoiseMax: 2
