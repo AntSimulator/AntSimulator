@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: MRCX
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 14000
+  basePrice: 166000
   maxUpPercent: 0.006
   maxDownPercent: 0.006
-  volumeBoostK: 30
-  volumeNoiseMin: 0.6
-  volumeNoiseMax: 1.4
-  eventToVolatility: 1.3
-  eventToVolume: 1.1
+  volumeBoostK: 40
+  volumeNoiseMin: 0.8
+  volumeNoiseMax: 1.2
+  eventToVolatility: 1.6
+  eventToVolume: 2.5
   communitySensitivity: 1
   stockId: MRCX
   sector: 1
   displayName: "\uBBF8\uB77C\uD074"
-  floatShares: 50000000
-  avgDailyVolume: 5000000
+  floatShares: 200000000
+  avgDailyVolume: 1500000
   noiseScale: 1
