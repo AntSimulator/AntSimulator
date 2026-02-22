@@ -19,10 +19,10 @@ MonoBehaviour:
   scope: 2
   sector: 2
   targetStockIds:
-  - SASU
-  probEffect: 1
+  - UMH
+  probEffect: 0.2
   isUp: 0
-  depthEffect: 0.5
+  depthEffect: 0.0002
   durationDays: 1
   durationTick: 60
   delist: 0

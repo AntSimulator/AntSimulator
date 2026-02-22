@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 40907
   title: 
-  description: "\"\uD615 \uBBFF\uC5B4\uB77C, \uC774\uAC70 \uBE44\uC698\uB4DC \uC20F
-    \uC544\uB2C8\uBA74 \uC190 \uC790\uB978\uB2E4\" \uB2C9\uB124\uC784 '\uC6CC\uB7F0\uBC84\uD54F\uC0AC\uCD0C'\uC758
+  description: "\"\uD615 \uBBFF\uC5B4\uB77C, \uC774\uAC70 \uBE44\uC698\uB4DC \uD3ED\uB77D
+    \uC544\uB2C8\uBA74 \uC190 \uC790\uB978\uB2E4\" \uB2C9\uB124\uC784 '\uD584\uB0E5\uC774''\uC758
     \uC120\uB3D9\uAE00 \uD654\uC81C"
   scope: 2
   sector: 3
   targetStockIds:
   - BYMM
-  probEffect: 1
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.5
+  depthEffect: 0.0002
   durationDays: 1
   durationTick: 60
   delist: 0

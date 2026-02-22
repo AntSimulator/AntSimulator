@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 81504
   title: 
-  description: "[\uC18D\uBCF4] \uCEE4\uD504 CEO, \"\uBA85\uBB38\uB300 \uBC15\uC0AC
-    \uB530\uB290\uB2C8 \uACF5\uC7A5 \uAC00\uB77C\" \uB3C5\uC124\u2026 \uAD50\uC721\uACC4
-    \uBC1C\uCE75, \uC8FC\uAC00\uB294 \uAE09\uB4F1"
+  description: "[\uC18D\uBCF4] \uBE68\uB791\uD280\uC5B4\uC758 \uCEE4\uD504 CEO, \"\uBA85\uBB38\uB300
+    \uBC15\uC0AC \uB530\uB290\uB2C8 \uACF5\uC7A5 \uAC00\uB77C\" \uB3C5\uC124\u2026
+    \uAD50\uC721\uACC4 \uBC1C\uCE75, \uC8FC\uAC00\uB294 \uAE09\uB4F1"
   scope: 2
   sector: 7
   targetStockIds:
   - PATR
-  probEffect: 1
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.5
+  depthEffect: 0.0002
   durationDays: 1
   durationTick: 60
   delist: 1

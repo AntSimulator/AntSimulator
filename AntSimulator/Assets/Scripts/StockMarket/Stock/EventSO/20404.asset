@@ -21,9 +21,9 @@ MonoBehaviour:
   sector: 1
   targetStockIds:
   - MRCX
-  probEffect: 1
+  probEffect: 0.2
   isUp: 0
-  depthEffect: 0.5
+  depthEffect: 0.0002
   durationDays: 1
   durationTick: 60
   delist: 0
