@@ -18,6 +18,10 @@ public class NewsUIController : MonoBehaviour
     [Header("Behavior")]
     public bool pauseGameWhileOpen = true;
     public float autoCloseSeconds = 3f;
+    
+    [Header("Audio")]
+    public AudioSource bgmSource;
+    public AudioClip blep;
 
     Coroutine _closeRoutine;
     float _prevTimeScale = 1f;
@@ -33,6 +37,13 @@ public class NewsUIController : MonoBehaviour
 
     public void Open(string text)
     {
+        if(bgmSource == null) return;
+        if(blep == null) return;
+
+        bgmSource.clip = blep;
+        bgmSource.loop = false;
+        bgmSource.Play();
+        
         if (contentText == null) return;
 
         contentText.text = text;

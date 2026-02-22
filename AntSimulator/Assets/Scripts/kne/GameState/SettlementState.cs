@@ -7,6 +7,7 @@ public class SettlementState : IGameState
     private float duration = 20f;//원래 20초
     private int lastDisplayedSec = -1;
     private bool isFinished = false;
+    public float remainTime;
 
     public SettlementState(GameStateController gsc)
     {
@@ -29,7 +30,7 @@ public class SettlementState : IGameState
         if (isFinished) return;
 
         gsc.stateTimer += Time.deltaTime;
-        float remainTime = duration - gsc.stateTimer;
+        remainTime = duration - gsc.stateTimer;
         int sec = Mathf.CeilToInt(remainTime);
         
         if(sec != lastDisplayedSec)

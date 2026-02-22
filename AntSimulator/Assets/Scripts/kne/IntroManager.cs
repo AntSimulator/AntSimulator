@@ -25,12 +25,17 @@ public class IntroManager : MonoBehaviour
     public Image displayImage;
     public TMP_Text displayText;
 
+    [Header("sound")] 
+    public AudioSource bgmSource;
+    public AudioClip keybordSound;
+
     private int currentIndex = 0;
     private bool isFading = false; 
 
     void Start()
     {
         SetPageData(currentIndex);
+        PlayKeybordSound();
     }
 
     public void Next()
@@ -102,5 +107,12 @@ public class IntroManager : MonoBehaviour
     public void SkipIntro()
     {
         SceneManager.LoadScene(nextSceneName);
+    }
+
+    void PlayKeybordSound()
+    {
+        bgmSource.clip = keybordSound;
+        bgmSource.loop = true;
+        bgmSource.Play();
     }
 }
