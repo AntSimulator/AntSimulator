@@ -31,7 +31,6 @@ namespace Utils.UI
     {
         if (map == null || !map.TryGetValue(id, out var go) || go == null) return;
         go.SetActive(true);
-        go.transform.SetAsLastSibling();
     }
 
     public void Close(string id)
