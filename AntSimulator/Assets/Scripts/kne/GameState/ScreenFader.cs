@@ -38,6 +38,9 @@ public class ScreenFader : MonoBehaviour
     {
         if (blackScreen == null) yield break;
 
+        blackScreen.gameObject.SetActive(true);
+        blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, 1f);
+
         Color c = blackScreen.color;
         float timer = 0f;
 
