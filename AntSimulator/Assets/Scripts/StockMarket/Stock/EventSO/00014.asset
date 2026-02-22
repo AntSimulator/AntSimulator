@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 00014
   title: 
-  description: "[\uAE34\uAE09] \"\uB9C8\uCE04\uD551 \uCCB4\uD3EC \uC644\uB8CC\"...
-    \uBBF8\uAD70, \uBCA0\uB124\uC218\uC5D8\uB77C \uAE30\uC2B5 \uACF5\uC2B5\uC73C\uB85C
-    \uB9C8\uB450\uB85C \uC804\uACA9 \uC555\uC1A1"
+  description: "[\uAE34\uAE09] \"\uBC88\uAC1C\uB294 \uCCE4\uB2E4\" \uBBF8 \uACF5\uAD70,
+    \uC774\uB780 \uBC29\uACF5\uB9DD \uBB34\uB825\uD654 \uC2DC\uD0A4\uBA70 \uC815\uBC00
+    \uD0C0\uACA9 \uAC1C\uC2DC"
   scope: 2
   sector: 4
   targetStockIds:
@@ -25,9 +25,9 @@ MonoBehaviour:
   - OKILL
   probEffect: 0.2
   isUp: 1
-  depthEffect: 0.00005
+  depthEffect: 0.0002
   durationDays: 3
-  durationTick: 90
+  durationTick: 30
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
