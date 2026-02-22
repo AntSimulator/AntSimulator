@@ -50,7 +50,8 @@ public class IntroManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(nextSceneName);
+            //SceneManager.LoadScene(nextSceneName);
+            StartCoroutine(FadeOutAndLoadScene());
         }
     }
 
@@ -106,7 +107,10 @@ public class IntroManager : MonoBehaviour
 
     public void SkipIntro()
     {
-        SceneManager.LoadScene(nextSceneName);
+        if (isFading) return;
+
+        StartCoroutine(FadeOutAndLoadScene());
+        //SceneManager.LoadScene(nextSceneName);
     }
 
     void PlayKeybordSound()
@@ -114,5 +118,17 @@ public class IntroManager : MonoBehaviour
         bgmSource.clip = keybordSound;
         bgmSource.loop = true;
         bgmSource.Play();
+    }
+
+    private IEnumerator FadeOutAndLoadScene()
+    {
+        isFading = true;
+
+        if (ScreenFader.Instance != null)
+        {
+            yield return StartCoroutine(ScreenFader.Instance.FadeOut());
+        }
+
+        SceneManager.LoadScene(nextSceneName);
     }
 }
