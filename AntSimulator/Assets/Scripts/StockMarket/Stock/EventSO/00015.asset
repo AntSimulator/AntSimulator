@@ -27,7 +27,7 @@ MonoBehaviour:
   - TSLM
   probEffect: 0.2
   isUp: 1
-  depthEffect: 0.0001
+  depthEffect: 0.00005
   durationDays: 3
   durationTick: 90
   delist: 0
