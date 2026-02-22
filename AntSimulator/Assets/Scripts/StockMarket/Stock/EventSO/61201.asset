@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 61201
   title: 
-  description: "[\uC18D\uBCF4] BISA, \uBD84\uAE30 \uBC30\uB2F9\uAE08 15.6% \uC804\uACA9
-    \uC778\uC0C1\u2026 300\uC5B5 \uB2EC\uB7EC \uADDC\uBAA8 \u2018\uC5ED\uB300\uAE09\u2019
+  description: "[\uC18D\uBCF4] BISA(\uBE44\uC790), \uBD84\uAE30 \uBC30\uB2F9\uAE08
+    15.6% \uC804\uACA9 \uC778\uC0C1\u2026 300\uC5B5 \uB2EC\uB7EC \uADDC\uBAA8 \u2018\uC5ED\uB300\uAE09\u2019
     \uC790\uC0AC\uC8FC \uB9E4\uC785 \uD504\uB85C\uADF8\uB7A8 \uAC00\uB3D9"
   scope: 2
   sector: 5
   targetStockIds:
   - BISA
-  probEffect: 1
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.5
+  depthEffect: 0.0002
   durationDays: 1
   durationTick: 60
   delist: 0

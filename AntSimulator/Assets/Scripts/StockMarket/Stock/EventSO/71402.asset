@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 71402
   title: 
-  description: "[\uB2E8\uB3C5] FDA \uC2B9\uC778 \uC2E0\uCCAD \uCCA0\uD68C... \uC784\uC0C1
-    \uC911 \uD658\uC790 \uC0AC\uB9DD \uC740\uD3D0 \uC758\uD639\uC5D0 \uC8FC\uAC00
-    \uD3ED\uB77D"
+  description: "[\uB2E8\uB3C5] \uBC14\uC774\uC790 FDA \uC2B9\uC778 \uC2E0\uCCAD \uCCA0\uD68C...
+    \uC784\uC0C1 \uC911 \uD658\uC790 \uC0AC\uB9DD \uC740\uD3D0 \uC758\uD639\uC5D0
+    \uC8FC\uAC00 \uD3ED\uB77D"
   scope: 2
   sector: 6
   targetStockIds:
   - JNJA
-  probEffect: 1
+  probEffect: 0.2
   isUp: 0
-  depthEffect: 0.5
+  depthEffect: 0.0002
   durationDays: 1
   durationTick: 90
   delist: 1

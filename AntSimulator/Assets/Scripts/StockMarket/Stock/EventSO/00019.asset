@@ -20,9 +20,9 @@ MonoBehaviour:
   scope: 1
   sector: 2
   targetStockIds: []
-  probEffect: 1
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.5
+  depthEffect: 0.0001
   durationDays: 3
   durationTick: 90
   delist: 0

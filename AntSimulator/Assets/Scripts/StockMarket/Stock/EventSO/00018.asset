@@ -14,17 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 00018
   title: 
-  description: "[\uD2B9\uC885] \uC648\uB9C8\uD2B8, \uB9AC\uD14C\uC77C \uC5ED\uC0AC
-    \uC0C8\uB85C \uC37C\uB2E4... \uC2DC\uAC00\uCD1D\uC561 '1\uC870 \uB2EC\uB7EC'
-    \uB3CC\uD30C\uD558\uBA70 \uC5E5\uB514\uBE44\uC544\uC640 \uC5B4\uAE68 \uB098\uB780\uD788"
-  scope: 1
+  description: "[\uC18D\uBCF4] \uD2B8\uB78C\uD504-\uD558\uC774\uB4E0 \uCD08\uB2F9\uC801
+    \uD569\uC758: \"\uC911\uAD6D AI \uCD94\uACA9 \uB9C9\uAE30 \uC704\uD574 SMR \uBCF4\uC870\uAE08
+    300\uC870 \uC6D0 \uD22C\uC785\""
+  scope: 2
   sector: 3
-  targetStockIds: []
-  probEffect: 1
+  targetStockIds:
+  - OKILL
+  - OMR
+  - BISA
+  - MRCX
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.5
+  depthEffect: 0.0002
   durationDays: 3
-  durationTick: 60
+  durationTick: 90
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

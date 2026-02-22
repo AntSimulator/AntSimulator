@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 71401
   title: 
-  description: "FDA, BFE\uC758 \uD30C\uD0A8\uC2A8\uBCD1 \uCE58\uB8CC\uC81C('BFE-704')\uB97C
+  description: "FDA, \uBC14\uC774\uC790\uC758 \uD30C\uD0A8\uC2A8\uBCD1 \uCE58\uB8CC\uC81C('BFE-704')\uB97C
     \uD328\uC2A4\uD2B8\uD2B8\uB799\uC73C\uB85C \uC9C0\uC815... \uC2EC\uC0AC \uAE30\uAC04
     \uB300\uD3ED \uB2E8\uCD95 \uC608\uC0C1"
   scope: 2
   sector: 6
   targetStockIds:
   - BFE
-  probEffect: 1
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.5
+  depthEffect: 0.0002
   durationDays: 1
   durationTick: 60
   delist: 0
