@@ -6,6 +6,7 @@ public class PreMarketState : IGameState
     private GameStateController gsc;
     private float duration = 10f;//원래 10초 
     private int lastDisplayedSecond = -1;
+    public float remainTime;
 
     public PreMarketState(GameStateController gsc)
     {
@@ -29,7 +30,7 @@ public class PreMarketState : IGameState
     {
         gsc.stateTimer += Time.deltaTime;
 
-        float remainTime = duration - gsc.stateTimer;
+        remainTime = duration - gsc.stateTimer;
         int sec = Mathf.CeilToInt(remainTime);
 
         if(sec != lastDisplayedSecond)

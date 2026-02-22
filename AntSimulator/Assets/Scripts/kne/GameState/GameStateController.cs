@@ -21,6 +21,9 @@ public class GameStateController : MonoBehaviour
     public RunRecorder runRecorder;
     public MarketSimulator market;
 
+    public AudioSource bgmSource;
+    public AudioClip tickingSound;
+
     public System.Action<int> OnDayStarted;
 
     public StockSeedExporter seedExporter;
