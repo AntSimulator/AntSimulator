@@ -473,8 +473,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC8FC\uBB38\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?\n(\uBC30\uB2EC\uBE44:
-    3\uB9CC\uC6D0)"
+  m_text: "\uC8FC\uBB38\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7894b2cf6b8085541bd03732c6ad09ce, type: 2}
   m_sharedMaterial: {fileID: -8553668443208238482, guid: 7894b2cf6b8085541bd03732c6ad09ce, type: 2}

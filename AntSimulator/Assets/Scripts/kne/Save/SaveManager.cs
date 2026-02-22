@@ -98,7 +98,7 @@ public class SaveManager : MonoBehaviour
             data.timer = 0f;
             data.stateName = "PreMarketState";
 
-            SceneManager.LoadScene("IntroScene");
+            //SceneManager.LoadScene("IntroScene");
         }
         
         data.saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -213,4 +213,22 @@ public class SaveManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void StartNewGame(int slotIndex)
+    {
+        StartCoroutine(NewGameRoutine(slotIndex));
+    }
+
+    private IEnumerator NewGameRoutine(int slotIndex)
+    {
+        if (ScreenFader.Instance != null)
+            yield return StartCoroutine(ScreenFader.Instance.FadeOut());
+        SaveToSlot(slotIndex);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("IntroScene");
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        if (ScreenFader.Instance != null)
+            yield return StartCoroutine(ScreenFader.Instance.FadeIn());
+    }
 }

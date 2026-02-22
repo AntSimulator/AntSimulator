@@ -21,16 +21,14 @@ MonoBehaviour:
   sector: 3
   targetStockIds:
   - BYMM
-  probEffect: 1
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.02
+  depthEffect: 0.0002
   durationDays: 1
-<<<<<<<< HEAD:AntSimulator/Assets/Scripts/StockMarket/Stock/EventSO/51003.asset
-========
-  durationTick: 60
->>>>>>>> merge_branch_1:AntSimulator/Assets/Scripts/StockMarket/Stock/EventSO/40901.asset
+  durationTick: 30
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

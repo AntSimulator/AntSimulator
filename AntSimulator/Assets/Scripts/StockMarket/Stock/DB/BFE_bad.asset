@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0513d48e0cdc247eba164202d30b878c, type: 3}
   m_Name: BFE_bad
   m_EditorClassIdentifier: Assembly-CSharp::EventPresentationSO
-  eventId: BEF_bad
+  eventId: BFE_bad
   presentationType: 1
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 13c7658b06c08400ba27987e0351a142, type: 3}
   newsFallbackBody: 
   calendarLines:
   - "\uC804 \uC138\uACC4 \uC218\uBC31\uB9CC \uD658\uC790\uB4E4\uC758 \uD76C\uB9DD\uC774

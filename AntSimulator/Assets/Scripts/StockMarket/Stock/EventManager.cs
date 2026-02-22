@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-
-
 
 public class EventManager : MonoBehaviour
 {
@@ -18,9 +15,8 @@ public class EventManager : MonoBehaviour
     public int ticksPerDay = 300;
     public int morningTick = 0;
 
-    public List<CalendarDayScheduleSO> calendarSchedules;
-
     public IReadOnlyList<EventInstance> ActiveEvents => active;
+
     public void Init(List<EventInstance> runEvents)
     {
         this.runEvents = runEvents ?? new List<EventInstance>();
@@ -31,45 +27,59 @@ public class EventManager : MonoBehaviour
     {
         if (runEvents == null) return;
 
-        var todayList = runEvents.Where(x => x.startDay == day).ToList();
-        if(todayList.Count == 0) return;
+        var todayList = runEvents.Where(x => x != null && x.startDay == day).ToList();
+        if (todayList.Count == 0) return;
+
         int morningIdx = UnityEngine.Random.Range(0, todayList.Count);
-        for(int i = 0; i<todayList.Count; i++)
+
+        for (int i = 0; i < todayList.Count; i++)
         {
-            
             var inst = todayList[i];
-            if(inst == null)continue;
-            inst.remainingTicks = Mathf.Max(1, inst.durationTicks);
+            if (inst == null) continue;
+
+            // ✅ durationTicks가 0이면 durationDays * ticksPerDay로 자동 변환(구 SO 호환)
+            int fallbackTicks = Mathf.Max(1, Mathf.Max(1, ticksPerDay));
+            int durTicks = inst.durationTicks > 0 ? inst.durationTicks : fallbackTicks;
+
+            inst.remainingTicks = durTicks;
             inst.revealed = false;
             inst.delistApplied = false;
-            if (i == morningIdx)
-            {
-                inst.revealTickInDay = morningTick;
-            }
-            else
-            {
-                inst.revealTickInDay = UnityEngine.Random.Range(0, Mathf.Max(1, ticksPerDay));
-            }
+
+            inst.revealTickInDay = (i == morningIdx)
+                ? morningTick
+                : UnityEngine.Random.Range(0, Mathf.Max(1, ticksPerDay));
 
             if (!active.Contains(inst))
-            {
                 active.Add(inst);
-            }
         }
     }
 
-    public void OnDayEnded()
+    /// <summary>
+    /// MarketSimulator에서 매 tick마다 호출해줘야 함 (너는 이미 호출 중)
+    /// </summary>
+    public void OnTick()
     {
         for (int i = 0; i < active.Count; i++)
-            active[i].remainingDays--;
+        {
+            var inst = active[i];
+            if (inst == null) continue;
 
-        active.RemoveAll(e => e.remainingDays <= 0);
+            // ✅ 공개 전에는 영향도 없고, 시간도 안 줄임
+            if (!inst.revealed) continue;
+
+            inst.remainingTicks--;
+        }
+
+        // ✅ 공개된 이벤트 중 시간이 끝난 것 제거
+        active.RemoveAll(e => e != null && e.revealed && e.remainingTicks <= 0);
     }
 
-    /// <summary>
-    /// probSum: (0.xx) 퍼센트포인트 합산 (0.10 = +10%p)
-    /// depthSum: 여러 이벤트 depthEffect는 (1+effect)를 곱 누적하고 마지막에 -1 (증가분)
-    /// </summary>
+    // ✅ DayEnd는 ticks 시스템에서는 굳이 건드릴 필요 없음 (남겨도 되는데, 비우는 게 안전)
+    public void OnDayEnded()
+    {
+        // nothing (tick 기반 수명 관리)
+    }
+
     public (float probSum, float depthSum) GetEffectsForStock(string stockId, Sector stockSector)
     {
         float probSum = 0f;
@@ -77,9 +87,11 @@ public class EventManager : MonoBehaviour
 
         foreach (var inst in active)
         {
+            if (inst == null) continue;
+            if (!inst.revealed) continue;
+
             var def = db != null ? db.FindById(inst.eventId) : null;
             if (def == null) continue;
-            if(!inst.revealed) continue;
 
             bool affects = def.scope switch
             {
@@ -92,21 +104,14 @@ public class EventManager : MonoBehaviour
 
             if (!affects) continue;
 
-            if (def.isUp == true)
-            {
-                probSum += def.probEffect;  
-            }
-            else
-            {
-                probSum -= def.probEffect;
-            }
-                          // 합산 (0.10 = +10%p)
-                          
-            depthMul *= (1f + def.depthEffect);      // 곱 누적
+            // ✅ isUp 기준으로 확률 퍼센트포인트를 +/- 적용
+            probSum += def.isUp ? def.probEffect : -def.probEffect;
+
+            // ✅ 폭은 항상 누적(증가분으로)
+            depthMul *= (1f + def.depthEffect);
         }
 
-        float depthSum = depthMul - 1f;              // 증가분으로 환원
-        return (probSum, depthSum);
+        return (probSum, depthMul - 1f);
     }
 
     public List<EventInstance> GetEventsStartingOnDay(int day)
@@ -120,19 +125,5 @@ public class EventManager : MonoBehaviour
         var list = GetEventsStartingOnDay(today + 1);
         if (list.Count == 0) return null;
         return list[UnityEngine.Random.Range(0, list.Count)];
-    }
-    public void OnTick()
-    {
-        for (int i = 0; i < active.Count; i++)
-        {
-            var inst = active[i];
-            if (inst == null) continue;
-            if (!inst.revealed) continue;       // 공개 전에는 영향 X + 시간도 안 줄임
-
-            inst.remainingTicks--;
-        }
-
-        // ✅ 공개된 이벤트 중 시간이 끝난 것 제거
-        active.RemoveAll(e => e != null && e.revealed && e.remainingTicks <= 0);
     }
 }

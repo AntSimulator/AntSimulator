@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 00017
   title: 
-  description: "[\uC18D\uBCF4] \uC648\uB9C8\uD2B8-\uAC00\uAE00 '\uC82C\uBBFC\uB098\uC774(Gemnini)'
-    \uD0D1\uC7AC AI \uC1FC\uD551 \uC804\uACA9 \uB7F0\uCE6D... \"\uC5C4\uB9C8\uC874
-    \uBE44\uC0C1\""
+  description: "[\uAE34\uAE09] \"\uC548 \uC0AC\uBA74 \uC5B4\uCA54 \uAC74\uB370?\"
+    \uC648\uB9C8\uD2B8, \uBA64\uBC84\uC2ED \uC694\uAE08 60% \uAE30\uC2B5 \uC778\uC0C1\uC5D0
+    \uBBF8 \uC18C\uBE44\uC790\uB4E4 '\uC544\uBBF8\uC874'\uC73C\uB85C \uB300\uD0C8\uCD9C"
   scope: 1
   sector: 3
   targetStockIds: []
-  probEffect: 0.7
+  probEffect: 0.2
   isUp: 0
-  depthEffect: 0.02
+  depthEffect: 0.00005
   durationDays: 3
-  durationTick: 60
+  durationTick: 90
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

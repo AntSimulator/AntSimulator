@@ -21,15 +21,15 @@ MonoBehaviour:
   sector: 0
   targetStockIds:
   - FMC
-  probEffect: 0.9
-  isUp: 1
-  depthEffect: 0.03
+  probEffect: 0.2
+  isUp: 0
+  depthEffect: 0.0002
   durationDays: 1
-  durationTick: 60
+  durationTick: 30
   delist: 1
   delistStockIds:
   - FMC
-  - 
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

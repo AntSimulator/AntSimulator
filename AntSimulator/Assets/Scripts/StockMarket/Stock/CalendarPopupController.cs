@@ -22,6 +22,15 @@ public class CalendarPopupController : MonoBehaviour
     [Header("Behavior")]
     public bool pauseGameWhileOpen = true;
     public bool allowSkipTypingOnClick = true;
+    
+    [Header("WED Finance BGM")]
+    public bool enableWedFinanceBgm = true;
+    public string wedGoodEventId;
+    public string wedBadEventId;
+    public AudioSource bgmSource;                  
+    public AudioClip wedGoodBgm;
+    public AudioClip wedBadBgm;
+
 
     private Coroutine _co;
     private Action _onClosed;
@@ -50,7 +59,7 @@ public class CalendarPopupController : MonoBehaviour
     public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
     {
         _onClosed = onClosed;
-
+        TryPlayWedFinanceBgm(def, day);
         // 1) 팝업 열기
         if (popupManager != null)
             popupManager.Open(popupId);
@@ -173,6 +182,9 @@ public class CalendarPopupController : MonoBehaviour
             StopCoroutine(_co);
             _co = null;
         }
+        
+        if(bgmSource != null && bgmSource.isPlaying)
+            bgmSource.Stop();
 
         // 팝업 닫기
         if (popupManager != null)
@@ -194,5 +206,27 @@ public class CalendarPopupController : MonoBehaviour
     public void OnClickCloseButton()
     {
         Close();
+    }
+
+    void TryPlayWedFinanceBgm(EventDefinition def, int day)
+    {
+        if (!enableWedFinanceBgm) return;
+        if (def == null) return;
+        if (day != 2) return;
+        if(bgmSource == null) return;
+
+        // good/bad는 eventId로 판별
+        if (!string.IsNullOrEmpty(wedGoodEventId) && def.eventId == wedGoodEventId && wedGoodBgm != null)
+        {
+            bgmSource.clip = wedGoodBgm;
+            bgmSource.loop = false;
+            bgmSource.Play();
+        }
+        else if (!string.IsNullOrEmpty(wedBadEventId) && def.eventId == wedBadEventId && wedBadBgm != null)
+        {
+            bgmSource.clip = wedBadBgm;
+            bgmSource.loop = false;
+            bgmSource.Play();
+        }
     }
 }

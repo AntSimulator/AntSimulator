@@ -74,7 +74,8 @@ public class SaveSlotMenu : MonoBehaviour
 
         if (inSaveMode)
         {
-            saveManager.SaveToSlot(slotIndex);
+            //saveManager.SaveToSlot(slotIndex);
+            saveManager.StartNewGame(slotIndex);
             RefreshUI();
             Debug.Log($"ªı ∞‘¿” ΩΩ∑‘ {slotIndex}");
         }

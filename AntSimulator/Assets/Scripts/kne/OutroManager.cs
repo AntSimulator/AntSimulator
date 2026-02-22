@@ -17,13 +17,18 @@ public class OutroManager : MonoBehaviour
 
     public List<CutscenePage> pages;
 
-    [Header("¼³Á¤")]
+    [Header("ï¿½ï¿½ï¿½ï¿½")]
     public string nextSceneName = "TitleScene";
     public float fadeSpeed = 2.0f;
 
-    [Header("UI ¿¬°á")]
+    [Header("UI ï¿½ï¿½ï¿½ï¿½")]
     public Image displayImage;
     public TMP_Text displayText;
+    
+    [Header("sound")] 
+    public AudioSource bgmSource;
+    public AudioClip EndingSound;
+  
 
     private int currentIndex = 0;
     private bool isFading = false;
@@ -31,6 +36,7 @@ public class OutroManager : MonoBehaviour
     void Start()
     {
         SetPageData(currentIndex);
+        PlayKeybordSound();
         if (ScreenFader.Instance != null)
         {
             StartCoroutine(ScreenFader.Instance.FadeIn());
@@ -101,5 +107,13 @@ public class OutroManager : MonoBehaviour
             c.a = alpha;
             displayText.color = c;
         }
+    }
+    void PlayKeybordSound()
+    {
+        Debug.Log($"[Outro] bgmSource={(bgmSource ? bgmSource.name : "NULL")}, clip={(EndingSound ? EndingSound.name : "NULL")}, listenerPause={AudioListener.pause}, timeScale={Time.timeScale}");
+        bgmSource.clip = EndingSound;
+        bgmSource.loop = false;
+        bgmSource.Play();
+        Debug.Log($"[Outro] isPlaying={bgmSource.isPlaying}, volume={bgmSource.volume}, mute={bgmSource.mute}, spatialBlend={bgmSource.spatialBlend}");
     }
 }

@@ -19,12 +19,14 @@ MonoBehaviour:
   scope: 0
   sector: 1
   targetStockIds: []
-  probEffect: 0.8
+  probEffect: 0.2
   isUp: 0
-  depthEffect: 0.02
+  depthEffect: 0.00005
   durationDays: 4
+  durationTick: 90
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

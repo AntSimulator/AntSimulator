@@ -20,11 +20,11 @@ MonoBehaviour:
   scope: 1
   sector: 2
   targetStockIds: []
-  probEffect: 0.7
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.02
+  depthEffect: 0.00005
   durationDays: 3
-  durationTick: 60
+  durationTick: 90
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

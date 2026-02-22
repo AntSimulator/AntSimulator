@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: BISA
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 20000
+  basePrice: 362000
   maxUpPercent: 0.002
   maxDownPercent: 0.002
-  volumeBoostK: 25
-  volumeNoiseMin: 0.7
-  volumeNoiseMax: 1.5
-  eventToVolatility: 1.2
+  volumeBoostK: 70
+  volumeNoiseMin: 0.95
+  volumeNoiseMax: 1.05
+  eventToVolatility: 1.1
   eventToVolume: 1.2
   communitySensitivity: 1
   stockId: BISA

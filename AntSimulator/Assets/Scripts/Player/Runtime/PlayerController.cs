@@ -6,6 +6,8 @@ using Player.Core;
 using Player.Models;
 using Stocks.Models;
 using Stocks.UI;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 namespace Player.Runtime
 {
@@ -21,23 +23,26 @@ namespace Player.Runtime
             public int currentPrice = 1000;
         }
 
-        [Header("Test Stocks")]
-        [SerializeField] private TestStock[] testStocks;
+        [Header("Test Stocks")] [SerializeField]
+        private TestStock[] testStocks;
 
-        [Header("Trade Settings")]
-        [SerializeField] private int qtyStep = 1;
+        [Header("Trade Settings")] [SerializeField]
+        private int qtyStep = 1;
+
         [SerializeField] private int priceStep = 500;
         [SerializeField] private long startCash = 2000000;
         [SerializeField] private int seedDefaultPrice = 1000;
         [SerializeField] private Button buyButton;
         [SerializeField] private Button sellButton;
 
-        [Header("HP Settings")]
-        [SerializeField] private int startHp = 100;
+        [Header("HP Settings")] [SerializeField]
+        private int startHp = 100;
+
         [SerializeField] private int maxHp = 100;
 
-        [Header("Seed Source (Stock SO)")]
-        [SerializeField] private bool applySeedOnStart = true;
+        [Header("Seed Source (Stock SO)")] [SerializeField]
+        private bool applySeedOnStart = true;
+
         [SerializeField] private List<StockDefinition> seedStockDefinitions = new();
         [SerializeField] private MarketSimulator marketSimulator;
         [SerializeField] private long seedBalance = -1;
@@ -45,15 +50,14 @@ namespace Player.Runtime
         [SerializeField] private string seedIconColor = "#FFFFFF";
         [SerializeField] private bool seedOverrideStocks = true;
 
-        [Header("HP Drain")]
-        [SerializeField] private bool drainHpEnabled = true;
+        [Header("HP Drain")] [SerializeField] private bool drainHpEnabled = true;
         [SerializeField] private float drainIntervalSeconds = 3f; // 3초마다
-        [SerializeField] private int drainAmount = 1;            // 1씩 감소
+        [SerializeField] private int drainAmount = 1; // 1씩 감소
         [SerializeField] private bool drainUseUnscaledTime = false; // TimeScale=0이어도 닳게 할거면 true
 
         private float hpDrainTimer = 0f;
-        
-        
+
+
         private PlayerState state;
         private PlayerHp hp;
         private PlayerTradingEngine tradingEngine;
@@ -65,6 +69,11 @@ namespace Player.Runtime
         public event Action<long> OnCashChanged;
         public event Action OnHoldingsChanged;
         public event Action<string> OnSelectedStockChanged;
+        
+        [Header("UI")]
+        public GameStateController gsc;
+        public GameObject timeEndPannel;
+        
 
         private void OnEnable()
         {
@@ -153,7 +162,7 @@ namespace Player.Runtime
             OnCashChanged?.Invoke(Cash);
             OnHpChanged?.Invoke(CurrentHp, MaxHp);
         }
-        
+
         private void Update()
         {
             DrainHpTick();
@@ -267,7 +276,8 @@ namespace Player.Runtime
                 marketSimulator = FindObjectOfType<MarketSimulator>();
             }
 
-            if (marketSimulator != null && marketSimulator.stockDefinitions != null && marketSimulator.stockDefinitions.Count > 0)
+            if (marketSimulator != null && marketSimulator.stockDefinitions != null &&
+                marketSimulator.stockDefinitions.Count > 0)
             {
                 return marketSimulator.stockDefinitions;
             }
@@ -277,6 +287,11 @@ namespace Player.Runtime
 
         public void Buy()
         {
+            if (gsc.currentStateName != "MarketOpenState")
+            {
+                timeEndPannel.SetActive(true);
+                return;
+            }
             var current = CurrentStock;
             if (current == null)
             {
@@ -299,6 +314,11 @@ namespace Player.Runtime
 
         public void Sell()
         {
+            if (gsc.currentStateName != "MarketOpenState")
+            {
+                timeEndPannel.SetActive(true);
+                return;
+            }
             var current = CurrentStock;
             if (current == null)
             {
@@ -329,26 +349,6 @@ namespace Player.Runtime
             {
                 coreStock.SetPrice(Mathf.RoundToInt(marketState.currentPrice));
             }
-        }
-
-        public void PriceUp()
-        {
-            if (!tradingEngine.PriceUp(priceStep))
-            {
-                return;
-            }
-
-            SyncSelectedStockFromEngine();
-        }
-
-        public void PriceDown()
-        {
-            if (!tradingEngine.PriceDown(priceStep))
-            {
-                return;
-            }
-
-            SyncSelectedStockFromEngine();
         }
 
         private void SyncSelectedStockFromEngine()
@@ -497,11 +497,7 @@ namespace Player.Runtime
 
         public int CurrentHp
         {
-            get
-            {
-                
-                return hp.CurrentHp;
-            }
+            get { return hp.CurrentHp; }
         }
 
         public void LoadSavedHp(int savedValue)
@@ -511,15 +507,12 @@ namespace Player.Runtime
 
         public int MaxHp
         {
-            get
-            {
-                return hp.MaxHp;
-            }
+            get { return hp.MaxHp; }
         }
 
         public void AddHp(int amount)
         {
-            
+
             hp.AddHp(amount);
         }
 
@@ -531,7 +524,7 @@ namespace Player.Runtime
 
         public void SetHp(int value)
         {
-            
+
             hp.SetHp(value);
         }
 
@@ -539,7 +532,7 @@ namespace Player.Runtime
         {
             OnHpChanged?.Invoke(currentHp, currentMaxHp);
         }
-        
+
         private void DrainHpTick()
         {
             if (!drainHpEnabled) return;
@@ -557,6 +550,87 @@ namespace Player.Runtime
             {
                 hpDrainTimer -= drainIntervalSeconds;
                 hp.DecreaseHp(drainAmount);
+            }
+        }
+
+        public void AddCash(long amount)
+        {
+            if (state == null) return;
+            state.AddCash(amount);
+            OnCashChanged?.Invoke(state.cash);
+        }
+
+        public void SubtractCash(long amount)
+        {
+            if (state == null) return;
+            state.RemoveCash(amount);
+            OnCashChanged?.Invoke(state.cash);
+            if (state.cash < 0)
+            {
+                TrySellAllHoldings();
+            }
+        }
+
+        private void TrySellAllHoldings()
+        {
+            if (state == null) return;
+
+            if (state.holdings.Count == 0)
+            {
+                SceneManager.LoadScene("BadEndingScene");
+            }
+
+            var allMarketStocks = marketSimulator != null ? marketSimulator.GetAllStocks() : null;
+
+            // testStocks 가격 fallback용 딕셔너리
+            var testStockPrices = new Dictionary<string, int>();
+            if (testStocks != null)
+            {
+                foreach (var ts in testStocks)
+                {
+                    if (ts != null && !string.IsNullOrWhiteSpace(ts.stockId))
+                        testStockPrices[ts.stockId] = ts.currentPrice;
+                }
+            }
+
+            // 컬렉션 수정 방지를 위해 복사
+            var holdingsCopy = new List<(string stockId, int quantity)>();
+            foreach (var kvp in state.holdings)
+            {
+                if (kvp.Value.quantity > 0)
+                    holdingsCopy.Add((kvp.Key, kvp.Value.quantity));
+            }
+
+            bool anySold = false;
+            foreach (var (stockId, quantity) in holdingsCopy)
+            {
+                // 시장 가격 우선, 없으면 testStocks 가격, 없으면 1
+                int price = 1;
+                if (allMarketStocks != null && allMarketStocks.TryGetValue(stockId, out var marketState))
+                    price = Mathf.RoundToInt(marketState.currentPrice);
+                else if (testStockPrices.TryGetValue(stockId, out var testPrice))
+                    price = testPrice;
+
+                if (state.TrySell(stockId, quantity, price, out var reason))
+                {
+                    Debug.Log($"[Player] 강제 청산: {stockId} x{quantity} @ {price}");
+                    anySold = true;
+                }
+                else
+                {
+                    Debug.LogWarning($"[Player] 강제 청산 실패: {stockId} - {reason}");
+                }
+            }
+
+            if (anySold)
+            {
+                OnCashChanged?.Invoke(state.cash);
+                OnHoldingsChanged?.Invoke();
+            }
+
+            if (state.cash < 0)
+            {
+                SceneManager.LoadScene("BadEndingScene");
             }
         }
     }

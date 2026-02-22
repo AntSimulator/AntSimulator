@@ -26,6 +26,9 @@ namespace Banking.Runtime
         [SerializeField] private bool enforceAccountLength16 = true;
         [SerializeField] private int accountLength = 16;
 
+        [SerializeField] private GameObject wrongNumberpopup;
+        [SerializeField] private GameObject TransferPanel;
+
         private void OnEnable()
         {
             if (requestChannel != null)
@@ -56,6 +59,12 @@ namespace Banking.Runtime
                 {
                     var toAcc = req.toAccount ?? string.Empty;
                     Debug.LogWarning($"[Transfer] Reject: InvalidAccount (len={toAcc.Length}) correlationId={req.correlationId}");
+                    wrongNumberpopup.SetActive(true);
+                    if (TransferPanel != null)
+                    {
+                        var body = TransferPanel.transform.Find("Body");
+                        if (body != null) body.gameObject.SetActive(false);
+                    }
                 }
                 else if (preCheck.Result.reason == TransferFailReason.InvalidAmount)
                 {

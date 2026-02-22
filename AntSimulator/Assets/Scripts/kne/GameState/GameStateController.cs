@@ -21,6 +21,10 @@ public class GameStateController : MonoBehaviour
     public RunRecorder runRecorder;
     public MarketSimulator market;
 
+    public AudioSource bgmSource;
+    public AudioClip tickingSound;
+    public AudioClip settlemetJazz;
+
     public System.Action<int> OnDayStarted;
 
     public StockSeedExporter seedExporter;
@@ -184,7 +188,7 @@ public class GameStateController : MonoBehaviour
             ChangeState(new PreMarketState(this));
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
 
         if (ScreenFader.Instance != null)

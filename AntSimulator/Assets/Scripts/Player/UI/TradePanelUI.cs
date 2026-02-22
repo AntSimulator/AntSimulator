@@ -109,10 +109,10 @@ namespace Player.UI
                 stockNameText.text = selectedStockName;
 
             if (stockBalanceText != null)
-                stockBalanceText.text = $"보유수량 : {holdingQuantity:N0}";
+                stockBalanceText.text = $"보유수량 : {holdingQuantity:N0}주";
 
             if (currentPriceText != null)
-                currentPriceText.text = $"현재가 : {currentPrice:N0}";
+                currentPriceText.text = $"현재가 : {currentPrice:N0}원";
         }
 
         private int GetHoldingQuantity(string stockCode)

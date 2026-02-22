@@ -14,19 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 10202
   title: 
-  description: "\uC5ED\uC8FC\uD589\uC5D0 \uC131\uACF5\uD574 \uADF8\uB798\uBBF8 \uC5B4\uC6CC\uB4DC
-    \uC218\uC0C1 \uD6C4\uBCF4\uC5D0 \uC624\uB974\uB2E4"
+  description: "[\uC18D\uBCF4] \uC5D0\uD504\uC5E0\uC528\uC5D4\uD130 '\uC9E7\uC740\uBC14\uC9C0',
+    \uD55C\uAD6D \uCD5C\uCD08 \uADF8\uB798\uBBF8 \uC5B4\uC6CC\uB4DC '\uBCA0\uC2A4\uD2B8
+    \uD31D' \uD6C4\uBCF4 \uC9C0\uBA85\u2026 \uC678\uC2E0 \"\uAE30\uC801\uC758 \uC5ED\uC8FC\uD589\""
   scope: 2
   sector: 0
   targetStockIds:
   - FMC
-  probEffect: 0.6
+  probEffect: 0.2
   isUp: 1
-  depthEffect: 0.03
+  depthEffect: 0.0002
   durationDays: 1
-  durationTick: 60
+  durationTick: 30
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
+  kind: 0

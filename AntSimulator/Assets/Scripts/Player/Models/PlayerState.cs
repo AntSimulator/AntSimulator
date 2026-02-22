@@ -17,7 +17,19 @@ namespace Player.Models
         
         public void SetCash(long value)
         {
-            cash = Math.Max(0, value);
+            cash = value;
+        }
+        
+        public void AddCash(long amount)
+        {
+            if (amount < 0) return;
+            cash += amount;
+        }
+        
+        public void RemoveCash(long amount)
+        {
+            if (amount < 0) return;
+            cash -= amount;
         }
 
         public void ClearHoldings()

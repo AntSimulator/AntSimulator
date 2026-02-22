@@ -7,6 +7,7 @@ public class SettlementState : IGameState
     private float duration = 20f;//원래 20초
     private int lastDisplayedSec = -1;
     private bool isFinished = false;
+    public float remainTime;
 
     public SettlementState(GameStateController gsc)
     {
@@ -16,6 +17,7 @@ public class SettlementState : IGameState
     public void Enter()
     {
         gsc.currentStateName = gameStateName;
+        PlayMusic();
         if (gsc.market != null)
         {
             gsc.market.simulateTicks = false;
@@ -29,7 +31,7 @@ public class SettlementState : IGameState
         if (isFinished) return;
 
         gsc.stateTimer += Time.deltaTime;
-        float remainTime = duration - gsc.stateTimer;
+        remainTime = duration - gsc.stateTimer;
         int sec = Mathf.CeilToInt(remainTime);
         
         if(sec != lastDisplayedSec)
@@ -49,5 +51,12 @@ public class SettlementState : IGameState
     }
 
     public void Exit() {  }
+
+    public void PlayMusic()
+    {
+        gsc.bgmSource.clip = gsc.settlemetJazz;
+        gsc.bgmSource.loop = false;
+        gsc.bgmSource.Play();
+    }
     
 }

@@ -7,6 +7,7 @@ public class MarketOpenState : IGameState
     private float duration = 150f;//원래 150
     private int lastDisplayedSec = -1;
     private float tickTimer;
+    public float remainTime;
 
     public MarketOpenState(GameStateController gsc)
     {
@@ -33,8 +34,12 @@ public class MarketOpenState : IGameState
             tickTimer -= gsc.market.tickIntervalSec;
             gsc.market.TickOnce();
         }
-        float remainTime = duration - gsc.stateTimer;
+        remainTime = duration - gsc.stateTimer;
         int totalSeconds = Mathf.FloorToInt(remainTime);
+        if (totalSeconds == 10 && lastDisplayedSec != 10)
+        {
+            PlayTickSound();
+        }
 
         if (totalSeconds != lastDisplayedSec)
         {
@@ -54,6 +59,7 @@ public class MarketOpenState : IGameState
         {
             gsc.ChangeState(new SettlementState(gsc));
         }
+        
     
     }
 
@@ -63,6 +69,13 @@ public class MarketOpenState : IGameState
             gsc.market.simulateTicks = false;
         }
         Debug.Log("���� �����Ǿ����ϴ�.");
+    }
+
+    public void PlayTickSound()
+    {
+        gsc.bgmSource.clip = gsc.tickingSound;
+        gsc.bgmSource.loop = false;
+        gsc.bgmSource.Play();
     }
     
 }

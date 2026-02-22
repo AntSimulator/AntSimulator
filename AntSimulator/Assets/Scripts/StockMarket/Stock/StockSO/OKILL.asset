@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdae1ff9cc04c8a882279c35df867d, type: 3}
   m_Name: OKILL
   m_EditorClassIdentifier: Assembly-CSharp::StockDefinition
-  basePrice: 20000
+  basePrice: 72000
   maxUpPercent: 0.06
   maxDownPercent: 0.06
-  volumeBoostK: 25
-  volumeNoiseMin: 0.7
-  volumeNoiseMax: 1.5
-  eventToVolatility: 1.1
-  eventToVolume: 1.1
+  volumeBoostK: 40
+  volumeNoiseMin: 0.8
+  volumeNoiseMax: 1.2
+  eventToVolatility: 1.6
+  eventToVolume: 2.5
   communitySensitivity: 1
   stockId: OKILL
   sector: 4
   displayName: "\uC624\uD0AC\uB7EC"
-  floatShares: 600000000
-  avgDailyVolume: 4000000
+  floatShares: 200000000
+  avgDailyVolume: 1500000
   noiseScale: 1

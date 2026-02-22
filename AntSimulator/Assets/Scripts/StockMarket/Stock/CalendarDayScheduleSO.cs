@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum CalendarDayOfWeek
 {
-    Mon, Tue, Wed, Thu, Fri
+    Mon = 0,
+    Tue = 1,
+    Wed = 2,
+    Thu = 3,
+    Fri = 4
 }
 
 [Serializable]

@@ -25,12 +25,17 @@ public class IntroManager : MonoBehaviour
     public Image displayImage;
     public TMP_Text displayText;
 
+    [Header("sound")] 
+    public AudioSource bgmSource;
+    public AudioClip keybordSound;
+
     private int currentIndex = 0;
     private bool isFading = false; 
 
     void Start()
     {
         SetPageData(currentIndex);
+        PlayKeybordSound();
     }
 
     public void Next()
@@ -45,7 +50,8 @@ public class IntroManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(nextSceneName);
+            //SceneManager.LoadScene(nextSceneName);
+            StartCoroutine(FadeOutAndLoadScene());
         }
     }
 
@@ -101,6 +107,28 @@ public class IntroManager : MonoBehaviour
 
     public void SkipIntro()
     {
+        if (isFading) return;
+
+        StartCoroutine(FadeOutAndLoadScene());
+        //SceneManager.LoadScene(nextSceneName);
+    }
+
+    void PlayKeybordSound()
+    {
+        bgmSource.clip = keybordSound;
+        bgmSource.loop = true;
+        bgmSource.Play();
+    }
+
+    private IEnumerator FadeOutAndLoadScene()
+    {
+        isFading = true;
+
+        if (ScreenFader.Instance != null)
+        {
+            yield return StartCoroutine(ScreenFader.Instance.FadeOut());
+        }
+
         SceneManager.LoadScene(nextSceneName);
     }
 }
