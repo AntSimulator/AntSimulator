@@ -25,7 +25,7 @@ MonoBehaviour:
   isUp: 0
   depthEffect: 0.0002
   durationDays: 1
-  durationTick: 60
+  durationTick: 30
   delist: 1
   delistStockIds:
   - FADS
