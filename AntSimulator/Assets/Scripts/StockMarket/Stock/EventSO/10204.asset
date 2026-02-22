@@ -29,7 +29,6 @@ MonoBehaviour:
   delist: 1
   delistStockIds:
   - FMC
-  - 
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
