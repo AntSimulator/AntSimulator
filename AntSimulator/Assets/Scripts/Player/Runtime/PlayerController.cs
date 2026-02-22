@@ -6,6 +6,7 @@ using Player.Core;
 using Player.Models;
 using Stocks.Models;
 using Stocks.UI;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 namespace Player.Runtime
@@ -68,6 +69,11 @@ namespace Player.Runtime
         public event Action<long> OnCashChanged;
         public event Action OnHoldingsChanged;
         public event Action<string> OnSelectedStockChanged;
+        
+        [Header("UI")]
+        public GameStateController gsc;
+        public GameObject timeEndPannel;
+        
 
         private void OnEnable()
         {
@@ -281,6 +287,11 @@ namespace Player.Runtime
 
         public void Buy()
         {
+            if (gsc.currentStateName != "MarketOpenState")
+            {
+                timeEndPannel.SetActive(true);
+                return;
+            }
             var current = CurrentStock;
             if (current == null)
             {
@@ -303,6 +314,11 @@ namespace Player.Runtime
 
         public void Sell()
         {
+            if (gsc.currentStateName != "MarketOpenState")
+            {
+                timeEndPannel.SetActive(true);
+                return;
+            }
             var current = CurrentStock;
             if (current == null)
             {

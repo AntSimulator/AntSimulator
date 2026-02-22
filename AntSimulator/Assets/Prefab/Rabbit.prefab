@@ -1250,6 +1250,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -133.14
       objectReference: {fileID: 0}
+    - target: {fileID: 5584293255606374202, guid: 4c06ae36d3640db4b8df6f812d938733, type: 3}
+      propertyPath: m_text
+      value: '#News'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7768859114260953261, guid: 4c06ae36d3640db4b8df6f812d938733, type: 3}
+      propertyPath: m_text
+      value: "[\uB2E8\uB3C5] \uCF54\uC2A4\uD53C 3,500\uC120 \uB3CC\uD30C \uC784\uBC15...
+        \"\uC678\uC778\uB4E4 \uBAB0\uB798 \uB9E4\uC9D1\uD558\uB294 \uC885\uBAA9 \uB9AC\uC2A4\uD2B8
+        \uC720\uCD9C, \uC624\uB298\uC774 \uB9C8\uC9C0\uB9C9 \uC800\uC810\""
+      objectReference: {fileID: 0}
     - target: {fileID: 8012098473559614518, guid: 4c06ae36d3640db4b8df6f812d938733, type: 3}
       propertyPath: m_Name
       value: RabbitNews

@@ -58,10 +58,10 @@ namespace Expenses
             string amountStr = showAmount ? $"{def.amount:n0}원" : "";
 
             // dueDay
-            string dueStr = showDueDay ? $"D{def.dueDay}" : "";
+            string dueStr = showDueDay ? $"{def.dueDay}" : "";
 
             // 계좌
-            string accStr = showAccountNumber ? def.accountNumber : "";
+            string accStr = showAccountNumber ? $"계좌번호 : {def.accountNumber}" : "";
 
             // 조합 (필요한 것만)
             // 예: "렌트비 D3 / 230,000원\n1234-...."
