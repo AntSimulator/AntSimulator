@@ -4,17 +4,24 @@ using UnityEngine;
 
 public static class RunEventGenerator
 {
-    public static List<EventInstance> Generate(EventDatabaseSO db, int totalDays, List<CalendarDayScheduleSO> calendarSchedules, int hiddenCount)
+    public static List<EventInstance> Generate(
+        EventDatabaseSO db,
+        int totalDays,
+        List<CalendarDayScheduleSO> calendarSchedules,
+        int hiddenCount)
     {
         var result = new List<EventInstance>();
         if (db == null || db.events == null || db.events.Count == 0) return result;
 
+        // ---------------------------
+        // 1) Calendar schedules: revealTickInDay는 slot 값 "고정"
+        // ---------------------------
         if (calendarSchedules != null && calendarSchedules.Count > 0)
         {
-             var map = calendarSchedules
+            var map = calendarSchedules
                 .Where(s => s != null)
                 .GroupBy(s => s.dayOfWeek)
-                .ToDictionary(g => g.Key, g => g.First()); // 요일당 1개만 쓰게 (중복 방지)
+                .ToDictionary(g => g.Key, g => g.First()); // 요일당 1개만
 
             for (int day = 1; day <= totalDays; day++)
             {
@@ -26,7 +33,6 @@ public static class RunEventGenerator
                 {
                     if (slot == null) continue;
 
-                    // good/bad 중 하나 확정
                     bool isGood = Random.value < Mathf.Clamp01(slot.goodChance);
                     string eventId = isGood ? slot.goodEventId : slot.badEventId;
 
@@ -43,44 +49,53 @@ public static class RunEventGenerator
                         continue;
                     }
 
-                    int duration = (slot.overrideDurationDays > 0) ? slot.overrideDurationDays : def.durationDays;
+                    // 레거시: durationDays는 있어도 됨(프리팹/세이브 호환)
+                    int durationDays = (slot.overrideDurationDays > 0) ? slot.overrideDurationDays : def.durationDays;
 
-                    // revealTickInDay 같은 건 EventInstance에 필드가 있어야 저장됨.
-                    // 너희 EventInstance가 revealTickInDay가 없다면, 생성 직후 EventManager가 default로 잡고 있거나,
-                    // EventInstance에 revealTickInDay 필드를 추가해서 저장하는 게 베스트.
-                    var inst = new EventInstance(def.eventId, day, duration, isHidden: slot.isHidden);
+                    var inst = new EventInstance(def.eventId, day, durationDays, isHidden: slot.isHidden);
 
-                    // ✅ (권장) EventInstance에 revealTickInDay 필드가 있으면 여기서 넣어라:
-                    // inst.revealTickInDay = slot.revealTickInDay;
-                    inst.durationTicks = 60;
+                    // ✅ 캘린더 이벤트만: slot이 정한 공개 tick을 "그대로" 넣는다
+                    inst.revealTickInDay = slot.revealTickInDay;
+
+                    // ✅ ticks-only: durationTicks는 SO값(=def.durationTick)을 사용
+                    inst.durationTicks = def.durationTick > 0 ? def.durationTick : 60;
+
                     result.Add(inst);
                 }
             }
         }
+
+        // ---------------------------
+        // 2) Hidden events: revealTickInDay는 랜덤(= -1로 두고 EventManager가 처리)
+        // ---------------------------
         var hiddenPool = db.events
             .Where(e => e != null && e.canBeHidden)
-            .OrderBy(_ => UnityEngine.Random.value)
+            .OrderBy(_ => Random.value)
             .Take(hiddenCount)
             .ToList();
 
         foreach (var def in hiddenPool)
         {
-            int day = UnityEngine.Random.Range(1, totalDays + 1);
-            result.Add(new EventInstance(def.eventId, day, def.durationTick, isHidden: true));
+            int day = Random.Range(1, totalDays + 1);
+
+            // ✅ 여기 버그였음: durationTick을 durationDays 자리에 넣으면 안 됨
+            var inst = new EventInstance(def.eventId, day, def.durationDays, isHidden: true);
+
+            // ticks-only: durationTicks는 SO값
+            inst.durationTicks = def.durationTick > 0 ? def.durationTick : 60;
+
+            // revealTickInDay는 -1 유지 → EventManager가 랜덤으로 박음
+            // inst.revealTickInDay = -1;
+
+            result.Add(inst);
         }
 
         return result;
     }
-    
-    
-    /// <summary>
-    /// day(1..N)를 월~금으로 매핑. (너 게임이 4일이면 Tue~Fri 같은 식으로 시작 요일을 바꿀 수도 있음)
-    /// </summary>
+
     private static CalendarDayOfWeek ToDow(int day)
     {
-        // 기본: day1=Mon, day2=Tue ... day5=Fri, 그 이후는 반복
-        int idx = (day - 1) % 5;
+        int idx = (day - 1) % 5; // day1=Mon ...
         return (CalendarDayOfWeek)idx;
     }
-    
 }

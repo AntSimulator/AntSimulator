@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public enum CalendarDayOfWeek
 {
-    Mon = 0,
-    Tue = 1,
-    Wed = 2,
-    Thu = 3,
-    Fri = 4
+    Mon = 1,
+    Tue = 2,
+    Wed = 3,
+    Thu = 4,
+    Fri = 5
 }
 
 [Serializable]

@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour
 
     private readonly List<EventInstance> active = new();
 
-    public int ticksPerDay = 300;
+    public int ticksPerDay = 180;
     public int morningTick = 0;
 
     public IReadOnlyList<EventInstance> ActiveEvents => active;
@@ -30,24 +30,39 @@ public class EventManager : MonoBehaviour
         var todayList = runEvents.Where(x => x != null && x.startDay == day).ToList();
         if (todayList.Count == 0) return;
 
-        int morningIdx = UnityEngine.Random.Range(0, todayList.Count);
+        // "랜덤 공개" 이벤트 중 하나를 morningTick에 배치하고 싶으면 유지
+        // (캘린더 고정 이벤트는 제외해야 함)
+        var randomRevealList = todayList.Where(e => e.revealTickInDay < 0).ToList();
+        int morningIdx = (randomRevealList.Count > 0)
+            ? UnityEngine.Random.Range(0, randomRevealList.Count)
+            : -1;
 
         for (int i = 0; i < todayList.Count; i++)
         {
             var inst = todayList[i];
             if (inst == null) continue;
 
-            // ✅ durationTicks가 0이면 durationDays * ticksPerDay로 자동 변환(구 SO 호환)
-            int fallbackTicks = Mathf.Max(1, Mathf.Max(1, ticksPerDay));
-            int durTicks = inst.durationTicks > 0 ? inst.durationTicks : fallbackTicks;
-
+            // ✅ ticks-only: durationTicks만 사용 (SO에서 이미 채워져 있어야 함)
+            int durTicks = inst.durationTicks > 0 ? inst.durationTicks : 60;
             inst.remainingTicks = durTicks;
+
             inst.revealed = false;
             inst.delistApplied = false;
 
-            inst.revealTickInDay = (i == morningIdx)
-                ? morningTick
-                : UnityEngine.Random.Range(0, Mathf.Max(1, ticksPerDay));
+            // ✅ 핵심: 캘린더 이벤트(= revealTickInDay >= 0)는 절대 덮어쓰지 않음
+            if (inst.revealTickInDay < 0)
+            {
+                // 랜덤 공개 이벤트만 morningTick 옵션 적용
+                bool isMorningPick = (morningIdx >= 0 && ReferenceEquals(inst, randomRevealList[morningIdx]));
+                inst.revealTickInDay = isMorningPick
+                    ? Mathf.Clamp(morningTick, 0, Mathf.Max(0, ticksPerDay - 1))
+                    : UnityEngine.Random.Range(0, Mathf.Max(1, ticksPerDay));
+            }
+            else
+            {
+                // 안전 클램프 (slot이 범위 밖이면 고쳐줌)
+                inst.revealTickInDay = Mathf.Clamp(inst.revealTickInDay, 0, Mathf.Max(0, ticksPerDay - 1));
+            }
 
             if (!active.Contains(inst))
                 active.Add(inst);

@@ -24,12 +24,13 @@ public class CalendarPopupController : MonoBehaviour
     public bool allowSkipTypingOnClick = true;
     
     [Header("WED Finance BGM")]
-    public bool enableWedFinanceBgm = true;
-    public string wedGoodEventId;
-    public string wedBadEventId;
+    // public bool enableWedFinanceBgm = true;
+    // public string wedGoodEventId;
+    // public string wedBadEventId;
     public AudioSource bgmSource;                  
-    public AudioClip wedGoodBgm;
-    public AudioClip wedBadBgm;
+    //public AudioClip wedGoodBgm;
+    //public AudioClip wedBadBgm;
+    public AudioClip blep;
 
 
     private Coroutine _co;
@@ -58,8 +59,12 @@ public class CalendarPopupController : MonoBehaviour
 
     public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
     {
+        bgmSource.clip = blep;
+        bgmSource.loop = false;
+        bgmSource.Play();
+        
         _onClosed = onClosed;
-        TryPlayWedFinanceBgm(def, day);
+        //TryPlayWedFinanceBgm(def, day);
         // 1) 팝업 열기
         if (popupManager != null)
             popupManager.Open(popupId);
@@ -207,26 +212,26 @@ public class CalendarPopupController : MonoBehaviour
     {
         Close();
     }
-
-    void TryPlayWedFinanceBgm(EventDefinition def, int day)
-    {
-        if (!enableWedFinanceBgm) return;
-        if (def == null) return;
-        if (day != 2) return;
-        if(bgmSource == null) return;
-
-        // good/bad는 eventId로 판별
-        if (!string.IsNullOrEmpty(wedGoodEventId) && def.eventId == wedGoodEventId && wedGoodBgm != null)
-        {
-            bgmSource.clip = wedGoodBgm;
-            bgmSource.loop = false;
-            bgmSource.Play();
-        }
-        else if (!string.IsNullOrEmpty(wedBadEventId) && def.eventId == wedBadEventId && wedBadBgm != null)
-        {
-            bgmSource.clip = wedBadBgm;
-            bgmSource.loop = false;
-            bgmSource.Play();
-        }
-    }
+    //
+    // void TryPlayWedFinanceBgm(EventDefinition def, int day)
+    // {
+    //     if (!enableWedFinanceBgm) return;
+    //     if (def == null) return;
+    //     if (day != 3) return;
+    //     if(bgmSource == null) return;
+    //
+    //     // good/bad는 eventId로 판별
+    //     if (!string.IsNullOrEmpty(wedGoodEventId) && def.eventId == wedGoodEventId && wedGoodBgm != null)
+    //     {
+    //         bgmSource.clip = wedGoodBgm;
+    //         bgmSource.loop = false;
+    //         bgmSource.Play();
+    //     }
+    //     else if (!string.IsNullOrEmpty(wedBadEventId) && def.eventId == wedBadEventId && wedBadBgm != null)
+    //     {
+    //         bgmSource.clip = wedBadBgm;
+    //         bgmSource.loop = false;
+    //         bgmSource.Play();
+    //     }
+    // }
 }

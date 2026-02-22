@@ -12,7 +12,7 @@ public class GameStateController : MonoBehaviour
     private IGameState currentState;
     public string currentStateName = "";
     public float stateTimer = 0f;
-    public int currentDay = 0;
+    public int currentDay = 1;
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
 
@@ -52,6 +52,7 @@ public class GameStateController : MonoBehaviour
     {
         Application.targetFrameRate = 30;
         seedExporter.WriteSeedOnce();
+        currentDay = 1;
         
         //?? ??? ??? ??? ??? ??
         var runEvents = RunEventGenerator.Generate(

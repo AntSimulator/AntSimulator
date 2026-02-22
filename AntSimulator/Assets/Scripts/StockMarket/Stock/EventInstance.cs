@@ -12,7 +12,7 @@ public class EventInstance
     public int durationTicks;
     //public bool isHidden;
 
-    public int revealTickInDay;
+    public int revealTickInDay = -1;
     public bool revealed;
 
     public bool delistApplied;
@@ -25,7 +25,7 @@ public class EventInstance
         this.remainingDays = durationDays;
         //this.isHidden = isHidden;
         revealed = false;
-        revealTickInDay = 0;
+        revealTickInDay = -1;
         delistApplied = false;
     }
 }
