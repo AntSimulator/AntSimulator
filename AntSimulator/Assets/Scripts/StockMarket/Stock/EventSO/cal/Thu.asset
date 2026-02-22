@@ -23,18 +23,18 @@ MonoBehaviour:
   - goodEventId: MRCX_good
     badEventId: MRCX_bad
     goodChance: 0.5
-    revealTickInDay: 80
+    revealTickInDay: 60
     overrideDurationDays: 1
     isHidden: 0
   - goodEventId: JPTI_good
     badEventId: JPTI_bad
     goodChance: 0.5
-    revealTickInDay: 110
+    revealTickInDay: 120
     overrideDurationDays: 1
     isHidden: 0
   - goodEventId: TSLM_good
     badEventId: TSLM_bad
     goodChance: 0.5
-    revealTickInDay: 140
+    revealTickInDay: 130
     overrideDurationDays: 1
     isHidden: 0
