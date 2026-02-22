@@ -867,13 +867,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IntroManager
   pages:
   - image: {fileID: 21300000, guid: f4de9153b9068184bb0c672ff66ee01a, type: 3}
-    dialogue: "\uB8E8x\uCF54\uC778\uC73C\uB85C \uBD80\uADC0\uC601\uD654\uB97C \uB204\uB838\uB358\uB098,"
+    dialogue: "\uB8E8x\uCF54\uC778\uC73C\uB85C \uBD80\uADC0\uC601\uD654\uB97C \uB204\uB838\uB358
+      \uB098,"
   - image: {fileID: 21300000, guid: 4597163bac213bb4c90cd344eacce483, type: 3}
     dialogue: "\uB8E8X\uCF54\uC778 \uC0AC\uD0DC\uB85C \uC778\uD574 \uCCAD\uC0B0\uC744
       \uB2F9\uD558\uACE0, \uBE5A\uB354\uBBF8\uC5D0 \uC549\uB294\uB2E4\u2026"
   - image: {fileID: 21300000, guid: 0a379f744aa4f6647b4d964a03704d4f, type: 3}
     dialogue: "\uADF8\uB3D9\uC548 \uC0AC\uACE0\uB97C \uD574\uACB0\uD574\uC8FC\uC168\uB358
-      \uBD80\uBAA8\uB2D8 \uB9C8\uC800\uB3C4 \uC774\uC820 \uC9C0\uACA8\uC6B0\uC2DC\uB2E4\uBA70
+      \uBD80\uBAA8\uB2D8\uB9C8\uC800\uB3C4 \uC774\uC820 \uC9C0\uACA8\uC6B0\uC2DC\uB2E4\uBA70
       \uC774\uBBFC\uC744 \uAC00\uC168\uB2E4."
   - image: {fileID: 21300000, guid: 7bd93a19a95b0df4ebcadfa8e096b93d, type: 3}
     dialogue: "\uC6B0\uB9AC\uC9D1\uC740 \uB9E4\uC8FC \uC0AC\uCC44\uC5C5\uC790\uB4E4\uC774
