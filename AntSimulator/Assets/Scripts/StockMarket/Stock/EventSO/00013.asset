@@ -22,7 +22,7 @@ MonoBehaviour:
   targetStockIds: []
   probEffect: 0.2
   isUp: 0
-  depthEffect: 0.0003
+  depthEffect: 0.0002
   durationDays: 5
   durationTick: 90
   delist: 0
