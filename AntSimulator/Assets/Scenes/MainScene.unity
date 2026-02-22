@@ -2084,6 +2084,8 @@ MonoBehaviour:
   eventDatabase: {fileID: 11400000, guid: 0d528906f61c54308b250ab689155d1b, type: 2}
   runRecorder: {fileID: 1049095966}
   market: {fileID: 1049095968}
+  bgmSource: {fileID: 680597180}
+  tickingSound: {fileID: 8300000, guid: 8ff1b9af7e99040e1991d164d4109eea, type: 3}
   seedExporter: {fileID: 1049095961}
   targetDay: 5
   calendarSchedules:
@@ -2273,6 +2275,8 @@ MonoBehaviour:
   contentText: {fileID: 265695005}
   pauseGameWhileOpen: 1
   autoCloseSeconds: 10
+  bgmSource: {fileID: 680597180}
+  blep: {fileID: 8300000, guid: d8b6fdf6e50034c75886bce84438e0b6, type: 3}
 --- !u!114 &1049095979
 MonoBehaviour:
   m_ObjectHideFlags: 0
