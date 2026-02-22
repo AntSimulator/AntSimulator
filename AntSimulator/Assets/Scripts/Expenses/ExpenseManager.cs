@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Banking.Contracts;
 using Banking.Events;
+using Player.Runtime;
 
 namespace Expenses
 {
@@ -13,7 +14,8 @@ namespace Expenses
         [SerializeField] private ExpenseResultChannelSO resultChannel;
         [SerializeField] private TransferRequestChannelSO transferRequestChannel;
         [SerializeField] private TransferResultChannelSO transferResultChannel;
-
+        [SerializeField] private PlayerController playerController;
+        
         private readonly Dictionary<string, ExpenseRuntime> runtimeByKey = new();
         private readonly Dictionary<string, ExpensePaymentCopy> paymentCopyByKey = new();
         private readonly Dictionary<string, Queue<string>> pendingExpenseKeysByAccount = new();
@@ -143,6 +145,8 @@ namespace Expenses
                         success = false,
                         reason = ExpenseFailReason.MissedDeadline
                     });
+                    
+                    playerController.SubtractCash(runtime.totalAmount * 2);
 
                     RemoveFromPendingIndexes(runtime.expenseKey, runtime.accountNumber);
                     Debug.LogWarning(
