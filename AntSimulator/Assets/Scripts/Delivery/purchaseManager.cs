@@ -2,16 +2,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Player.Runtime;
+using Delivery;
 
 public class purchaseManager : MonoBehaviour
 {
     public GameObject purchaseChang; // 인스펙터에서 PurchaseChang 오브젝트
-    public int foodPrice = 230000;   // 음식 구매 가격 23만원
-    
-    
+
     [Header("Refs")]
-    public PlayerController player;  
-    public int healAmount = 10;   
+    public PlayerController player;
+
+    // 현재 선택된 음식 데이터 (OpenPopup 호출 시 설정됨)
+    private DeliverySO currentDeliveryData;
 
     // purchaseChang 안의 본문 Text(TMP)를 캐싱
     private TextMeshProUGUI _bodyText;
@@ -37,9 +38,11 @@ public class purchaseManager : MonoBehaviour
         }
     }
 
-    // 팝업 버튼을 눌렀을 때 호출
-    public void OpenPopup()
+    // 음식 버튼을 눌렀을 때 호출 — 해당 음식의 DeliverySO를 넘겨서 팝업을 연다
+    public void OpenPopup(DeliverySO data)
     {
+        currentDeliveryData = data;
+
         // 팝업을 열 때 원래 텍스트로 복원
         if (_bodyText != null)
             _bodyText.text = _originalBodyText;
@@ -55,17 +58,23 @@ public class purchaseManager : MonoBehaviour
             return;
         }
 
-        if (player.GetCash()<foodPrice)
+        if (currentDeliveryData == null)
+        {
+            Debug.LogError("[purchaseManager] currentDeliveryData is null");
+            return;
+        }
+
+        if (player.GetCash() < currentDeliveryData.price)
         {
             Debug.Log("Not enough cash to purchase food.");
             if (_bodyText != null)
                 _bodyText.text = "돈이 부족합니다...!";
             return;
         }
-        player.SubtractCash(foodPrice);
-        player.AddHp(healAmount);
+        player.SubtractCash(currentDeliveryData.price);
+        player.AddHp(currentDeliveryData.healAmount);
         purchaseChang.SetActive(false);
-        Debug.Log($"{foodPrice}사용 HP + {healAmount}");
+        Debug.Log($"{currentDeliveryData.price}사용 HP + {currentDeliveryData.healAmount}");
     }
 
     // '아니요' 버튼을 눌렀을 때 함수
