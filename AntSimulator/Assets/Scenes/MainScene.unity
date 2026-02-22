@@ -2086,6 +2086,7 @@ MonoBehaviour:
   market: {fileID: 1049095968}
   bgmSource: {fileID: 680597180}
   tickingSound: {fileID: 8300000, guid: 8ff1b9af7e99040e1991d164d4109eea, type: 3}
+  settlemetJazz: {fileID: 8300000, guid: 3ecbaadde3d0047b8a7a7cd0e8b053a1, type: 3}
   seedExporter: {fileID: 1049095961}
   targetDay: 5
   calendarSchedules:
@@ -4022,10 +4023,38 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1049095972}
+    - target: {fileID: 467448665747237864, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467448665747237864, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467448665747237864, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 469561801723064395, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1049095972}
+    - target: {fileID: 1016299942091293340, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016299942091293340, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016299942091293340, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016299942091293340, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1762068009428428602, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
       propertyPath: m_Name
       value: Desktop
@@ -4118,6 +4147,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1049095972}
+    - target: {fileID: 5038184647184680820, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038184647184680820, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038184647184680820, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038184647184680820, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7203376754986366527, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -17,6 +17,7 @@ public class SettlementState : IGameState
     public void Enter()
     {
         gsc.currentStateName = gameStateName;
+        PlayMusic();
         if (gsc.market != null)
         {
             gsc.market.simulateTicks = false;
@@ -50,5 +51,12 @@ public class SettlementState : IGameState
     }
 
     public void Exit() {  }
+
+    public void PlayMusic()
+    {
+        gsc.bgmSource.clip = gsc.settlemetJazz;
+        gsc.bgmSource.loop = false;
+        gsc.bgmSource.Play();
+    }
     
 }
