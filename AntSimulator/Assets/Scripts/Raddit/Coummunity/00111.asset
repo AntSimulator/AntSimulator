@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: 00111
   m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
   eventId: 00111
-  title: "[\uCC0C\uB77C\uC2DC] \"\uAE30\uB984\uAC12\uC774 \uBB3C\uAC12 \uB41C\uB2E4?\"...
-    \uBE44OPEC \uAD6D\uAC00\uB4E4 '\uCE58\uD0A8 \uAC8C\uC784' \uC2DC\uC791\uB41C
-    \uB4EF"
+  title: "[\uCC0C\uB77C\uC2DC] \uD39C\uD0C0\uACE4 \uADF9\uBE44 \uBB38\uAC74 \uC720\uCD9C:
+    \"\uB7EC\uC2DC\uC544\uC0B0 \uC5F0\uB8CC \uC218\uC785 \uAE08\uC9C0\""
   body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"

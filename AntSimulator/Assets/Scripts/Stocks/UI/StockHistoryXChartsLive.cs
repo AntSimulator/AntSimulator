@@ -270,7 +270,7 @@ namespace Stocks.UI
             var zoom = chart.EnsureChartComponent<DataZoom>();
             zoom.enable = true;
             zoom.supportInside = true;
-            zoom.supportInsideDrag = false;
+            zoom.supportInsideDrag = true;
             zoom.supportInsideScroll = true;
             zoom.supportSlider = supportSlider;
             zoom.supportMarquee = false;
@@ -386,7 +386,8 @@ namespace Stocks.UI
             for (int i = 0; i < xLabels.Length; i++)
             {
                 chart.AddXAxisData(xLabels[i]);
-                chart.AddData(0, new[] { ohlc[i].Open, ohlc[i].Close, ohlc[i].Low, ohlc[i].High });
+                // Candlestick tooltip expects [index, open, close, lowest, highest].
+                chart.AddData(0, i, ohlc[i].Open, ohlc[i].Close, ohlc[i].Low, ohlc[i].High);
             }
 
             chart.RefreshChart();
