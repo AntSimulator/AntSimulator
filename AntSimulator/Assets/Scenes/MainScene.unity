@@ -1893,7 +1893,7 @@ MonoBehaviour:
   seedIconColor: '#FFFFFF'
   seedOverrideStocks: 1
   drainHpEnabled: 1
-  drainIntervalSeconds: 4
+  drainIntervalSeconds: 3
   drainAmount: 1
   drainUseUnscaledTime: 0
   gsc: {fileID: 1049095969}
