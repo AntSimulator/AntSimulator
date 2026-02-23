@@ -207,11 +207,6 @@ public class SaveManager : MonoBehaviour
             yield return ScreenFader.Instance.FadeIn();
     }
 
-    public void ExitGame()
-    {
-        Debug.Log("게임 종료");
-        Application.Quit();
-    }
 
     public void StartNewGame(int slotIndex)
     {
