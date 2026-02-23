@@ -2815,8 +2815,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Expenses.ExpenseManager
   gameStateController: {fileID: 1049095969}
   expenseDefinitions:
-  - {fileID: 11400000, guid: 65cb2c64c22c2194dab38ed799d3c3a4, type: 2}
   - {fileID: 11400000, guid: 24eddfd5c50de45e1b2c7d55f416432b, type: 2}
+  - {fileID: 11400000, guid: 65cb2c64c22c2194dab38ed799d3c3a4, type: 2}
   resultChannel: {fileID: 11400000, guid: fbfeed3be68a33e4697bef79a28f2b9b, type: 2}
   transferRequestChannel: {fileID: 11400000, guid: 6cd129c505dc343e292edd3e84a8760a, type: 2}
   transferResultChannel: {fileID: 11400000, guid: 2e834ac73ace3db4ab4f792070c59d19, type: 2}
@@ -2828,7 +2828,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049095960}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4860171e0217cc4f9621f0f25912ec7, type: 3}
   m_Name: 
@@ -5816,6 +5816,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1049095972}
+    - target: {fileID: 7731607980073251734, guid: 07d172ea50eef234694cd3a3f9b13538, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
