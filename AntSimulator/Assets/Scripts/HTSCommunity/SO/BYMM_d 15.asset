@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
-  m_Name: BYMM_u 1
+  m_Name: BYMM_d 15
   m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
   stockId: BYMM
-  direction: 0
-  title: "\uCF69\uACE0\uAE30\uD30C\uB294 \uAE30\uC5C5\uC758 \uC8FC\uC2DD\uC744 \uC9C4\uC9C0\uD558\uAC8C
-    \uC0AC\uB0D0?"
+  direction: 1
+  title: "\uADFC\uB370 \uCF69\uACE0\uAE30\uB294 \uBA39\uC5B4\uBCF4\uACE0 \uB9E4\uC218\uD55C\uAC70\uC784?"
   body: 
