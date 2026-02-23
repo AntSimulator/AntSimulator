@@ -25,8 +25,8 @@ public class CalendarPopupController : MonoBehaviour
     
     [Header("WED Finance BGM")]
     public bool enableWedFinanceBgm = true;
-    public string wedGoodEventId = "Financial_good";
-    public string wedBadEventId = "Financial_bad";
+    public string wedGoodEventId = "Finance_good";
+    public string wedBadEventId = "Finance_bad";
     public AudioSource bgmSource;                  
     public AudioClip wedGoodBgm;
     public AudioClip wedBadBgm;
