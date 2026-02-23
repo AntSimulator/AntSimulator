@@ -22,7 +22,7 @@ MonoBehaviour:
   - MRCX
   probEffect: 0.2
   isUp: 1
-  depthEffect: 0.0001
+  depthEffect: 0.0002
   durationDays: 1
   durationTick: 30
   delist: 0

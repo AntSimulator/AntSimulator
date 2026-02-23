@@ -25,7 +25,7 @@ MonoBehaviour:
   - OKILL
   probEffect: 0.2
   isUp: 1
-  depthEffect: 0.0002
+  depthEffect: 0.00025
   durationDays: 3
   durationTick: 30
   delist: 0
