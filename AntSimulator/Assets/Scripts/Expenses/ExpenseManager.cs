@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using Banking.Contracts;
 using Banking.Events;
 using Player.Runtime;
@@ -15,6 +16,7 @@ namespace Expenses
         [SerializeField] private TransferRequestChannelSO transferRequestChannel;
         [SerializeField] private TransferResultChannelSO transferResultChannel;
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private GameObject MissedPopup;
         
         private readonly Dictionary<string, ExpenseRuntime> runtimeByKey = new();
         private readonly Dictionary<string, ExpensePaymentCopy> paymentCopyByKey = new();
@@ -151,6 +153,15 @@ namespace Expenses
                     RemoveFromPendingIndexes(runtime.expenseKey, runtime.accountNumber);
                     Debug.LogWarning(
                         $"[Expense] Missed deadline expenseId={runtime.expenseId} dueDay={runtime.dueDay} day={day} remaining={runtime.remainingAmount}");
+
+                    if (MissedPopup != null)
+                    {
+                        var tmp = MissedPopup.GetComponentInChildren<TMP_Text>();
+                        if (tmp != null)
+                            tmp.text = $"{runtime.displayName}을 놓쳤습니다...! 벌금 : {runtime.totalAmount * 2}";
+                        
+                        MissedPopup.SetActive(true);
+                    }
                 }
 
                 runtime.resultPublished = true;
