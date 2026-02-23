@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: ALL_u 43
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: 
+  direction: 0
+  title: "\uC0C1\uC2B9\uC7A5\uC5D0\uC11C \uB3C8 \uBC88\uAC70\uB294 \uC2E4\uB825\uC774
+    \uC544\uB2C8\uB77C\uACE0?"
+  body: "\uADFC\uB370 \uD558\uB77D\uC7A5\uC5D0\uC11C \uB3C8 \uC783\uC740\uAC74 \uB0B4
+    \uC2E4\uB825\uC774\uB77C\uB294 \uC18C\uB9AC\uB0D0 \uC9C0\uAE08??????"
