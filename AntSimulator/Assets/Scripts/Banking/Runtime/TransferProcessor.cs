@@ -3,6 +3,7 @@ using Banking.Contracts;
 using Banking.Core;
 using Banking.Events;
 using Banking.UnityAdapter;
+using Expenses;
 
 namespace Banking.Runtime
 {
@@ -14,6 +15,9 @@ namespace Banking.Runtime
         [Header("Event Channels")]
         [SerializeField] private TransferRequestChannelSO requestChannel;
         [SerializeField] private TransferResultChannelSO resultChannel;
+
+        [Header("Dependencies")]
+        [SerializeField] private ExpenseManager expenseManager;
 
         [Header("Player Money Target")]
         [Tooltip("현금을 보관하는 컴포넌트(대개 PlayerController).")]
@@ -47,77 +51,94 @@ namespace Banking.Runtime
 
         private void HandleTransferRequest(TransferRequest req)
         {
-            var preCheck = TransferProcessUseCase.Evaluate(
-                req,
-                long.MaxValue,
-                enforceAccountLength16,
-                accountLength);
-
-            if (!preCheck.Result.success)
+            try
             {
-                if (preCheck.Result.reason == TransferFailReason.InvalidAccount)
+                var preCheck = TransferProcessUseCase.Evaluate(
+                    req,
+                    long.MaxValue,
+                    enforceAccountLength16,
+                    accountLength);
+
+                if (!preCheck.Result.success)
                 {
-                    var toAcc = req.toAccount ?? string.Empty;
-                    Debug.LogWarning($"[Transfer] Reject: InvalidAccount (len={toAcc.Length}) correlationId={req.correlationId}");
-                    wrongNumberpopup.SetActive(true);
-                    if (TransferPanel != null)
+                    if (preCheck.Result.reason == TransferFailReason.InvalidAccount)
                     {
-                        var body = TransferPanel.transform.Find("Body");
-                        if (body != null) body.gameObject.SetActive(false);
+                        var toAcc = req.toAccount ?? string.Empty;
+                        Debug.LogWarning($"[Transfer] Reject: InvalidAccount (len={toAcc.Length}) correlationId={req.correlationId}");
+                        wrongNumberpopup.SetActive(true);
+                        if (TransferPanel != null)
+                        {
+                            var body = TransferPanel.transform.Find("Body");
+                            if (body != null) body.gameObject.SetActive(false);
+                        }
                     }
+                    else if (preCheck.Result.reason == TransferFailReason.InvalidAmount)
+                    {
+                        Debug.LogWarning($"[Transfer] Reject: InvalidAmount amount={req.amount} correlationId={req.correlationId}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[Transfer] Reject: {preCheck.Result.reason} correlationId={req.correlationId}");
+                    }
+
+                    resultChannel?.Raise(preCheck.Result);
+                    return;
                 }
-                else if (preCheck.Result.reason == TransferFailReason.InvalidAmount)
+
+                if (playerMoneyComponent == null)
                 {
-                    Debug.LogWarning($"[Transfer] Reject: InvalidAmount amount={req.amount} correlationId={req.correlationId}");
+                    Debug.LogError("[Transfer] playerMoneyComponent is not assigned.");
+                    RaiseSystemErrorResult(req, "playerMoneyComponent is not assigned.");
+                    return;
                 }
-                else
+
+                if (!ReflectionCashAccessor.TryGetCash(playerMoneyComponent, cashMemberName, out var currentCash))
                 {
-                    Debug.LogWarning($"[Transfer] Reject: {preCheck.Result.reason} correlationId={req.correlationId}");
+                    Debug.LogError($"[Transfer] Cannot read cash member '{cashMemberName}' from {playerMoneyComponent.GetType().Name}.");
+                    RaiseSystemErrorResult(req, $"Cannot read cash member '{cashMemberName}'.");
+                    return;
                 }
 
-                resultChannel?.Raise(preCheck.Result);
-                return;
-            }
+                var decision = TransferProcessUseCase.Evaluate(
+                    req,
+                    currentCash,
+                    enforceAccountLength16,
+                    accountLength);
 
-            if (playerMoneyComponent == null)
-            {
-                Debug.LogError("[Transfer] playerMoneyComponent is not assigned.");
-                RaiseSystemErrorResult(req, "playerMoneyComponent is not assigned.");
-                return;
-            }
+                if (!decision.Result.success)
+                {
+                    Debug.LogWarning($"[Transfer] Reject: InsufficientFunds cash={currentCash} amount={req.amount} correlationId={req.correlationId}");
+                    resultChannel?.Raise(decision.Result);
+                    return;
+                }
 
-            if (!ReflectionCashAccessor.TryGetCash(playerMoneyComponent, cashMemberName, out var currentCash))
-            {
-                Debug.LogError($"[Transfer] Cannot read cash member '{cashMemberName}' from {playerMoneyComponent.GetType().Name}.");
-                RaiseSystemErrorResult(req, $"Cannot read cash member '{cashMemberName}'.");
-                return;
-            }
+                if (!ReflectionCashAccessor.TrySetCash(playerMoneyComponent, cashMemberName, decision.NextCash))
+                {
+                    Debug.LogError($"[Transfer] Cannot write cash member '{cashMemberName}' to {playerMoneyComponent.GetType().Name}.");
+                    RaiseSystemErrorResult(req, $"Cannot write cash member '{cashMemberName}'.");
+                    return;
+                }
 
-            var decision = TransferProcessUseCase.Evaluate(
-                req,
-                currentCash,
-                enforceAccountLength16,
-                accountLength);
+                Debug.Log(
+                    $"[Transfer] Approved: cash {currentCash} -> {decision.NextCash}, " +
+                    $"to={req.toAccount}, amount={req.amount}, correlationId={req.correlationId}");
 
-            if (!decision.Result.success)
-            {
-                Debug.LogWarning($"[Transfer] Reject: InsufficientFunds cash={currentCash} amount={req.amount} correlationId={req.correlationId}");
                 resultChannel?.Raise(decision.Result);
-                return;
             }
-
-            if (!ReflectionCashAccessor.TrySetCash(playerMoneyComponent, cashMemberName, decision.NextCash))
+            finally
             {
-                Debug.LogError($"[Transfer] Cannot write cash member '{cashMemberName}' to {playerMoneyComponent.GetType().Name}.");
-                RaiseSystemErrorResult(req, $"Cannot write cash member '{cashMemberName}'.");
+                TryResolveDueExpenses();
+            }
+        }
+
+        private void TryResolveDueExpenses()
+        {
+            if (expenseManager == null)
+            {
                 return;
             }
 
-            Debug.Log(
-                $"[Transfer] Approved: cash {currentCash} -> {decision.NextCash}, " +
-                $"to={req.toAccount}, amount={req.amount}, correlationId={req.correlationId}");
-
-            resultChannel?.Raise(decision.Result);
+            expenseManager.ResolveDueExpenses();
         }
 
         private void RaiseSystemErrorResult(TransferRequest req, string message)

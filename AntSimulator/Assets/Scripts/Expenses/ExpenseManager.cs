@@ -117,12 +117,21 @@ namespace Expenses
             ResolveDueExpenses(day);
         }
 
+        public void ResolveDueExpenses()
+        {
+            if (currentDay < 0)
+            {
+                currentDay = gameStateController != null ? gameStateController.currentDay : 1;
+            }
+
+            ResolveDueExpenses(currentDay);
+        }
+
         private void ResolveDueExpenses(int day)
         {
             foreach (var runtime in runtimeByKey.Values)
             {
                 if (runtime.resultPublished) continue;
-                if (runtime.dueDay > day) continue;
 
                 if (runtime.remainingAmount <= 0)
                 {
@@ -134,9 +143,20 @@ namespace Expenses
                         success = true,
                         reason = ExpenseFailReason.None
                     });
+                    
+                    if (MissedPopup != null)
+                    {
+                        var tmp = MissedPopup.GetComponentInChildren<TMP_Text>();
+                        if (tmp != null)
+                            tmp.text = $"{runtime.displayName}를 제때 납부했습니다!";
+                        
+                        MissedPopup.SetActive(true);
+                    }
 
                     Debug.Log($"[Expense] Settled expenseId={runtime.expenseId} dueDay={runtime.dueDay} day={day}");
                 }
+                
+                else if (runtime.dueDay > day) continue;
                 else
                 {
                     PublishResult(new ExpenseResult
@@ -148,7 +168,7 @@ namespace Expenses
                         reason = ExpenseFailReason.MissedDeadline
                     });
                     
-                    playerController.SubtractCash(runtime.totalAmount * 2);
+                    playerController.SubtractCash(runtime.remainingAmount * 2);
 
                     RemoveFromPendingIndexes(runtime.expenseKey, runtime.accountNumber);
                     Debug.LogWarning(
@@ -158,7 +178,7 @@ namespace Expenses
                     {
                         var tmp = MissedPopup.GetComponentInChildren<TMP_Text>();
                         if (tmp != null)
-                            tmp.text = $"{runtime.displayName}을 놓쳤습니다...! 벌금 : {runtime.totalAmount * 2}";
+                            tmp.text = $"{runtime.displayName}을 놓쳤습니다...! 벌금 : {runtime.remainingAmount * 2}";
                         
                         MissedPopup.SetActive(true);
                     }
