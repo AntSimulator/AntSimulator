@@ -465,9 +465,8 @@ namespace Player.UI
 
             if (row.quantityText != null)
             {
-                row.quantityText.text = row.profitRateText != null
-                    ? $"보유수량: {quantity:N0}"
-                    : $"수량: {quantity:N0} | 손익: {profitRate:+0.00;-0.00;0.00}%";
+                row.quantityText.text =
+                    $"평가금: {stockEvaluation:N0} | 수량: {quantity:N0} | 평균가: {avgBuyPrice:N2} | 손익: {profitRate:+0.00;-0.00;0.00}%";
             }
 
             if (row.avgBuyPriceText != null)
