@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: JPTI
   sector: 1
   displayName: "\uC9DC\uD30C\uAC8C\uB9AC \uCEF4\uD4E8\uD130"
+  icon: {fileID: -7170388028016907480, guid: ee79fb9ac0a125449b574387827138b8, type: 3}
   floatShares: 50000000
   avgDailyVolume: 500000
   noiseScale: 3

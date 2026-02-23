@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: MIVE
   sector: 0
   displayName: "\uC7A5\uC218\uB9D0\uBC8C"
+  icon: {fileID: -1953950970442036023, guid: 483e0b102d2b30b4e97e89b9b48790b5, type: 3}
   floatShares: 200000000
   avgDailyVolume: 1500000
   noiseScale: 1

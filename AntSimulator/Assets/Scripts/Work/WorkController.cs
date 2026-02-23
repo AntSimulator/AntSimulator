@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Player.Runtime;
 using UnityEngine;
@@ -8,13 +9,11 @@ namespace Work
 {
     public class WorkController : MonoBehaviour
     {
-        private const float PreMarketDurationSeconds = 10f;
-        private const float MarketOpenDurationSeconds = 150f;
+        private const float WorkTickIntervalSeconds = 0.1f; // 10 ticks per second
 
         [Serializable]
         public class WorkOption
         {
-            [Min(0f)] public float timeToPassSeconds = 10f;
             [Min(0)] public long rewardCash = 10000;
         }
 
@@ -26,6 +25,9 @@ namespace Work
         [Header("Work Options")]
         [SerializeField] private List<WorkOption> workOptions = new();
         [SerializeField, Min(0)] private int selectedWorkIndex;
+        private WaitForSecondsRealtime fastForwardWait;
+        private Coroutine fastForwardCoroutine;
+        private bool isFastForwarding;
 
         private void Reset()
         {
@@ -45,6 +47,8 @@ namespace Work
             {
                 playerController = FindFirstObjectByType<PlayerController>();
             }
+
+            fastForwardWait = new WaitForSecondsRealtime(WorkTickIntervalSeconds);
         }
 
         private void OnEnable()
@@ -60,6 +64,13 @@ namespace Work
             if (workButton != null)
             {
                 workButton.onClick.RemoveListener(HandleWorkButtonClicked);
+            }
+
+            if (fastForwardCoroutine != null)
+            {
+                StopCoroutine(fastForwardCoroutine);
+                fastForwardCoroutine = null;
+                isFastForwarding = false;
             }
         }
 
@@ -89,17 +100,16 @@ namespace Work
                 return;
             }
 
-            if (gameStateController != null)
+            if (gameStateController == null)
             {
-                if (option.timeToPassSeconds == 0f)
-                {
-                    gameStateController.ChangeState(new SettlementState(gameStateController));
-                }
-                else if (option.timeToPassSeconds > 0f)
-                {
-                    gameStateController.stateTimer += option.timeToPassSeconds;
-                    TryChangeStateByElapsedTime();
-                }
+                Debug.LogWarning("[Work] GameStateController is missing.");
+                return;
+            }
+
+            if (isFastForwarding)
+            {
+                Debug.LogWarning("[Work] Fast-forward is already running.");
+                return;
             }
 
             if (playerController != null && option.rewardCash > 0)
@@ -107,28 +117,57 @@ namespace Work
                 playerController.Cash += option.rewardCash;
             }
 
-            Debug.Log(
-                $"[Work] index={index} time+={option.timeToPassSeconds:F1}s reward+={option.rewardCash} cash={playerController?.Cash ?? 0}");
+            fastForwardCoroutine = StartCoroutine(FastForwardToSettlement());
+
+            Debug.Log($"[Work] index={index} reward+={option.rewardCash} cash={playerController?.Cash ?? 0}");
         }
 
-        private void TryChangeStateByElapsedTime()
+        private IEnumerator FastForwardToSettlement()
         {
-            if (gameStateController == null)
-            {
-                return;
-            }
+            isFastForwarding = true;
+            int startDay = gameStateController.currentDay;
 
-            if (gameStateController.currentStateName == "PreMarketState" &&
-                gameStateController.stateTimer >= PreMarketDurationSeconds)
+            try
             {
-                gameStateController.ChangeState(new MarketOpenState(gameStateController));
-                return;
-            }
+                while (gameStateController != null &&
+                       gameStateController.currentDay == startDay &&
+                       gameStateController.currentStateName != "SettlementState")
+                {
+                    if (gameStateController.market == null)
+                    {
+                        Debug.LogWarning("[Work] MarketSimulator is missing.");
+                        yield break;
+                    }
 
-            if (gameStateController.currentStateName == "MarketOpenState" &&
-                gameStateController.stateTimer >= MarketOpenDurationSeconds)
+                    if (gameStateController.currentStateName == "PreMarketState")
+                    {
+                        gameStateController.ChangeState(new MarketOpenState(gameStateController));
+                        gameStateController.market.simulateTicks = false;
+                        continue;
+                    }
+
+                    if (gameStateController.currentStateName != "MarketOpenState")
+                    {
+                        Debug.LogWarning($"[Work] Fast-forward aborted in state={gameStateController.currentStateName}");
+                        yield break;
+                    }
+
+                    gameStateController.market.simulateTicks = false;
+                    gameStateController.market.TickOnce();
+
+                    if (gameStateController.market.IsDayTickFinished)
+                    {
+                        gameStateController.ChangeState(new SettlementState(gameStateController));
+                        break;
+                    }
+
+                    yield return fastForwardWait;
+                }
+            }
+            finally
             {
-                gameStateController.ChangeState(new SettlementState(gameStateController));
+                fastForwardCoroutine = null;
+                isFastForwarding = false;
             }
         }
     }

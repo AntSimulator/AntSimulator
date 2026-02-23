@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: PPAP
   sector: 1
   displayName: "\uD30C\uC778\uC560\uD50C"
+  icon: {fileID: 2114797429667742674, guid: e44e2e7f86866454283207619547e165, type: 3}
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1
