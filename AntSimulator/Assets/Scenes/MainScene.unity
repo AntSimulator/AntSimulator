@@ -1733,7 +1733,7 @@ MonoBehaviour:
   seedDefaultPrice: 1000
   buyButton: {fileID: 1367772931}
   sellButton: {fileID: 1367772930}
-  startHp: 100
+  startHp: 1000
   maxHp: 100
   applySeedOnStart: 1
   seedStockDefinitions: []
