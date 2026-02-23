@@ -1734,7 +1734,7 @@ MonoBehaviour:
   buyButton: {fileID: 1367772931}
   sellButton: {fileID: 1367772930}
   startHp: 1000
-  maxHp: 100
+  maxHp: 1000
   applySeedOnStart: 1
   seedStockDefinitions: []
   marketSimulator: {fileID: 1049095968}
