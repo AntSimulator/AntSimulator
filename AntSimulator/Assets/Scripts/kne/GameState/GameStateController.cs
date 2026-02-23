@@ -24,6 +24,7 @@ public class GameStateController : MonoBehaviour
     public AudioSource bgmSource;
     public AudioClip tickingSound;
     public AudioClip settlemetJazz;
+    public AudioClip marketOpenDing;
 
     public System.Action<int> OnDayStarted;
 
