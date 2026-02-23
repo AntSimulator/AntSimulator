@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
+  m_Name: 20504
+  m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
+  eventId: 20504
+  title: 
+  description: "[\uB2E8\uB3C5] \"\uC591\uC790\uCEF4\uD4E8\uD130\uB85C \uBE44\uD2B8\uCF54\uC778\uC744?\"
+    \uC9DC\uD30C\uAC8C\uB9AC, \uB72C\uAE08\uC5C6\uB294 '\uCD08\uACE0\uC18D \uCC44\uAD74
+    \uC804\uC6A9 \uC11C\uBC84' \uCD9C\uC2DC \uC784\uBC15... \uC8FC\uC8FC\uB4E4 \"\uC81C\uC815\uC2E0\uC774\uB0D0\""
+  scope: 2
+  sector: 1
+  targetStockIds:
+  - JPTI
+  probEffect: 0.2
+  isUp: 1
+  depthEffect: 0.2
+  durationDays: 1
+  durationTick: 2
+  delist: 0
+  delistStockIds: []
+  canBeCalendarEvent: 0
+  canBeHidden: 1
+  allowRepeatInRun: 0
+  kind: 0

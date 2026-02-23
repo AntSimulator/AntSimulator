@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: WMWT
   sector: 3
   displayName: "\uC648\uB9C8\uD2B8"
+  icon: {fileID: 7335381650193962518, guid: de793d08def517042955e5ab3ed1738b, type: 3}
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1

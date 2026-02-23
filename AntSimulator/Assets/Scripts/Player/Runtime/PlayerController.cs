@@ -73,6 +73,8 @@ namespace Player.Runtime
         [Header("UI")]
         public GameStateController gsc;
         public GameObject timeEndPannel;
+
+        [SerializeField] private GameObject popup_StocksAllSold;
         
 
         private void OnEnable()
@@ -615,6 +617,7 @@ namespace Player.Runtime
                 {
                     Debug.Log($"[Player] 강제 청산: {stockId} x{quantity} @ {price}");
                     anySold = true;
+                    popup_StocksAllSold.SetActive(true);
                 }
                 else
                 {

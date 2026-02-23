@@ -2562,7 +2562,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBD80\uCC44 : 4,000,000"
+  m_text: "\uBD80\uCC44 : 4,000,000\uC6D0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7894b2cf6b8085541bd03732c6ad09ce, type: 2}
   m_sharedMaterial: {fileID: -8553668443208238482, guid: 7894b2cf6b8085541bd03732c6ad09ce, type: 2}

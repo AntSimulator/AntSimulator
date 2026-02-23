@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: OKILL
   sector: 4
   displayName: "\uC624\uD0AC\uB7EC"
+  icon: {fileID: -5082364678102125542, guid: 87db6092cb3aeda45bba6c5864b3e21e, type: 3}
   floatShares: 200000000
   avgDailyVolume: 1500000
   noiseScale: 1

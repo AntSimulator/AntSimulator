@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: ALL_d 73
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: 
+  direction: 1
+  title: "\uBB3C\uD0C0\uAE30 <~ \uC774\uAC70 \u3139\u3147 \uAC4D \uC0AC\uAE30\uC600\uB124?"
+  body: "\uCE68\uB300\uC5D0 \uB204\uC6CC\uC11C \uC798 \uC0DD\uAC01\uD574\uBCF4\uB2C8\uAE4C
+    \uADF8\uB0E5 \uBB36\uC774\uB294 \uB3C8 \uC561\uC218\uB9CC \uCEE4\uC9C0\uB294
+    \uAC70\uC600\uB124 \u314B\u314B\u314B \uBCF4\uC774\uC2A4\uD53C\uC2F1 \uC911\uC5D0
+    200\uB9CC \uC0AC\uAE30 \uB2F9\uD588\uB294\uB370 \uD53C\uC2F1\uBC94\uC774 200\uB9CC\uC6D0
+    \uB354 \uC8FC\uBA74 \uB3C8 \uB3CC\uB824\uC8FC\uACA0\uC2B5\uB2C8\uB2E4 \uD558\uB294\uAC70\uB791
+    \uB611\uAC19\uC796\uC544"

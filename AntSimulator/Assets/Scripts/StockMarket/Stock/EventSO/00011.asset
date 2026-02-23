@@ -22,9 +22,9 @@ MonoBehaviour:
   targetStockIds: []
   probEffect: 0.2
   isUp: 0
-  depthEffect: 0.00005
+  depthEffect: 0.00025
   durationDays: 3
-  durationTick: 90
+  durationTick: 30
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 0

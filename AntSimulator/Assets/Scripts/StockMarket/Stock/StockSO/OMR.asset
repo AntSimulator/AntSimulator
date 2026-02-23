@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: OMR
   sector: 4
   displayName: "\uC62C\uB4DC\uC2A4\uCF00\uC77C\uD30C\uC6CC"
+  icon: {fileID: 7224078916553593231, guid: 99b0d3ce3cbfa7941bc651e4bd6f4545, type: 3}
   floatShares: 50000000
   avgDailyVolume: 500000
   noiseScale: 1

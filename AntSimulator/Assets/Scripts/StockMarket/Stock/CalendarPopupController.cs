@@ -25,11 +25,12 @@ public class CalendarPopupController : MonoBehaviour
     
     [Header("WED Finance BGM")]
     public bool enableWedFinanceBgm = true;
-    public string wedGoodEventId;
-    public string wedBadEventId;
+    public string wedGoodEventId = "Finance_good";
+    public string wedBadEventId = "Finance_bad";
     public AudioSource bgmSource;                  
     public AudioClip wedGoodBgm;
     public AudioClip wedBadBgm;
+    public AudioClip blep;
 
 
     private Coroutine _co;
@@ -59,7 +60,17 @@ public class CalendarPopupController : MonoBehaviour
     public void Show(EventPresentationSO pres, EventDefinition def, int day, int tick, Action onClosed)
     {
         _onClosed = onClosed;
-        TryPlayWedFinanceBgm(def, day);
+        if (bgmSource != null && blep != null)
+        {
+            bgmSource.Stop();
+            bgmSource.clip = blep;
+            bgmSource.loop = false;
+            bgmSource.Play();
+
+        }
+
+        StartCoroutine(PlayWedBgmAfterBlepCo(def, day));
+        //TryPlayWedFinanceBgm(def, day);
         // 1) 팝업 열기
         if (popupManager != null)
             popupManager.Open(popupId);
@@ -182,6 +193,12 @@ public class CalendarPopupController : MonoBehaviour
             StopCoroutine(_co);
             _co = null;
         }
+
+        if (_bgmCo != null)
+        {
+            StopCoroutine(_bgmCo);
+            _bgmCo = null;
+        } 
         
         if(bgmSource != null && bgmSource.isPlaying)
             bgmSource.Stop();
@@ -207,14 +224,14 @@ public class CalendarPopupController : MonoBehaviour
     {
         Close();
     }
-
+    
     void TryPlayWedFinanceBgm(EventDefinition def, int day)
     {
         if (!enableWedFinanceBgm) return;
         if (def == null) return;
-        if (day != 2) return;
+        if (day != 3) return;
         if(bgmSource == null) return;
-
+    
         // good/bad는 eventId로 판별
         if (!string.IsNullOrEmpty(wedGoodEventId) && def.eventId == wedGoodEventId && wedGoodBgm != null)
         {
@@ -228,5 +245,36 @@ public class CalendarPopupController : MonoBehaviour
             bgmSource.loop = false;
             bgmSource.Play();
         }
+    }
+    private Coroutine _bgmCo;
+
+    IEnumerator PlayWedBgmAfterBlepCo(EventDefinition def, int day)
+    {
+        // 기존 BGM 예약 코루틴 있으면 중복 방지
+        if (_bgmCo != null) StopCoroutine(_bgmCo);
+        _bgmCo = StartCoroutine(_PlayWedBgmAfterBlepCo(def, day));
+        yield break;
+    }
+
+    IEnumerator _PlayWedBgmAfterBlepCo(EventDefinition def, int day)
+    {
+        if (!enableWedFinanceBgm) yield break;
+        if (def == null) yield break;
+
+        // ✅ 너희 기준에서 "수요일"이 day==3 맞으면 그대로, 아니면 여기만 바꿔
+        if (day != 3) yield break;
+
+        if (bgmSource == null) yield break;
+
+        // blep 길이만큼 기다림 (timescale 0이어도 돌아야 함)
+        float wait = (blep != null) ? blep.length : 0f;
+        if (wait > 0f)
+            yield return new WaitForSecondsRealtime(wait);
+
+        // 이미 팝업이 닫혔으면 재생하지 않기
+        if (!_isOpen) yield break;
+
+        // 이제 wedBGM 선택 재생
+        TryPlayWedFinanceBgm(def, day);
     }
 }

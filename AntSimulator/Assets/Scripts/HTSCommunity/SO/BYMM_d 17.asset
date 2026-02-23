@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: BYMM_d 17
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: BYMM
+  direction: 1
+  title: "\uC18C\uC561\uC73C\uB85C \uB2E8\uD0C0\uCE58\uB2E4\uAC00 \uB2E4\uB978\uAC70
+    \uD558\uB2E4 \uBD24\uB354\uB2C8 -40\uCC0D\uC5C8\uB2E4"
+  body: 

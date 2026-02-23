@@ -29,6 +29,8 @@ namespace Stocks.UI
 
             if (iconImage != null)
             {
+                if (item != null && item.icon != null)
+                    iconImage.sprite = item.icon;
                 iconImage.color = iconColor;
                 iconImage.enabled = true;
             }

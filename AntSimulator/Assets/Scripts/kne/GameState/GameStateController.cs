@@ -12,7 +12,7 @@ public class GameStateController : MonoBehaviour
     private IGameState currentState;
     public string currentStateName = "";
     public float stateTimer = 0f;
-    public int currentDay = 0;
+    public int currentDay = 1;
     public CalendarManager calendarUI;
     public TextMeshProUGUI stateInfoText;
 
@@ -24,6 +24,7 @@ public class GameStateController : MonoBehaviour
     public AudioSource bgmSource;
     public AudioClip tickingSound;
     public AudioClip settlemetJazz;
+    public AudioClip marketOpenDing;
 
     public System.Action<int> OnDayStarted;
 
@@ -32,7 +33,7 @@ public class GameStateController : MonoBehaviour
 
     [Header("Ending Settings")]
     public int targetDay = 5;
-    private long targetCash = 4000000;
+    private long targetCash = 4500000;
     private long ecurrentCash = 0;
     private PlayerController _endingPlayer;
 
@@ -47,11 +48,16 @@ public class GameStateController : MonoBehaviour
     [Header("Settlement-off list")]
     public List<MonoBehaviour> settlementOffControllers = new List<MonoBehaviour>();
 
+    [SerializeField] private int ticksPerDay = 180;
 
     void Start()
     {
         Application.targetFrameRate = 30;
         seedExporter.WriteSeedOnce();
+        currentDay = 1;
+        
+        if (eventManager != null) eventManager.ticksPerDay = ticksPerDay;
+        if (market != null) market.ticksPerDay = ticksPerDay;
         
         //?? ??? ??? ??? ??? ??
         var runEvents = RunEventGenerator.Generate(
@@ -62,7 +68,7 @@ public class GameStateController : MonoBehaviour
 
         //??? ??? ??? + day 1 ?? ??
         eventManager.Init(runEvents);
-        eventManager.OnDayStarted(currentDay);
+        //eventManager.OnDayStarted(currentDay);
 
         // ?? ??
         runRecorder.totalDays = targetDay;
@@ -73,10 +79,23 @@ public class GameStateController : MonoBehaviour
         calendarUI?.HighLightToday(currentDay);
         
         // ?? ???? Day start ?? ?? 
-        OnDayStarted?.Invoke(currentDay);
+        //OnDayStarted?.Invoke(currentDay);
+        FireDayStarted();
         
         _endingPlayer = FindObjectOfType<PlayerController>();
 
+    }
+    
+    private void FireDayStarted()
+    {
+        // 1) 이벤트 매니저 먼저 (active 세팅)
+        if (eventManager != null)
+            eventManager.OnDayStarted(currentDay);
+
+        // 2) 나머지 시스템 (마켓 tickInDay=0, 커뮤니티 등)
+        OnDayStarted?.Invoke(currentDay);
+
+        Debug.Log($"[DAY START] day={currentDay}");
     }
 
     // Update is called once per frame
@@ -122,10 +141,10 @@ public class GameStateController : MonoBehaviour
         }
 
         // ??? ? ?? ??
-        eventManager.OnDayStarted(currentDay);
+        //eventManager.OnDayStarted(currentDay);
 
-        OnDayStarted?.Invoke(currentDay);
-
+        //OnDayStarted?.Invoke(currentDay);
+        FireDayStarted();
         Debug.Log("?????? ????????????! ????: " + currentDay + "??");
     }
 

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc15b5106db9481baec5d1c1b0288a9, type: 3}
+  m_Name: 20503
+  m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
+  eventId: 20503
+  title: "\"\uC591\uC790(Quantum)\uBCF4\uB2E4 \uD604\uAE08\uC774 \uAE09\uD558\uB2E4?\"
+    \uC9DC\uD30C\uAC8C\uB9AC, \uB0B4\uC77C '\uC218\uC775\uC131 \uAC1C\uC120' \uC704\uD55C
+    \uCDA9\uACA9\uC801 \uC2E0\uC0AC\uC5C5 \uBC1C\uD45C \uC608\uACE0"
+  body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"

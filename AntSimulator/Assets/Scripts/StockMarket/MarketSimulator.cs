@@ -18,6 +18,8 @@ public class MarketSimulator : MonoBehaviour
     private float timer;
 
     private int tickInDay = 0;
+    public int CurrentTickInDay => tickInDay;
+    public bool IsDayTickFinished => tickInDay >= Mathf.Max(1, ticksPerDay);
 
     public EventManager eventManager;
     public StockHistoryExporter historyExporter;
@@ -156,7 +158,7 @@ public class MarketSimulator : MonoBehaviour
 
         float change = UnityEngine.Random.Range(0f, maxChange);
         stock.currentPrice *= isUp ? (1f + change) : (1f - change);
-        if (stock.currentPrice < def.basePrice*0.1) stock.currentPrice = def.basePrice*0.1f;
+        if (stock.currentPrice < def.basePrice*0.05) stock.currentPrice = def.basePrice*0.05f;
     }
 
     private void HandleDayStarted(int day)

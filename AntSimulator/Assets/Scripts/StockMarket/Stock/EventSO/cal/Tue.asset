@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2839ba7ad34514e33877f99a6b72c3af, type: 3}
   m_Name: Tue
   m_EditorClassIdentifier: Assembly-CSharp::CalendarDayScheduleSO
-  dayOfWeek: 1
+  dayOfWeek: 2
   slots:
   - goodEventId: SYSP_good
     badEventId: SYSP_bad
