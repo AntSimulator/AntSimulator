@@ -23,6 +23,7 @@ public class MarketOpenState : IGameState
             gsc.market.allowEventReveal = true;
             gsc.market.simulateTicks = true;
         }
+        gsc.bgmSource.PlayOneShot(gsc.marketOpenDing);
         lastDisplayedSec = -1;
     }
 

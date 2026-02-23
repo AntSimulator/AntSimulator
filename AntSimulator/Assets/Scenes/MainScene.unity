@@ -3054,6 +3054,7 @@ MonoBehaviour:
   bgmSource: {fileID: 680597180}
   tickingSound: {fileID: 8300000, guid: 8ff1b9af7e99040e1991d164d4109eea, type: 3}
   settlemetJazz: {fileID: 8300000, guid: 3ecbaadde3d0047b8a7a7cd0e8b053a1, type: 3}
+  marketOpenDing: {fileID: 8300000, guid: f42f2876b260c44628b0273ba66f0df3, type: 3}
   seedExporter: {fileID: 1049095961}
   targetDay: 5
   calendarSchedules:
