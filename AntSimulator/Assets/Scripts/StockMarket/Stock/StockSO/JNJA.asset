@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: JNJA
   sector: 6
   displayName: Johnson & Jason
+  icon: {fileID: -3138190333766880443, guid: c7ea57a98536edf46af2c21212909e28, type: 3}
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1

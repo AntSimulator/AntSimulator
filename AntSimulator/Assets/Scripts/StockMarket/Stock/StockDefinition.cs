@@ -35,10 +35,11 @@ public class StockDefinition : ScriptableObject
     [Header("Community Sensitivity (per-stock)")]
     public float communitySensitivity = 1.0f; // 급등락/거래량 폭발 시 글이 얼마나 늘어나는지
 
-    [Header("기본 정보")] 
+    [Header("기본 정보")]
     public string stockId;
     public Sector sector;
     public string displayName;
+    public Sprite icon;
     public float floatShares;
     public long avgDailyVolume;
     public float noiseScale = 1f;

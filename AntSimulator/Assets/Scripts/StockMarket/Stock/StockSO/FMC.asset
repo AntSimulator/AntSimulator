@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: FMC
   sector: 0
   displayName: "\uC5D0\uD504\uC5E0\uC528\uC5D4\uD130"
+  icon: {fileID: -2066561408196641359, guid: a0080e393be96d34bae10dee8bf5d86c, type: 3}
   floatShares: 50000000
   avgDailyVolume: 500000
   noiseScale: 1

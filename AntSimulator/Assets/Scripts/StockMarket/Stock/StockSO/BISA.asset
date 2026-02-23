@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: BISA
   sector: 5
   displayName: "\uBE44\uC790"
+  icon: {fileID: 4599599452946507921, guid: f3b8f00c5833bd144b4bdb76c0d220bd, type: 3}
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1

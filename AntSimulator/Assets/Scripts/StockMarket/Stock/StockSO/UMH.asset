@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: UMH
   sector: 2
   displayName: "\uC720\uB2C8\uD2F0\uB4DC \uD5EC\uC2A4"
+  icon: {fileID: -2032214410684628000, guid: eef5b5c8fda29ba4685ba510be9d5688, type: 3}
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1

@@ -62,6 +62,7 @@ namespace Stocks.Models
                     code = code,
                     name = displayName,
                     iconColor = defaultIconColor,
+                    icon = def.icon,
                     amount = Mathf.Max(0, defaultAmount),
                     price = price
                 });

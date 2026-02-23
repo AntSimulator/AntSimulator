@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: TSLM
   sector: 1
   displayName: "\uD2F0\uC2AC\uB77C"
+  icon: {fileID: 6226689412258632472, guid: 775c3d586d7ea7143b2ef953daf96f23, type: 3}
   floatShares: 600000000
   avgDailyVolume: 4000000
   noiseScale: 1

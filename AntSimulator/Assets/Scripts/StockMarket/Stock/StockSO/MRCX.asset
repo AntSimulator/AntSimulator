@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: MRCX
   sector: 1
   displayName: "\uBBF8\uB77C\uD074"
+  icon: {fileID: 6924818620377953126, guid: 790db3521a4fe564e97ed95085a638d4, type: 3}
   floatShares: 200000000
   avgDailyVolume: 1500000
   noiseScale: 1

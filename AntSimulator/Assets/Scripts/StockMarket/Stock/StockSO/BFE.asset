@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: BFE
   sector: 6
   displayName: "\uBC14\uC774\uC790"
+  icon: {fileID: -5631732952303289644, guid: 2308e9f8aa7909f408e7305183327da8, type: 3}
   floatShares: 200000000
   avgDailyVolume: 1500000
   noiseScale: 1

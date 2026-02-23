@@ -24,6 +24,7 @@ MonoBehaviour:
   stockId: PATR
   sector: 7
   displayName: "\uBE68\uB791\uD280\uC5B4"
+  icon: {fileID: -7013970781115158607, guid: 4e009ffe9c483b649ba99c7f34ebf332, type: 3}
   floatShares: 200000000
   avgDailyVolume: 1500000
   noiseScale: 1
