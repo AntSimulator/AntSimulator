@@ -17,8 +17,25 @@ namespace Stocks.UI
         [SerializeField] private List<StockDefinition> stockDefinitions = new();
         [SerializeField] private MarketSimulator marketSimulator;
 
+        private bool isSubscribedToMarket;
+        private bool pendingDelistRefresh;
+
+        void OnEnable()
+        {
+            EnsureMarketSimulatorReference();
+            SubscribeToMarketEvents();
+        }
+
+        void OnDisable()
+        {
+            UnsubscribeFromMarketEvents();
+        }
+
         void Start()
         {
+            EnsureMarketSimulatorReference();
+            SubscribeToMarketEvents();
+
             var db = BuildSeedFromStockDefinitions();
 
             Debug.Log($"[StockListUI] db null? {db == null}");
@@ -32,6 +49,13 @@ namespace Stocks.UI
             }
 
             Render(db);
+        }
+
+        void LateUpdate()
+        {
+            if (!pendingDelistRefresh) return;
+            pendingDelistRefresh = false;
+            RefreshStockList();
         }
 
         
@@ -48,17 +72,24 @@ namespace Stocks.UI
                 Destroy(content.GetChild(i).gameObject);
 
             // 생성 + 바인딩
+            StockSeedItem firstVisible = null;
             foreach (var s in db.stocks)
             {
+                if (s == null || !IsStockVisible(s.code))
+                    continue;
+
+                if (firstVisible == null)
+                    firstVisible = s;
+
                 var row = Instantiate(rowPrefab, content);
 
                 var color = TryParseHtmlColor(s.iconColor, out var c) ? c : Color.white;
                 row.Bind(s, color, OnRowSelected);
             }
 
-            if (selectFirstOnRender && db.stocks.Count > 0)
+            if (selectFirstOnRender && firstVisible != null)
             {
-                OnRowSelected(db.stocks[0]);
+                OnRowSelected(firstVisible);
                 
             }
             
@@ -113,6 +144,53 @@ namespace Stocks.UI
             }
 
             return new List<StockDefinition>();
+        }
+
+        private void EnsureMarketSimulatorReference()
+        {
+            if (marketSimulator == null)
+            {
+                marketSimulator = FindObjectOfType<MarketSimulator>();
+            }
+        }
+
+        private void SubscribeToMarketEvents()
+        {
+            if (isSubscribedToMarket || marketSimulator == null) return;
+            marketSimulator.OnEventRevealed += HandleEventRevealed;
+            isSubscribedToMarket = true;
+        }
+
+        private void UnsubscribeFromMarketEvents()
+        {
+            if (!isSubscribedToMarket || marketSimulator == null) return;
+            marketSimulator.OnEventRevealed -= HandleEventRevealed;
+            isSubscribedToMarket = false;
+        }
+
+        private void HandleEventRevealed(EventDefinition def, int day, int tick)
+        {
+            if (def == null || !def.delist) return;
+            pendingDelistRefresh = true;
+        }
+
+        private void RefreshStockList()
+        {
+            var db = BuildSeedFromStockDefinitions();
+            if (db == null || db.stocks == null) return;
+            Render(db);
+        }
+
+        private bool IsStockVisible(string stockCode)
+        {
+            if (string.IsNullOrWhiteSpace(stockCode)) return false;
+            if (marketSimulator == null) return true;
+
+            var runtimeStocks = marketSimulator.GetAllStocks();
+            if (runtimeStocks == null) return true;
+            if (!runtimeStocks.TryGetValue(stockCode, out var state)) return true;
+
+            return state == null || !state.isDelisted;
         }
         
     }
