@@ -716,7 +716,7 @@ MonoBehaviour:
   displayImage: {fileID: 928945182}
   displayText: {fileID: 2133518594}
   bgmSource: {fileID: 163550367}
-  EndingSound: {fileID: 8300000, guid: dc369b9b881464062b47313ed9027c78, type: 3}
+  EndingSound: {fileID: 8300000, guid: 0a7fb8ff5dfd545899f45e4b852eb12b, type: 3}
 --- !u!4 &1463640795
 Transform:
   m_ObjectHideFlags: 0
