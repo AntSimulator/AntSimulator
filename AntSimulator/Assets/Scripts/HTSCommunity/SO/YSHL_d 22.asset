@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82861d2baff844577983a17acd9d7f20, type: 3}
+  m_Name: YSHL_d 22
+  m_EditorClassIdentifier: Assembly-CSharp::HTSCommunitySO
+  stockId: OKILL
+  direction: 1
+  title: "\uC9C4\uC2EC ai \uC6D0\uC804 \uC0B0\uC5C5 \uB05D\uB09C\uAC74\uAC70\uC694??
+    -56\uD37C\uC778\uB370 \uBB3C\uD0C8\uB824\uACE0 \uD588\uB2E4\uAC00  \uC774\uAC74
+    \uC544\uB2C8\uB2E4 \uC2F6\uC740\uB370..."
+  body: 
