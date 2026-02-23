@@ -156,7 +156,7 @@ namespace Expenses
                     Debug.Log($"[Expense] Settled expenseId={runtime.expenseId} dueDay={runtime.dueDay} day={day}");
                 }
                 
-                else if (runtime.dueDay > day) continue;
+                else if (runtime.dueDay +1 > day) continue;
                 else
                 {
                     PublishResult(new ExpenseResult
