@@ -25,6 +25,7 @@ public class EventManager : MonoBehaviour
 
     public void OnDayStarted(int day)
     {
+        active.Clear();
         if (runEvents == null) return;
 
         var todayList = runEvents.Where(x => x != null && x.startDay == day).ToList();

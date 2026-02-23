@@ -2504,8 +2504,8 @@ MonoBehaviour:
   volumeBurstRelThreshold: 2.5
   volMulBurstThreshold: 1.6
   burstMin: 1
-  burstMax: 6
-  ticksPerDay: 40
+  burstMax: 1
+  ticksPerDay: 30
   morningTick: 0
   logWhenPosted: 1
   logTemplateStats: 0
@@ -2696,6 +2696,7 @@ MonoBehaviour:
   - {fileID: 1049095976}
   settlementOffControllers:
   - {fileID: 1049095976}
+  ticksPerDay: 180
 --- !u!4 &1049095970
 Transform:
   m_ObjectHideFlags: 0
@@ -2895,12 +2896,7 @@ MonoBehaviour:
   closeButton: {fileID: 162193088}
   pauseGameWhileOpen: 1
   allowSkipTypingOnClick: 1
-  enableWedFinanceBgm: 1
-  wedGoodEventId: Finance_good
-  wedBadEventId: Finance_bad
   bgmSource: {fileID: 680597180}
-  wedGoodBgm: {fileID: 8300000, guid: f14c4d2f91ed74bb094a6fe512ccc629, type: 3}
-  wedBadBgm: {fileID: 8300000, guid: f91131ef9c0a848b1bdc23a39a1b085c, type: 3}
   blep: {fileID: 8300000, guid: d8b6fdf6e50034c75886bce84438e0b6, type: 3}
 --- !u!114 &1049095980
 MonoBehaviour:
