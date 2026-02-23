@@ -25,7 +25,7 @@ public class EventManager : MonoBehaviour
 
     public void OnDayStarted(int day)
     {
-        active.Clear();
+        //active.Clear();
         if (runEvents == null) return;
 
         var todayList = runEvents.Where(x => x != null && x.startDay == day).ToList();
@@ -93,7 +93,7 @@ public class EventManager : MonoBehaviour
     // ✅ DayEnd는 ticks 시스템에서는 굳이 건드릴 필요 없음 (남겨도 되는데, 비우는 게 안전)
     public void OnDayEnded()
     {
-        // nothing (tick 기반 수명 관리)
+        active.Clear();
     }
 
     public (float probSum, float depthSum) GetEffectsForStock(string stockId, Sector stockSector)
