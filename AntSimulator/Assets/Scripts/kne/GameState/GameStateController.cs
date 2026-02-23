@@ -33,7 +33,7 @@ public class GameStateController : MonoBehaviour
 
     [Header("Ending Settings")]
     public int targetDay = 5;
-    private long targetCash = 4000000;
+    private long targetCash = 4500000;
     private long ecurrentCash = 0;
     private PlayerController _endingPlayer;
 
