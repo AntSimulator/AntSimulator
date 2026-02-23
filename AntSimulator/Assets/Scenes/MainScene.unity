@@ -560,15 +560,15 @@ RectTransform:
   m_GameObject: {fileID: 168221630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9435185, y: 0.9435185, z: 0.9435185}
+  m_LocalScale: {x: 2.7994504, y: 2.7994504, z: 2.7994504}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1982632317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1014.1367, y: 570.3907}
-  m_SizeDelta: {x: 1920.206, y: 1080}
+  m_AnchoredPosition: {x: 2049.1418, y: 1152.3679}
+  m_SizeDelta: {x: 0.53564453, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &168221632
 MonoBehaviour:
@@ -1733,7 +1733,7 @@ MonoBehaviour:
   seedDefaultPrice: 1000
   buyButton: {fileID: 1367772931}
   sellButton: {fileID: 1367772930}
-  startHp: 100
+  startHp: 14
   maxHp: 100
   applySeedOnStart: 1
   seedStockDefinitions: []
@@ -5615,6 +5615,7 @@ RectTransform:
   m_Children:
   - {fileID: 1640317200}
   - {fileID: 1420429903}
+  - {fileID: 168221631}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6310,7 +6311,6 @@ SceneRoots:
   - {fileID: 843853581}
   - {fileID: 1982632317}
   - {fileID: 941754391}
-  - {fileID: 168221631}
   - {fileID: 1429204924}
   - {fileID: 1049095970}
   - {fileID: 1913618229}
