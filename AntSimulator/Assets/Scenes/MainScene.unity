@@ -1733,8 +1733,8 @@ MonoBehaviour:
   seedDefaultPrice: 1000
   buyButton: {fileID: 1367772931}
   sellButton: {fileID: 1367772930}
-  startHp: 1000
-  maxHp: 1000
+  startHp: 100
+  maxHp: 100
   applySeedOnStart: 1
   seedStockDefinitions: []
   marketSimulator: {fileID: 1049095968}
