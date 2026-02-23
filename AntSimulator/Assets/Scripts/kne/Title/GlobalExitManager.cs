@@ -55,7 +55,7 @@ public class GlobalExitManager : MonoBehaviour
 
                 exitWindow.SetActive(!isWindowActive);
 
-                // Time.timeScale = isWindowActive ? 1f : 0f; 
+                Time.timeScale = isWindowActive ? 1f : 0f; 
             }
         }
     }
@@ -71,13 +71,13 @@ public class GlobalExitManager : MonoBehaviour
         if (exitWindow != null)
         {
             exitWindow.SetActive(false);
-            // Time.timeScale = 1f; // 일시정지 해제
+            Time.timeScale = 1f; // 일시정지 해제
         }
     }
 
     public void GoToTitle()
     {
-        //Time.timeScale = 1f;
+        Time.timeScale = 1f;
 
         if (exitWindow != null)
         {
