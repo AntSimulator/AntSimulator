@@ -26,7 +26,7 @@ MonoBehaviour:
   depthEffect: 0.0002
   durationDays: 1
   durationTick: 30
-  delist: 1
+  delist: 0
   delistStockIds:
   - FADS
   canBeCalendarEvent: 0

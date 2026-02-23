@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
   eventId: 20404
   title: 
-  description: "CEO \uB77C\uB9AC, \uC774\uBBF8 \uC804\uC6A9\uAE30 \uD0C0\uACE0 \uAD6D\uC678
-    \uB3C4\uD53C?\" \uD655\uC778\uB418\uC9C0 \uC54A\uC740 \uB9DD\uBA85\uC124\uC5D0
-    \uBBF8\uB77C\uD074 \uC8FC\uC8FC\uB4E4 \uD328\uB2C9"
+  description: "[\uB2E8\uB3C5] \uC5E5\uBE44\uB514\uC544 \"\uC624\uD508AI \uD22C\uC790
+    \uC804\uACA9 \uCCA0\uD68C\" \uC120\uC5B8\u2026 \uBC84\uB9BC\uBC1B\uC740 \uBBF8\uB77C\uD074,
+    CEO \uB77C\uB9AC\uB294 \uC774\uBBF8 \uC804\uC6A9\uAE30 \uB744\uC6E0\uB098?"
   scope: 2
   sector: 1
   targetStockIds:
