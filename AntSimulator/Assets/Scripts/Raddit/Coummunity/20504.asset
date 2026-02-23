@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebc15b5106db9481baec5d1c1b0288a9, type: 3}
-  m_Name: 20404
+  m_Name: 20504
   m_EditorClassIdentifier: Assembly-CSharp::CommunityPostSO
-  eventId: 20404
-  title: "[\uCC0C\uB77C\uC2DC] \"\uCE69 \uACF5\uAE09\uB9DD\uC5D0 \uBB34\uC2A8 \uC77C\uC774?\"
-    \uC11C\uBD80 \uCABD \uB300\uD615 \uD30C\uD2B8\uB108\uC0AC, \uBBF8\uB77C\uD074
-    \uD5A5 \uBB3C\uB7C9 \uC7AC\uAC80\uD1A0 \uC911\u2026 \uB3D9\uB9F9 \uC804\uC120\uC5D0
-    \uC774\uC0C1 \uAE30\uB958 \uD3EC\uCC29"
+  eventId: 20504
+  title: "\"\uC591\uC790 \uC5F0\uAD6C\uC18C\uC5D0\uC11C \uADF8\uB798\uD53D\uCE74\uB4DC\uAC00
+    \uC65C \uB098\uC640?\" \uC9DC\uD30C\uAC8C\uB9AC \uBCF8\uC0AC \uC4F0\uB808\uAE30\uC7A5
+    \uC810\uB839\uD55C '\uCC44\uAD74\uAE30' \uBC15\uC2A4\uB4E4\u2026 \uB0B4\uC77C
+    \uCDA9\uACA9 \uBC1C\uD45C \uC608\uACE0?"
   body: "test \uC785\uB2C8\uB2E4 \uC774\uAC74 \uBCF8\uBB38"

@@ -10,25 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8df4c0249cb4cec89579a7141051de, type: 3}
-  m_Name: 81504
+  m_Name: 20504
   m_EditorClassIdentifier: Assembly-CSharp::EventDefinition
-  eventId: 81504
+  eventId: 20504
   title: 
-  description: "[\uC18D\uBCF4] \uBE68\uB791\uD280\uC5B4\uC758 \uCEE4\uD504 CEO, \"\uBA85\uBB38\uB300
-    \uBC15\uC0AC \uB530\uB290\uB2C8 \uACF5\uC7A5 \uAC00\uB77C\" \uB3C5\uC124\u2026
-    \uAD50\uC721\uACC4 \uBC1C\uCE75, \uC8FC\uAC00\uB294 \uAE09\uB4F1"
+  description: "[\uB2E8\uB3C5] \"\uC591\uC790\uCEF4\uD4E8\uD130\uB85C \uBE44\uD2B8\uCF54\uC778\uC744?\"
+    \uC9DC\uD30C\uAC8C\uB9AC, \uB72C\uAE08\uC5C6\uB294 '\uCD08\uACE0\uC18D \uCC44\uAD74
+    \uC804\uC6A9 \uC11C\uBC84' \uCD9C\uC2DC \uC784\uBC15... \uC8FC\uC8FC\uB4E4 \"\uC81C\uC815\uC2E0\uC774\uB0D0\""
   scope: 2
-  sector: 7
+  sector: 1
   targetStockIds:
-  - PATR
+  - JPTI
   probEffect: 0.2
   isUp: 1
-  depthEffect: 0.0002
+  depthEffect: 0.2
   durationDays: 1
-  durationTick: 30
+  durationTick: 2
   delist: 0
-  delistStockIds:
-  - FADS
+  delistStockIds: []
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
