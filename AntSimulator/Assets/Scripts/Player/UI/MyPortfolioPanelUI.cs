@@ -192,9 +192,9 @@ namespace Player.UI
                 return;
             }
 
-            rect.anchorMin = new Vector2(0f, 0f);
-            rect.anchorMax = new Vector2(1f, 1f);
-            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchorMin = new Vector2(0f, 1f);   // 상단 고정
+            rect.anchorMax = new Vector2(1f, 1f);   // 상단 고정
+            rect.pivot = new Vector2(0.5f, 1f);     // 상단 피벗
             rect.offsetMin = new Vector2(16f, 16f);
             rect.offsetMax = new Vector2(-16f, -104f);
         }
