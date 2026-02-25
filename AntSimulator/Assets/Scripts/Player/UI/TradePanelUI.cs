@@ -19,7 +19,8 @@ namespace Player.UI
 
         [Header("Input")]
         [SerializeField] private TMP_InputField quantityInput;
-        [SerializeField] private Button maxButton;
+        [SerializeField] private Button buyMaxButton;
+        [SerializeField] private Button sellMaxButton;
 
         private string selectedStockCode;
         private string selectedStockName;
@@ -31,8 +32,11 @@ namespace Player.UI
             if (quantityInput != null)
                 quantityInput.onEndEdit.AddListener(OnQuantityInputChanged);
 
-            if (maxButton != null)
-                maxButton.onClick.AddListener(OnMaxButtonClicked);
+            if (buyMaxButton != null)
+                buyMaxButton.onClick.AddListener(OnBuyMaxButtonClicked);
+
+            if (sellMaxButton != null)
+                sellMaxButton.onClick.AddListener(OnSellMaxButtonClicked);
         }
 
         private void OnDisable()
@@ -42,8 +46,11 @@ namespace Player.UI
             if (quantityInput != null)
                 quantityInput.onEndEdit.RemoveListener(OnQuantityInputChanged);
 
-            if (maxButton != null)
-                maxButton.onClick.RemoveListener(OnMaxButtonClicked);
+            if (buyMaxButton != null)
+                buyMaxButton.onClick.RemoveListener(OnBuyMaxButtonClicked);
+
+            if (sellMaxButton != null)
+                sellMaxButton.onClick.RemoveListener(OnSellMaxButtonClicked);
         }
 
         private void Start()
@@ -70,7 +77,7 @@ namespace Player.UI
                 playerController.SetQtyStep(text);
         }
 
-        private void OnMaxButtonClicked()
+        private void OnBuyMaxButtonClicked()
         {
             if (quantityInput == null || playerController == null)
             {
@@ -90,6 +97,19 @@ namespace Player.UI
             var maxQuantity = CalculateMaxBuyQuantity(playerController.Cash, currentPrice);
 
             quantityInput.text = maxQuantity.ToString();
+            OnQuantityInputChanged(quantityInput.text);
+        }
+
+        private void OnSellMaxButtonClicked()
+        {
+            if (quantityInput == null || playerController == null)
+            {
+                return;
+            }
+
+            var holdingQuantity = GetHoldingQuantity(selectedStockCode);
+
+            quantityInput.text = holdingQuantity.ToString();
             OnQuantityInputChanged(quantityInput.text);
         }
 

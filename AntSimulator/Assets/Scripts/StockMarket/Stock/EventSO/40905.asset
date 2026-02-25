@@ -26,8 +26,9 @@ MonoBehaviour:
   depthEffect: 0.002
   durationDays: 1
   durationTick: 30
-  delist: 0
-  delistStockIds: []
+  delist: 1
+  delistStockIds:
+  - BYMM
   canBeCalendarEvent: 0
   canBeHidden: 1
   allowRepeatInRun: 0
