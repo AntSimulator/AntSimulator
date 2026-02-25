@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Player.Models;
 using Player.Runtime;
@@ -51,6 +52,10 @@ namespace Player.UI
             public TMP_Text quantityText;
             public TMP_Text avgBuyPriceText;
             public TMP_Text profitRateText;
+            public Button selectButton;
+            public UnityAction onSelectClicked;
+            public string boundStockId;
+            public string boundStockName;
         }
 
         private void Awake()
@@ -192,9 +197,9 @@ namespace Player.UI
                 return;
             }
 
-            rect.anchorMin = new Vector2(0f, 0f);
-            rect.anchorMax = new Vector2(1f, 1f);
-            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchorMin = new Vector2(0f, 1f);   // 상단 고정
+            rect.anchorMax = new Vector2(1f, 1f);   // 상단 고정
+            rect.pivot = new Vector2(0.5f, 1f);     // 상단 피벗
             rect.offsetMin = new Vector2(16f, 16f);
             rect.offsetMax = new Vector2(-16f, -104f);
         }
@@ -284,6 +289,7 @@ namespace Player.UI
 
                 if (staleRow.root != null)
                 {
+                    UnbindRowSelection(staleRow);
                     Destroy(staleRow.root);
                 }
 
@@ -321,6 +327,7 @@ namespace Player.UI
 
             if (existing != null && existing.root != null)
             {
+                UnbindRowSelection(existing);
                 Destroy(existing.root);
             }
 
@@ -364,8 +371,25 @@ namespace Player.UI
                 currentPriceText = FindTextAny(rowRoot.transform, CurrentPriceNode),
                 quantityText = FindTextAny(rowRoot.transform, TotalBuyQuantityNode, QtyNode),
                 avgBuyPriceText = FindTextAny(rowRoot.transform, AverageBuyPriceNode),
-                profitRateText = FindTextAny(rowRoot.transform, ProfitRateNode)
+                profitRateText = FindTextAny(rowRoot.transform, ProfitRateNode),
+                selectButton = ResolveSelectionButton(rowRoot)
             };
+        }
+
+        private static Button ResolveSelectionButton(GameObject rowRoot)
+        {
+            if (rowRoot == null)
+            {
+                return null;
+            }
+
+            var rootButton = rowRoot.GetComponent<Button>();
+            if (rootButton != null)
+            {
+                return rootButton;
+            }
+
+            return rowRoot.GetComponentInChildren<Button>(true);
         }
 
         private GameObject InstantiateRowRoot()
@@ -452,6 +476,7 @@ namespace Player.UI
             float profitRate)
         {
             var displayName = ResolveStockDisplayName(stockId);
+            BindRowSelection(row, stockId, displayName);
 
             if (row.stockNameText != null)
             {
@@ -481,6 +506,44 @@ namespace Player.UI
                     ? new Color(0.93f, 0.25f, 0.25f, 1f)
                     : new Color(0.22f, 0.58f, 0.95f, 1f);
             }
+        }
+
+        private static void BindRowSelection(RowView row, string stockId, string stockName)
+        {
+            if (row == null || row.selectButton == null || string.IsNullOrWhiteSpace(stockId))
+            {
+                return;
+            }
+
+            var normalizedName = stockName ?? string.Empty;
+            if (string.Equals(row.boundStockId, stockId, StringComparison.Ordinal) &&
+                string.Equals(row.boundStockName, normalizedName, StringComparison.Ordinal))
+            {
+                return;
+            }
+
+            if (row.onSelectClicked != null)
+            {
+                row.selectButton.onClick.RemoveListener(row.onSelectClicked);
+            }
+
+            row.boundStockId = stockId;
+            row.boundStockName = normalizedName;
+            row.onSelectClicked = () => StockSelectionEvents.RaiseSelected(row.boundStockId, row.boundStockName);
+            row.selectButton.onClick.AddListener(row.onSelectClicked);
+        }
+
+        private static void UnbindRowSelection(RowView row)
+        {
+            if (row == null || row.selectButton == null || row.onSelectClicked == null)
+            {
+                return;
+            }
+
+            row.selectButton.onClick.RemoveListener(row.onSelectClicked);
+            row.onSelectClicked = null;
+            row.boundStockId = null;
+            row.boundStockName = null;
         }
 
         private string ResolveStockDisplayName(string stockId)
@@ -566,6 +629,10 @@ namespace Player.UI
         private void OnDestroy()
         {
             UnregisterSummaryBindings();
+            foreach (var row in rowsByStockId.Values)
+            {
+                UnbindRowSelection(row);
+            }
             rowsByStockId.Clear();
             staleStockIds.Clear();
         }

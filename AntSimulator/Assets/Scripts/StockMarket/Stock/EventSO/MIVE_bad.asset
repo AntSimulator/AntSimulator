@@ -23,7 +23,7 @@ MonoBehaviour:
   isUp: 0
   depthEffect: 0.00002
   durationDays: 1
-  durationTick: 180
+  durationTick: 60
   delist: 0
   delistStockIds: []
   canBeCalendarEvent: 1
